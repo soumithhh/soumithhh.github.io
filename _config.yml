@@ -14,6 +14,7 @@ minimal: false             # use a dark header
 
 navigation:
   - {file: "About.md", title: "About"}
+   - {file: "About.md", icon: <i class="fa-solid fa-circle-exclamation"></i> title: "About"}
   - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Goodreads, icon: book, url: "https://www.goodreads.com/user/show/83851001-soumith"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}

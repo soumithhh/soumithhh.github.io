@@ -7,16 +7,16 @@ minimal: true
 mathjax: true
 
 show_excerpts: true        # show article excerpts on the home page
-show_frame: true           # adds a gray frame to the site
+show_frame: false           # adds a gray frame to the site
 show_sidebar: false        # show a sidebar instead of the usual header
 minimal: false             # use a dark header
 
 
 navigation:
   - {file: "blog.md", title: "Blog"}
-  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
-  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}
-  - {title: Feed, icon: rss, url: "/feed.xml"}
+ # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
+ # - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}
+ # - {title: Feed, icon: rss, url: "/feed.xml"}
   
 
 

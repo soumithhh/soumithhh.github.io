@@ -13,7 +13,7 @@ minimal: false             # use a dark header
 
 
 navigation:
-  - {title: Home, url: "https://www.soumith.com/"}
+  - {title: Home, icon: Home, url: "https://www.soumith.com/"}
   - {file: "About.md", title: "About"}
   - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Goodreads, icon: book, url: "https://www.goodreads.com/user/show/83851001-soumith"}

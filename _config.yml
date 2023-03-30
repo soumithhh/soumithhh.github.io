@@ -18,7 +18,7 @@ navigation:
   - {file: "About.md", icon: circle-exclamation, title: "About"}
   - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
-  - {title: Home, icon: House, url: "https://www.soumith.com/"}
+  - {title: Home, icon: house, url: "https://www.soumith.com/"}
   # - {title: Goodreads, icon: book, url: "https://www.goodreads.com/user/show/83851001-soumith"}
   # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   # - {title: Github, icon: github, url: "https://github.com/soumithhh/"}

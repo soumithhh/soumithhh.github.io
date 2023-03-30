@@ -7,6 +7,9 @@ minimal: true
 mathjax: true
 
 show_excerpts: true        # show article excerpts on the home page
+show_frame: true           # adds a gray frame to the site
+show_sidebar: false        # show a sidebar instead of the usual header
+minimal: false             # use a dark header
 
 
 navigation:
@@ -15,16 +18,7 @@ navigation:
   - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}
   - {title: Feed, icon: rss, url: "/feed.xml"}
   
-  external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
-  #- {title: Mail, icon: envelope, url: "mailto:soumithhh@users.noreply.github.com"}
-  #- {title: Github, icon: github, url: "https://github.com/soumithhh"}
-    {title: Goodreads, icon: goodreads, url: "https://www.goodreads.com/user/show/83851001-soumith"}
-  - {title: Instagram, icon: instagram, url: "https://www.instagram.com/soumithhh/"}
-  - {title: Website, icon: globe, url: "https://www.soumith.com/"}
-  - {title: Twitter, icon: twitter, url: "https://www.Twitter.com/soumithhh"}
-  - {title: YouTube, icon: youtube, url: "https://www.youtube.com/@soumithhh"}
-  - {title: Facebook, icon: facebook, url: "https://www.facebook.com/soumithhh"}
- #  - {title: Github, icon: github, url: "https://github.com/soumithhh"}
+
 
 remote_theme: niklasbuschmann/contrast
 

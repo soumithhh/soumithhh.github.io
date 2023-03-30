@@ -6,6 +6,9 @@ excerpt_separator: "\n\n\n"
 minimal: true
 mathjax: true
 
+show_excerpts: true        # show article excerpts on the home page
+
+
 navigation:
   - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}

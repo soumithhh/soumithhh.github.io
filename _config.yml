@@ -16,7 +16,7 @@ navigation:
   - {file: "About.md", title: "About"}
   - {file: "About.md", icon: f06a, title: "About"}
   - {file: "About.md", icon: circle-exclamation, title: "About"}
-  - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
+  - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
   - {title: Home, icon: House, url: "https://www.soumith.com/"}
   # - {title: Goodreads, icon: book, url: "https://www.goodreads.com/user/show/83851001-soumith"}

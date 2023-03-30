@@ -13,11 +13,11 @@ minimal: false             # use a dark header
 
 
 navigation:
-  - {title: Home, icon: Home, url: "https://www.soumith.com/"}
   - {file: "About.md", title: "About"}
   - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Goodreads, icon: book, url: "https://www.goodreads.com/user/show/83851001-soumith"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
+  - {title: Home, icon: House, url: "https://www.soumith.com/"}
   # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   # - {title: Github, icon: github, url: "https://github.com/soumithhh/"}
   

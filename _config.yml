@@ -15,8 +15,8 @@ minimal: false             # use a dark header
 navigation:
   - {file: "blog.md", title: "Blog"}
  # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
- # - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}
-  - {title: Home, icon: Home, url: "https://www.soumith.com/"}
+  - {title: Github, icon: github, url: "https://github.com/soumithhh/"}
+  - {title: Home, url: "https://www.soumith.com/"}
  
  # Social links
  

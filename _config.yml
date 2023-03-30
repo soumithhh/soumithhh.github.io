@@ -17,6 +17,7 @@ navigation:
   - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
   - {title: Home, icon: hut, url: "https://www.soumith.com/"}
+  - {title: Home, icon: building, url: "https://www.soumith.com/"}
   # - {file: "About.md", icon: circle-exclamation, title: "About"}
   # - {file: "About.md", title: "About"}
   # - {file: "About.md", icon: f06a, title: "About"}

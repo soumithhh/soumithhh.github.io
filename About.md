@@ -1,5 +1,6 @@
 ---
 layout: page
+title: "About"
 ---
 
 "Hello and welcome to Soumith's Shelf! My name is Soumith, and I'm an Electrical Engineer with a passion for learning and exploring new technologies. When I'm not working on engineering projects, you can find me buried in a good book. I'm also the founder of the [Papataka Book Club](https://www.instagram.com/papatakabookclub/), where I love to engage in thoughtful discussions with fellow book enthusiasts.

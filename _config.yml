@@ -10,6 +10,7 @@ show_excerpts: true        # show article excerpts on the home page
 
 
 navigation:
+  - {file: "blog.md", title: "Blog"}
   - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/"}
   - {title: Feed, icon: rss, url: "/feed.xml"}

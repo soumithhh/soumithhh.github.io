@@ -6,7 +6,7 @@ description: Readthon Hosted By Smriti
 
 Readthon Hosted By Smriti.
 
-<!-- excerpt -->
+<!--more-->
 
 Prompts:⤵
 1. Read a book you've been putting off 

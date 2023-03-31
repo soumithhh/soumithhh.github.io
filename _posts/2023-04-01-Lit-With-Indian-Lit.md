@@ -9,10 +9,7 @@ Readthon Hosted By Smriti.
 
 
 
-Prompts:
-1. Read a book you've been putting off 
-3. Read an award winning/nominated book 
-4. Read a book translated from a language you've never read from or hardly read from
+Smriti hosts an annual Readathon called "Lit with Indian Lit," which features engaging prompts to inspire readers to explore translated Indian literature. This year, I have chosen three books to fulfill the prompts: "My Story" by Kamala Das for a book I've been putting off, "The Black Hill" by Mamang Dai for an award-winning/nominated book, and "Lajja: Shame" by Taslima Nasrin, translated by Tutul Gupta, for a book translated from a language I've rarely or never read before. I am committed to updating my progress regularly, so be sure to check out this blog.
 
 
 

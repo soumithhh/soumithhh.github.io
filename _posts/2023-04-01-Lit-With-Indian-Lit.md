@@ -3,16 +3,13 @@ title: "Lit With Indian Lit 2023"
 date: 2023-03-31
 description: Readthon Hosted By Smriti
 ---
-
 Readthon Hosted By Smriti.
-
 <!-- excerpt -->
+
+
 
 Prompts:⤵
 1. Read a book you've been putting off 
-
-
-
 3. Read an award winning/nominated book 
 4. Read a book translated from a language you've never read from or hardly read from
 

@@ -17,6 +17,6 @@ Prompts:⤵
 
 ## Detail Video by Smriti
 
-<iframe width="400" height="225" src="https://www.youtube.com/embed/8jbjlWJ8xoM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="355" height="200" src="https://www.youtube.com/embed/8jbjlWJ8xoM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 {% include embed.html url="https://www.youtube.com/watch?v=8jbjlWJ8xoM&t=277s&ab_channel=SantReads" %}

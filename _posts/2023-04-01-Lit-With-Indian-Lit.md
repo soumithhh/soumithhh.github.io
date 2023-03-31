@@ -6,12 +6,15 @@ description: Readthon Hosted By Smriti
 
 Readthon Hosted By Smriti.
 
-<!--more-->
+<!-- excerpt -->
 
 Prompts:⤵
 1. Read a book you've been putting off 
-2. Read an award winning/nominated book 
-3. Read a book translated from a language you've never read from or hardly read from
+
+
+
+3. Read an award winning/nominated book 
+4. Read a book translated from a language you've never read from or hardly read from
 
 
 

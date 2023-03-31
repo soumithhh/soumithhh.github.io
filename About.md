@@ -7,7 +7,7 @@ Hello and welcome to Soumith's Shelf! My name is Soumith, and I'm an Electrical 
 
 As an engineer and a lifelong learner (my parents think this), I'm constantly curious about the world around me and always looking to expand my knowledge (basically to stay away from trouble). I love exploring different technologies and discovering new ways to apply them to solve problems (Problems solved so far 0!).
 
-Through this blog, I aim to share my experiences, insights, and discoveries with my readers (in another words, to myself!). I hope to inspire and educate others who share my love for learning, exploring, and making meaningful connections. (ChatGPT is having high expectations on me)
+Through this blog, I aim to share my experiences, insights, and discoveries with my readers (in another words, to myself!). I hope to inspire and educate others who share my love for learning, exploring, and making meaningful connections. (ChatGPT has high expectations of me.)
 
-Thank you for stopping by, and I can't wait to connect with you! (have to say this, an attempt to get disappointment)
+Thank you for stopping by, and I can't wait to connect with you! (I have to say this, I'm anticipating disappointment)
 

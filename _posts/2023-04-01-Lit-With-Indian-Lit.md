@@ -3,6 +3,7 @@ title: "Lit With Indian Lit 2023"
 date: 2023-03-31
 description: Readthon Hosted By Smriti
 ---
+<img src="{{ https://soumithhh.github.io/ }}/assets/image3.png" alt="TBR">
 Readthon Hosted By Smriti.
 <!-- excerpt -->
 

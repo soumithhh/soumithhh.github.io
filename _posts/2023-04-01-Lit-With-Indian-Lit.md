@@ -1,6 +1,6 @@
 ---
 title: "Lit With Indian Lit"
-date: 2023-04-01
+date: 2023-03-31
 description: Readthon Hosted By Smriti
 ---
 

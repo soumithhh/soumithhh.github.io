@@ -8,7 +8,7 @@ Readthon Hosted By Smriti.
 
 
 
-Prompts:⤵
+Prompts:
 1. Read a book you've been putting off 
 3. Read an award winning/nominated book 
 4. Read a book translated from a language you've never read from or hardly read from
@@ -19,4 +19,3 @@ Prompts:⤵
 
 <iframe width="355" height="200" src="https://www.youtube.com/embed/8jbjlWJ8xoM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-{% include embed.html url="https://www.youtube.com/watch?v=8jbjlWJ8xoM&t=277s&ab_channel=SantReads" %}

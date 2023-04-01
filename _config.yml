@@ -1,5 +1,6 @@
 title: "Soumith's Shelf"
 author: "Soumith"
+description: "Made with <b style=\"color: #f45;\">&lt;3</b>"
 permalink: /:title/
 lang: "en"
 excerpt_separator: "\n\n\n"
@@ -13,10 +14,9 @@ minimal: false             # use a dark header
 
 
 navigation:
-  - {file: "About.md", icon: globe, title: "About"}
-  - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
-  - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
-  - {title: Home, icon: building, url: "https://www.soumith.com/"}
+  - {title: Home, url: "https://www.soumith.com/"}
+  - {file: "About.md", title: "About"}
+  - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
   # - {title: Home, icon: hut, url: "https://www.soumith.com/"}
   # - {file: "About.md", icon: circle-exclamation, title: "About"}
   # - {file: "About.md", title: "About"}
@@ -25,7 +25,12 @@ navigation:
   # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   # - {title: Github, icon: github, url: "https://github.com/soumithhh/"}
   
- 
+ external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
+  - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
+  - {title: Twitter, icon: twitter, url: "https://twittwr.com/soumithhh/"}
+  - {title: Github, icon: github, url: "https://github.com/soumithhh"}
+  # - {title: Subscribe, icon: rss, url: "/feed.xml"}
+  # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
  
 
 

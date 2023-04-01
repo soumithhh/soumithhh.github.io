@@ -14,9 +14,10 @@ minimal: false             # use a dark header
 
 
 navigation:
-  - {title: Home, url: "https://www.soumith.com/"}
-  - {file: "About.md", title: "About"}
-  - {title: Book Club, url: "https://www.instagram.com/papatakabookclub/"}
+  - {file: "About.md", icon: globe, title: "About"}
+  - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
+  - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
+  - {title: Home, icon: building, url: "https://www.soumith.com/"}
   # - {title: Home, icon: hut, url: "https://www.soumith.com/"}
   # - {file: "About.md", icon: circle-exclamation, title: "About"}
   # - {file: "About.md", title: "About"}
@@ -25,14 +26,12 @@ navigation:
   # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
   # - {title: Github, icon: github, url: "https://github.com/soumithhh/"}
   
- external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
-  - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
-  - {title: Twitter, icon: twitter, url: "https://twittwr.com/soumithhh/"}
-  - {title: Github, icon: github, url: "https://github.com/soumithhh"}
-  # - {title: Subscribe, icon: rss, url: "/feed.xml"}
-  # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
  
-
+ 
+external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
+  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
+  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/contrast"}
+  - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 remote_theme: niklasbuschmann/contrast
 

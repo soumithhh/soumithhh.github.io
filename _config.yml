@@ -14,13 +14,10 @@ minimal: false             # use a dark header
 
 
 navigation:
-  - {url: "https://www.soumith.com/, title: Home"}
-  - { url: "https://www.instagram.com/papatakabookclub/, title: Book Club"}
-  - {file: "About.md"}
-  # - {file: "About.md", icon: globe, title: "About"}
-  # - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
-  # - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
-  # - {title: Home, icon: building, url: "https://www.soumith.com/"}
+   - {file: "About.md", icon: globe, title: "About"}
+   - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
+   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
+   - {title: Home, icon: building, url: "https://www.soumith.com/"}
   # - {title: Home, icon: hut, url: "https://www.soumith.com/"}
   # - {file: "About.md", icon: circle-exclamation, title: "About"}
   # - {file: "About.md", title: "About"}

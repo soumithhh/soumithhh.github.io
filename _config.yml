@@ -14,6 +14,7 @@ minimal: false             # use a dark header
 
 
 navigation:
+  - {url: "https://www.soumith.com/ title: Home"}
   - {file: "About.md", icon: globe, title: "About"}
   - {title: Book Club, icon: book, url: "https://www.instagram.com/papatakabookclub/"}
   - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}

@@ -29,9 +29,10 @@ navigation:
  
  
 external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
-  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
-  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/contrast"}
-  - {title: Subscribe, icon: rss, url: "/feed.xml"}
+  # - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
+  - {title: Instagram, icon: instagram, url: "https://instagram.com/soumithhh/"}
+  - {title: Github, icon: github, url: "https://github.com/soumithhh"}
+  # - {title: Subscribe, icon: rss, url: "/feed.xml"}
 
 remote_theme: niklasbuschmann/contrast
 

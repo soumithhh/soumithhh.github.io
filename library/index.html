@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What My Goodreads Library Reveals About How I Read</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+    <style>
+        /* CSS Variables for Light and Dark Modes */
+        :root {
+            --bg-color: #faf9f6;
+            --text-color: #2c2c2c;
+            --heading-color: #111111;
+            --header-border: #e0e0e0;
+            --toggle-bg: #cccccc;
+            --toggle-btn: #ffffff;
+            --accent-color: #382110;
+        }
 
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --header-border: #333333;
+            --toggle-bg: #555555;
+            --toggle-btn: #222222;
+            --accent-color: #dcb07b;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--header-border);
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .profile-link:hover {
+            color: var(--accent-color);
+        }
+
+        .gr-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            object-fit: cover;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .profile-link:hover .gr-logo {
+            transform: translateY(-2px);
+        }
+
+        /* Toggle Switch */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-switch-label {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-color);
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: var(--toggle-bg);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            background-color: var(--toggle-btn);
+            bottom: 3px;
+            content: "";
+            height: 18px;
+            left: 3px;
+            position: absolute;
+            transition: 0.4s;
+            width: 18px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+            background-color: #ffffff;
+        }
+
+        /* Typography */
+        h1, h2 {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--heading-color);
+            transition: color 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.1rem; }
+            p { font-size: 1.05rem; }
+            
+            .theme-switch-label {
+                display: none; /* Hide label on small screens to save space */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://www.goodreads.com/user/show/83851001-soumith" target="_blank" rel="noopener noreferrer" class="profile-link" title="Visit my Goodreads profile">
+                <img src="https://www.soumith.com/library/glogo.jfif" alt="Goodreads Logo" class="gr-logo">
+                <span>My Goodreads</span>
+            </a>
+            <div class="theme-switch-wrapper">
+                <span class="theme-switch-label">Dark Mode</span>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" aria-label="Toggle Dark Mode" />
+                    <div class="slider"></div>
+                </label>
+            </div>
+        </header>
+
+        <article>
+            <h1>WHAT MY GOODREADS LIBRARY REVEALS ABOUT HOW I READ</h1>
+            
+            <p>I've always thought of myself as someone with a clear reading style. Then I looked at my Goodreads data and realized I'm not consistent at all. I'm multiple readers at once, and my library is evidence of a person in flux. Here's what my reading patterns actually tell me.</p>
+            
+            <h2>THE BOOKS THAT NEVER END</h2>
+            
+            <p>I have a confession: I've been reading <em>How to Read a Book</em> by Mortimer Adler for almost six years. It's been on my currently-reading shelf since March 2020. I have this other book too, a Telugu classic called <em>Amrutham Kurisina Raatri</em>, which has lived in my active reading list since June 2019.</p>
+            
+            <p>For a long time, I felt guilty about this. Wasn't I supposed to finish books? Wasn't that the whole point? But then I realized something. These aren't books that are gathering dust unfinished. They're books I return to. I read a chapter, I sit with it, I come back weeks later. Sometimes months later.</p>
+            
+            <p>Mortimer Adler's book teaches you how to read critically and deeply. It feels fitting that I'd read it slowly, applying its lessons as I go. And the Telugu classic is something I pick up when I want to remember something about language and culture that can't be rushed.</p>
+            
+            <p>I think I spent years being ashamed of these lingering reads because productivity culture taught me that finishing is the only metric that matters. But these books aren't failures. They're conversations that span years. They're part of my life in a different way than the books I tear through in a weekend.</p>
+            
+            <h2>THE SPRINTS</h2>
+            
+            <p>Which brings me to the opposite pattern. Sometimes I enter what I can only describe as reading frenzies. January 2026 was like this. In the span of three weeks, I finished three entirely different books that each required serious mental engagement.</p>
+            
+            <p><em>Breaking the Habit of Being Yourself</em> hit me on January 8th. Then <em>The Inner Game of Tennis</em> followed on January 15th. By January 31st, I had completed <em>The E-myth Revisited</em>. These weren't light reads. Each one demanded something different from me. Psychology, athletics, entrepreneurship. And yet I moved through all three with intensity.</p>
+            
+            <p>What I'm realizing is that these sprints aren't random. They happen when I'm trying to solve something. When I'm in a phase where I need answers, I can absorb these dense, transformative books rapidly. I can read them late into the night, underline passages, sit with ideas until they crystallize.</p>
+            
+            <p>My reading speed isn't constant. It's tied to my need. When I'm hungry for change, I'm a velocity reader. When I'm processing something, I'm a slow reader.</p>
+            
+            <h2>THE STORIES THAT QUESTION EVERYTHING</h2>
+            
+            <p>If I look at what I finish and what I return to, there's a clear thread. I'm drawn to stories and ideas that make me uncomfortable, that critique, that interrogate the systems I live within.</p>
+            
+            <p>I've read <em>1984</em> and <em>Animal Farm</em>, of course. Those are the obvious choices for someone interested in power and corruption. But I also read <em>Yellowface</em>, R.F. Kuang's sharp satire about publishing and racism. I've spent time with Kafka's absurdism. I've explored the darker edges of what fiction can do to a reader.</p>
+            
+            <p>What connects all of these is that they refuse to let me settle. They won't let me accept things as they are. They're books written by people who looked at the world and decided to tell you the uncomfortable truth about what they saw.</p>
+            
+            <p>I think this says something about what I'm looking for when I open a book. I'm not looking to escape. I'm looking for clarity. I want writers who can show me how power works, how systems fail, how injustice gets woven into the fabric of everyday life. And I want them to do it in ways that are sharp enough to make me think differently about what I thought I understood.</p>
+            
+            <h2>THE GROUND LEVEL VIEW</h2>
+            
+            <p>There's a cluster of books on my shelf that took me a while to notice. They're all about India. Not India as a concept or a nation-state in abstract, but India as a lived reality. India seen from the ground.</p>
+            
+            <p>I read Daya Pawar's <em>Baluta</em>, which documents what it means to grow up as a Mahar, what caste actually means in real life, not just in textbooks. I read Chalam's <em>Maidanam</em>. I'm still working through Sumita Dawra's <em>Poor But Spirited in Karimnagar</em>, which reads like field notes from someone actually doing the work of administration in a district.</p>
+            
+            <p>What these books have in common is that they're not theoretical. They're intimate. They show you how systems work by showing you how they feel to a person living inside them. They're written by people who were there, who saw it, who lived it.</p>
+            
+            <p>I think I keep coming back to this genre because I'm hungry for authenticity. I want to understand how India actually functions, not how it's supposed to function. I want the view from someone who's spent years at the district level, solving real problems with real constraints. There's a kind of wisdom in these books that doesn't exist in policy papers or political analysis.</p>
+            
+            <h2>THE SHIFT I DIDN'T PLAN</h2>
+            
+            <p>Here's the thing that surprised me most when I looked at my recent reads. I've changed. Not gradually, but distinctly. In previous years, I was finishing book after book about social justice, business strategy, psychology, social systems. Heavy intellectual work. Books that demanded I think about the world differently.</p>
+            
+            <p>In 2026, something shifted. I finished <em>Project Hail Mary</em> by Andy Weir. I read <em>Dissection of a Murder</em>. I'm currently working through <em>Around the World in Eighty Days</em>. These are plot-driven books. Books where the satisfaction comes from the story itself, from the momentum, from wondering what happens next.</p>
+            
+            <p>I notice I want escape more. Or maybe not escape. Maybe I want the kind of intellectual engagement that comes from following a puzzle rather than dismantling a system. There's something restful about a book where you don't have to wrestle with moral complexity. Where you just follow the plot and see where it leads.</p>
+            
+            <p>I don't know if this is temporary or permanent. I don't know if I'm burned out on critique or just ready for a different kind of challenge. But the data is clear: the reader I am now wants something different than the reader I was twelve months ago.</p>
+            
+            <h2>WHAT THIS PATTERN MEANS</h2>
+            
+            <p>When I see all of this together, I don't see a contradiction. I see a person trying to live fully in the world and understand it. Some books need years because they're works you grow into. Some books need to be finished in a sprint because they're solving an urgent problem. Some books need to critique and challenge because you can't move forward without seeing clearly. Some books need to be stories because sometimes you need to rest inside a narrative that doesn't demand you change anything.</p>
+            
+            <p>My Goodreads library isn't inconsistent. It's realistic. It's the record of a person who reads differently depending on what they need, when they need it, and where they are.</p>
+            
+            <p>And right now, in 2026, I'm apparently someone who wants to travel the world, solve mysteries, and save planets on the page. I'm okay with that.</p>
+            
+            <p>I'm beginning to think that the best readers aren't consistent. They're responsive. They read what they need, when they need it. And they're honest enough to let their reading patterns change as they change.</p>
+            
+            <p>That's what my Goodreads library is telling me. I'm listening.</p>
+        </article>
+    </div>
+
+    <script>
+        const toggleSwitch = document.querySelector('#checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Check local storage for previous preference
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Check system preference if no local storage is set
+            document.documentElement.setAttribute('data-theme', 'dark');
+            toggleSwitch.checked = true;
+        }
+
+        // Toggle function
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+---
+layout: default
+title: "Blog"
+permalink: /blog/
+---
+
+<div class="blog-page">
+  <div class="shelf-header">
+    <h1 class="page-title">Blog Posts</h1>
+    <p class="page-subtitle">Thoughts, articles, and long-form writings</p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 32px;">
+    {% for post in site.posts %}
+      <article style="border-bottom: 1.5px dashed #e2e8f0; padding-bottom: 20px;">
+        <h2 style="font-family: var(--font-sketch); font-size: 2rem; font-weight: 700; margin-bottom: 6px;">
+          <a href="{{ post.url | relative_url }}" style="color: var(--text-main); text-decoration: none;">
+            {{ post.title }}
+          </a>
+        </h2>
+        <div style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 8px;">
+          {{ post.date | date: "%B %d, %Y" }} {% if post.category %} • Category: {{ post.category }}{% endif %}
+        </div>
+        <p style="font-size: 1.1rem; color: #333333;">
+          {{ post.excerpt | strip_html | truncate: 180 }}
+        </p>
+      </article>
+    {% else %}
+      <p style="font-size: 1.2rem; color: var(--text-muted);">No blog posts found yet. Add posts in <code>_posts/</code> directory!</p>
+    {% endfor %}
+  </div>
+</div>

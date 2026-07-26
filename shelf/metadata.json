@@ -1,0 +1,6 @@
+{
+  "name": "Soumith's Shelf & Blog - Jekyll Theme",
+  "description": "Complete Jekyll static site repository with Bookshelf and Blog layouts, matching custom hand-drawn design specifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

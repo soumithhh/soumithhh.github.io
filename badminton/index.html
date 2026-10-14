@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Badminton Log & Analytics</title>
+<title>Badminton Log</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
@@ -24,47 +24,59 @@
     --l0:#1E2D26; --l1:#2B5A47; --l2:#3A8A69; --l3:#5FD0A0;
   }
 }
+[data-theme="light"]{
+  --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
+  --court:#1B5E4A; --court-deep:#134636; --good:#1B7A55; --bad:#C23B4E;
+  --c1:#1B5E4A; --c2:#F2C230; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
+  --l0:#E3E9E4; --l1:#A9D3BF; --l2:#4FA17F; --l3:#1B5E4A;
+}
+[data-theme="dark"]{
+  --bg:#0D1612; --card:#15221C; --ink:#E8F0EA; --muted:#93A69B; --line:#25362E;
+  --court:#1F7A5F; --court-deep:#0F3A2D; --good:#4FC08D; --bad:#E5738A;
+  --c1:#4FC08D; --c2:#F2C230; --c3:#6FA0F5; --c4:#E5738A; --c5:#A68CF0; --c6:#52C7C1;
+  --l0:#1E2D26; --l1:#2B5A47; --l2:#3A8A69; --l3:#5FD0A0;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5}
-.wrap{max-width:1180px;margin:0 auto;padding:16px 16px 48px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;transition:background 0.2s,color 0.2s}
+.wrap{max-width:1180px;margin:0 auto;padding:16px 16px 56px}
 h1,h2,h3,p{margin:0}
-button,input,textarea,select{font:inherit;color:inherit}
+button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--shuttle);outline-offset:2px}
 
-/* top bar */
+/* Top bar */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0 16px}
-.top h1{font-size:1.35rem;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.shuttle-icon{font-size:1.6rem;line-height:1}
+.top h1{font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
 .top .meta{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.85rem}
 .btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:0.15s ease}
 .btn:hover{border-color:var(--court);transform:translateY(-1px)}
-.btn-primary{background:var(--court);color:#fff;border-color:var(--court)}
-.btn-primary:hover{background:var(--court-deep);color:#fff}
-.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.92rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.9rem}
 .banner.err{background:#FBE3E6;color:#7A1626}
 .banner[hidden]{display:none}
 
-/* hero court */
+/* Hero court */
 .hero{position:relative;overflow:hidden;border-radius:20px;background:var(--court);color:var(--chalk);margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
 .hero .court{position:absolute;inset:0;width:100%;height:100%;opacity:.22}
 .hero-in{position:relative;display:grid;grid-template-columns:auto 1fr;gap:12px 36px;align-items:end;padding:26px 28px}
 .dlabel{font-size:1rem;font-weight:600;opacity:.85}
-.dnum{font-size:clamp(4.5rem,16vw,8rem);font-weight:800;line-height:.9;letter-spacing:-.04em}
+.dnum{font-size:clamp(4.5rem,16vw,7.5rem);font-weight:800;line-height:.9;letter-spacing:-.04em}
 .hero-side{display:grid;gap:14px}
-.hero-sub{font-size:1.05rem;max-width:38ch}
+.hero-sub{font-size:1.05rem;max-width:40ch;line-height:1.4}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{background:rgba(246,244,234,.14);border:1px solid rgba(246,244,234,.28);border-radius:12px;padding:8px 14px}
 .chip b{display:block;font-size:1.35rem;line-height:1.2}
 .chip span{font-size:.8rem;opacity:.85}
 @media (max-width:640px){.hero-in{grid-template-columns:1fr;padding:22px 20px}}
 
-/* kpis */
+/* KPIs */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .kpi .k{font-size:.85rem;color:var(--muted)}
 .kpi .v{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.25}
 .kpi .s{font-size:.8rem;color:var(--muted)}
 
-/* panels */
+/* Panels */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
 .panel{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-width:0}
 .panel h2{font-size:1.05rem;font-weight:800;margin-bottom:2px}
@@ -74,11 +86,11 @@ button,input,textarea,select{font:inherit;color:inherit}
 .chart.tall{height:300px}
 .nodata{color:var(--muted);font-size:.9rem;padding:20px 0;text-align:center}
 
-/* insights */
+/* Insights */
 .insights{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .insights li{padding-left:14px;border-left:4px solid var(--shuttle);max-width:75ch;line-height:1.55}
 
-/* heatmap */
+/* Heatmap */
 .heat-wrap{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:4px}
 .heat-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-size:.7rem;color:var(--muted);padding-right:2px}
 .heat-days span{display:flex;align-items:center}
@@ -90,53 +102,44 @@ button,input,textarea,select{font:inherit;color:inherit}
 .legend{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:12px}
 .legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
 
-/* calculator */
+/* Calculator */
 .calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
 .calc label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);font-weight:600}
 .calc input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:1rem;color:var(--ink);width:100%}
 .verdict{padding:12px 14px;border-radius:12px;background:var(--bg);display:grid;gap:4px}
 .verdict b{font-size:1.1rem}
 
-/* tables */
+/* Tables */
 .tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.92rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-weight:600;color:var(--muted);font-size:.82rem}
+th{font-weight:700;color:var(--muted);font-size:.82rem}
 td.n,th.n{text-align:right}
+.partner-tag{background:var(--bg);padding:2px 7px;border-radius:6px;font-size:0.75rem;margin-right:3px;display:inline-block}
 details{margin-top:18px;color:var(--muted);font-size:.88rem}
 details summary{cursor:pointer;font-weight:600}
 details ul{margin:8px 0 0;padding-left:18px}
-footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-/* modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:999;padding:16px}
-.modal{background:var(--card);border:1px solid var(--line);border-radius:18px;width:100%;max-width:700px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 16px 36px rgba(0,0,0,0.25);overflow:hidden}
-.modal-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
-.modal-head h3{font-size:1.1rem;font-weight:800}
-.modal-tabs{display:flex;gap:8px;padding:8px 20px;border-bottom:1px solid var(--line);background:rgba(0,0,0,0.02)}
-.tab-btn{background:none;border:none;padding:8px 12px;font-weight:600;font-size:0.88rem;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted)}
-.tab-btn.active{border-color:var(--court);color:var(--court)}
-.modal-body{padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
-.modal-foot{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
-textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:monospace;font-size:0.8rem;background:var(--bg);color:var(--ink);resize:vertical}
+footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:16px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header class="top">
-    <h1>🏸 Badminton log</h1>
+    <div class="brand">
+      <span class="shuttle-icon">🏸</span>
+      <div>
+        <h1>Badminton log</h1>
+      </div>
+    </div>
     <div class="meta">
       <span id="updated" aria-live="polite">Loading...</span>
-      <button class="btn btn-primary" id="btnImport" type="button">Import / Paste Data</button>
-      <button class="btn" id="refresh" type="button">Refresh</button>
+      <button class="btn" id="refresh" type="button">🔄 Refresh</button>
+      <button class="btn" id="themeToggle" type="button" title="Toggle theme">🌓</button>
     </div>
   </header>
 
-  <div class="banner" id="banner" hidden>
-    <span id="bannerText"></span>
-    <button class="btn" id="bannerBtn" style="padding:4px 10px;font-size:.8rem">Paste Data</button>
-  </div>
+  <div class="banner" id="banner" hidden></div>
 
   <section class="hero" aria-label="Journey summary">
     <svg class="court" viewBox="0 0 134 61" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="#F6F4EA" stroke-width=".5">
@@ -157,7 +160,7 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
         <p class="dnum" id="dayNo">0</p>
       </div>
       <div class="hero-side">
-        <p class="hero-sub" id="heroSub">Loading sessions...</p>
+        <p class="hero-sub" id="heroSub">Connecting to Google Sheet...</p>
         <div class="chips" id="chips"></div>
       </div>
     </div>
@@ -168,13 +171,13 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
   <div class="grid">
     <section class="panel">
       <h2>What your data says</h2>
-      <p class="hint">Generated dynamically from your sessions and gear.</p>
+      <p class="hint">Generated directly from your Google Sheet.</p>
       <ul class="insights" id="insights"></ul>
     </section>
 
     <section class="panel s7">
       <h2>Last 16 weeks</h2>
-      <p class="hint">Each square is a day. Darker means longer court playtime.</p>
+      <p class="hint">Each square is a day. Darker green indicates longer court playtime.</p>
       <div class="heat-wrap">
         <div class="heat-days" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
         <div class="heat" id="heat" role="img" aria-label="Play calendar for the last 16 weeks"></div>
@@ -184,10 +187,10 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
 
     <section class="panel s5">
       <h2>Is membership worth it?</h2>
-      <p class="hint">Compare pay-per-session against monthly club membership.</p>
+      <p class="hint">Compare pay-per-session against a monthly club membership.</p>
       <div class="calc">
         <label>Daily fee per session<input id="inRate" type="number" min="0" step="1"></label>
-        <label>Membership per month<input id="inMember" type="number" min="0" step="1" placeholder="0"></label>
+        <label>Membership per month<input id="inMember" type="number" min="0" step="1" placeholder="e.g. 1500"></label>
         <label>Sessions per week<input id="inWeek" type="number" min="0" step="0.5"></label>
       </div>
       <div class="verdict" id="verdict"></div>
@@ -195,13 +198,13 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
 
     <section class="panel s7">
       <h2>Session length</h2>
-      <p class="hint">Minutes per session, with a 3-session average.</p>
+      <p class="hint">Minutes per session, with a 3-session moving average.</p>
       <div class="chart"><canvas id="chDuration" role="img"></canvas></div>
     </section>
 
     <section class="panel s5">
       <h2>Sessions per week</h2>
-      <p class="hint">Weeks start on Monday.</p>
+      <p class="hint">Weekly consistency (weeks start on Monday).</p>
       <div class="chart"><canvas id="chWeekly" role="img"></canvas></div>
     </section>
 
@@ -213,7 +216,7 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
 
     <section class="panel s4">
       <h2>Day of week</h2>
-      <p class="hint">Which days you show up.</p>
+      <p class="hint">Which days you show up most.</p>
       <div class="chart"><canvas id="chWeekday" role="img"></canvas></div>
     </section>
 
@@ -225,19 +228,19 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
 
     <section class="panel s6">
       <h2>Money spent over time</h2>
-      <p class="hint">Court fees and gear, added up day by day.</p>
+      <p class="hint">Court fees and gear expenses accumulated day by day.</p>
       <div class="chart"><canvas id="chSpend" role="img"></canvas></div>
     </section>
 
     <section class="panel s6">
       <h2>Cost per session over time</h2>
-      <p class="hint">Total spend divided by sessions played so far.</p>
+      <p class="hint">Total spend divided by sessions played (falls as equipment is utilized).</p>
       <div class="chart"><canvas id="chCps" role="img"></canvas></div>
     </section>
 
     <section class="panel s5">
       <h2>Gear spend by type</h2>
-      <p class="hint">Where the gear money went.</p>
+      <p class="hint">Where your equipment budget went.</p>
       <div class="chart"><canvas id="chGear" role="img"></canvas></div>
     </section>
 
@@ -260,70 +263,26 @@ textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px
   </details>
 
   <footer id="foot">
-    <span>Badminton Log &bull; Data stored securely in your browser</span>
+    <span>Badminton Log &bull; Auto-syncs directly from your Google Sheet</span>
     <span id="footTime"></span>
   </footer>
 </div>
 
-<!-- Modal for pasting data -->
-<div class="modal-overlay" id="importModal" style="display:none">
-  <div class="modal">
-    <div class="modal-head">
-      <h3>Import Google Sheets or CSV Data</h3>
-      <button class="btn" id="modalClose" style="padding:4px 8px">&times;</button>
-    </div>
-    <div class="modal-tabs">
-      <button class="tab-btn active" id="tabPasteBtn">Paste CSV / TSV</button>
-      <button class="tab-btn" id="tabLinkBtn">Google Sheets Link</button>
-      <button class="tab-btn" id="tabDemoBtn">Sample Data</button>
-    </div>
-    <div class="modal-body" id="tabPasteBody">
-      <p style="font-size:0.85rem;color:var(--muted);margin:0">
-        Copy your table cells directly in Google Sheets (<kbd>Ctrl+A</kbd>, <kbd>Ctrl+C</kbd>) and paste them here!
-      </p>
-      <div style="display:flex;gap:8px">
-        <button class="btn" id="btnPasteClipboard" type="button" style="font-size:0.8rem">📋 Paste from Clipboard</button>
-      </div>
-      <label style="font-size:0.85rem;font-weight:600">Sessions Data:
-        <textarea id="taSessions" placeholder="Paste your sessions table here..."></textarea>
-      </label>
-      <label style="font-size:0.85rem;font-weight:600">Gear Data (Optional):
-        <textarea id="taGear" style="height:90px" placeholder="Paste your gear table here..."></textarea>
-      </label>
-    </div>
-    <div class="modal-body" id="tabLinkBody" style="display:none">
-      <p style="font-size:0.85rem;color:var(--muted)">
-        Make sure in Google Sheets, <strong>Share</strong> is set to <strong>"Anyone with the link can view"</strong>.
-      </p>
-      <label style="font-size:0.85rem;font-weight:600">Sessions Published CSV URL:
-        <input id="inSUrl" type="url" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;margin-top:4px">
-      </label>
-      <label style="font-size:0.85rem;font-weight:600">Gear Published CSV URL:
-        <input id="inGUrl" type="url" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;margin-top:4px">
-      </label>
-      <button class="btn btn-primary" id="btnFetchUrls" type="button" style="margin-top:8px">Fetch from Google Sheets</button>
-    </div>
-    <div class="modal-body" id="tabDemoBody" style="display:none;text-align:center;padding:30px 20px">
-      <p style="font-size:0.95rem">Reset to realistic sample badminton data (11 sessions & 4 gear purchases).</p>
-      <button class="btn btn-primary" id="btnResetDemo" type="button" style="margin-top:12px">Load Sample Data</button>
-    </div>
-    <div class="modal-foot">
-      <button class="btn" id="modalCancel">Cancel</button>
-      <button class="btn btn-primary" id="modalApply">Apply & Save</button>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
+/* ============================================================
+   CONFIG: Put your Google Sheets published CSV links below
+   ============================================================ */
 const CONFIG = {
   SESSIONS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGuqca1pmIcDKSzkH6Z-LRwI6mQWxFR3egbBFn0B-Ywn2U29P5dCTeyKUDa-Xk2oEXURwAmndl-y_v/pub?gid=375537300&single=true&output=csv",
   GEAR_CSV_URL:     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGuqca1pmIcDKSzkH6Z-LRwI6mQWxFR3egbBFn0B-Ywn2U29P5dCTeyKUDa-Xk2oEXURwAmndl-y_v/pub?gid=65044097&single=true&output=csv",
   CURRENCY: "₹",
   DAILY_RATE: 53,
+  REFRESH_MINUTES: 5,
   NAME_ALIASES: { "nischith": "Nischit" }
 };
 
+/* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const DAY = 86400000;
@@ -339,12 +298,11 @@ const weekStart = d => { const x = startOfDay(d); x.setDate(x.getDate() - ((x.ge
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-/* ---------- ROBUST PARSER (CSV, TSV, GOOGLE SHEETS COPY) ---------- */
+/* ---------- Smart CSV Parser ---------- */
 function parseCSV(text) {
   text = String(text ?? "").replace(/^\uFEFF/, "").trim();
   if (!text) return [];
 
-  // Auto detect tab-delimited vs comma-delimited
   const lines = text.split(/\r?\n/).slice(0, 5);
   let tabs = 0, commas = 0;
   lines.forEach(l => { tabs += (l.match(/\t/g)||[]).length; commas += (l.match(/,/g)||[]).length; });
@@ -417,7 +375,12 @@ function parseDate(s) {
   return isNaN(t) ? null : startOfDay(new Date(t));
 }
 
-function parseMoney(v) { const n = parseFloat(String(v ?? "").replace(/,/g, "").replace(/[^\d.\-]/g, "")); return isNaN(n) ? 0 : n; }
+function parseMoney(v) {
+  if (typeof v === "number") return v;
+  const n = parseFloat(String(v ?? "").replace(/,/g, "").replace(/[^\d.\-]/g, ""));
+  return isNaN(n) ? 0 : n;
+}
+
 function parseDuration(v) {
   const s = String(v ?? "").toLowerCase().trim(); if (!s) return 0;
   let m = s.match(/^(\d+):(\d{2})$/); if (m) return +m[1] * 60 + +m[2];
@@ -455,7 +418,9 @@ const cleanWindow = v => String(v ?? "").replace(/\s+/g, " ").trim().replace(/\b
 const cap = s => s.replace(/\s+/g, " ").replace(/(^|\s)\S/g, c => c.toUpperCase());
 function parsePartners(v) {
   return String(v ?? "").split(/[,&+\/;|]|\band\b/i).map(x => x.trim())
-    .filter(x => x && !/^(solo|alone|none|na|n\/a|-|—)$/i.test(x)).map(cap).map(n => (CONFIG.NAME_ALIASES || {})[n.toLowerCase()] || n);
+    .filter(x => x && !/^(solo|alone|none|na|n\/a|-|—|only me|me)$/i.test(x))
+    .map(cap)
+    .map(n => (CONFIG.NAME_ALIASES || {})[n.toLowerCase()] || n);
 }
 
 function inferCategory(item) {
@@ -478,6 +443,7 @@ function parseSessions(text) {
   H.forEach((h, i) => { if (!taken.has(i) && ["fee", "cost", "amount", "price", "paid"].some(a => h.includes(a))) feeCols.push(i); });
   const sessions = [];
   rows.slice(1).forEach((r, idx) => {
+    if (!r[map.date]) return;
     const d = parseDate(r[map.date]); if (!d) return;
     const dn = map.day !== undefined ? parseInt(String(r[map.day]).replace(/\D/g, ""), 10) : NaN;
     sessions.push({
@@ -507,12 +473,17 @@ function parseGear(text) {
     const cost = map.cost !== undefined ? parseMoney(r[map.cost]) : 0;
     if (!item && !cost) return;
     const catRaw = map.category !== undefined ? String(r[map.category] ?? "").trim() : "";
-    gear.push({ item: item || "Item", cost, date: map.date !== undefined ? parseDate(r[map.date]) : null, category: catRaw ? cap(catRaw) : inferCategory(item), store: map.store !== undefined ? String(r[map.store] ?? "").trim() : "" });
+    gear.push({
+      item: item || "Item", cost,
+      date: map.date !== undefined ? parseDate(r[map.date]) : null,
+      category: catRaw ? cap(catRaw) : inferCategory(item),
+      store: map.store !== undefined ? String(r[map.store] ?? "").trim() : ""
+    });
   });
   return { gear, headers, map };
 }
 
-/* ---------- ANALYSIS ---------- */
+/* ---------- Analytics & Metrics ---------- */
 function compute(S, G) {
   const n = S.length, today = startOfDay(new Date());
   const totalMin = sum(S, "min"), court = sum(S, "fee"), gearSpend = sum(G, "cost"), total = court + gearSpend;
@@ -566,24 +537,24 @@ function makeInsights(S, G, a) {
   const sl = a.slotKeys.slice().sort((x, y) => a.slot[y].n - a.slot[x].n);
   if (sl.length) {
     const t = sl[0], o = a.slot[t];
-    let line = `${t} is your main slot: ${Math.round(o.n / a.n * 100)}% of sessions` + (o.min ? `, averaging ${dur(o.min / o.n)}.` : ".");
+    let line = `${t} is your primary slot: ${Math.round(o.n / a.n * 100)}% of sessions` + (o.min ? `, averaging ${dur(o.min / o.n)}.` : ".");
     const longest = sl.filter(k => a.slot[k].min).sort((x, y) => a.slot[y].min / a.slot[y].n - a.slot[x].min / a.slot[x].n)[0];
-    if (longest && longest !== t && sl.length > 1) line += ` Longest sessions in ${longest} (${dur(a.slot[longest].min / a.slot[longest].n)} avg).`;
+    if (longest && longest !== t && sl.length > 1) line += ` Longest sessions are in ${longest} (${dur(a.slot[longest].min / a.slot[longest].n)} avg).`;
     out.push(line);
   }
   if (a.partners.length) {
     const p = a.partners[0];
-    out.push(`${p.name} is your most frequent partner with ${p.n} sessions. Played with ${a.partners.length} people so far.`);
+    out.push(`${p.name} is your most frequent partner with ${p.n} sessions. You've played with ${a.partners.length} friends so far` + (a.solo ? `, plus ${a.solo} solo match.` : "."));
   }
   const bd = a.wd.indexOf(Math.max(...a.wd));
-  out.push(`${WD[bd]} is your busiest day. Your pace is ${a.perWeek.toFixed(1)} sessions per week.`);
+  out.push(`${WD[bd]} is your busiest day (${a.wd[bd]} sessions). Pace is ${a.perWeek.toFixed(1)} sessions per week.`);
   if (a.total) {
-    out.push(`Each session has cost ${money(a.total / a.n)} so far (${money(a.court / a.n)} court` + (a.gearSpend ? `, ${money(a.gearSpend / a.n)} gear` : "") + `).`);
+    out.push(`Each session has cost ${money(a.total / a.n)} so far (${money(a.court / a.n)} court` + (a.gearSpend ? `, ${money(a.gearSpend / a.n)} gear` : "") + `). The gear cost drops with every extra match you play.`);
   }
   return out;
 }
 
-/* ---------- CHARTS & RENDERING ---------- */
+/* ---------- Rendering Charts & Tables ---------- */
 const charts = {};
 function chart(id, cfg) {
   if (typeof Chart === "undefined") return;
@@ -594,12 +565,17 @@ function chart(id, cfg) {
 }
 
 function renderAll(S, G, parsed) {
-  const a = compute(S, G), P = [css("--c1")||"#1B5E4A", css("--c2")||"#F2C230", css("--c3")||"#2D6CDF", css("--c4")||"#D1495B", css("--c5")||"#7A5CD6", css("--c6")||"#2BA6A0"];
+  const a = compute(S, G);
+  const P = [css("--c1")||"#1B5E4A", css("--c2")||"#F2C230", css("--c3")||"#2D6CDF", css("--c4")||"#D1495B", css("--c5")||"#7A5CD6", css("--c6")||"#2BA6A0"];
 
   const dayCount = Math.max(...S.map(s => s.dayNo));
   $("#dayNo").textContent = dayCount;
   $("#heroSub").textContent = `${a.n} sessions and ${dur(a.totalMin)} on court since ${fmtDateY(a.first)}.`;
-  $("#chips").innerHTML = [[a.cur, "day streak"], [a.best, "best streak"], [a.weekSessions, "this week"]].map(x => `<div class="chip"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
+  $("#chips").innerHTML = [
+    [a.cur, "day streak"],
+    [a.best, "best streak"],
+    [a.weekSessions, "this week"]
+  ].map(x => `<div class="chip"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
 
   const cps = a.total / a.n, hrs = a.totalMin / 60;
   const k = [
@@ -626,7 +602,6 @@ function renderAll(S, G, parsed) {
   }
   $("#heat").innerHTML = h;
 
-  // Membership Calc
   renderCalc(a);
 
   // Charts
@@ -650,8 +625,8 @@ function renderAll(S, G, parsed) {
   }
 
   chart("chSpend", { type: "line", data: { labels: a.tl.map(t => fmtDate(t.d)), datasets: [
-    { label: "Court fees", data: a.tl.map(t => t.c), borderColor: P[0], backgroundColor: P[0] + "44", fill: true, tension: .25, pointRadius: 0 },
-    { label: "Gear", data: a.tl.map(t => t.gr), borderColor: P[1], backgroundColor: P[1] + "44", fill: true, tension: .25, pointRadius: 0 } ] },
+    { label: "Court fees", data: a.tl.map(t => t.c), borderColor: P[0], backgroundColor: P[0] + "33", fill: true, tension: .25, pointRadius: 0 },
+    { label: "Gear", data: a.tl.map(t => t.gr), borderColor: P[1], backgroundColor: P[1] + "33", fill: true, tension: .25, pointRadius: 0 } ] },
     options: { scales: { y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
 
   const pts = a.tl.filter(t => t.ns > 0);
@@ -668,28 +643,36 @@ function renderAll(S, G, parsed) {
   $("#gearTbl").innerHTML = G.length
     ? `<table><thead><tr><th>Item</th><th>Type</th><th>Bought</th><th>Store</th><th class="n">Cost</th><th class="n">Per session</th></tr></thead><tbody>` +
       G.map(g => { const since = g.date ? S.filter(s => s.date >= g.date).length : S.length;
-        return `<tr><td>${esc(g.item)}</td><td>${esc(g.category)}</td><td>${g.date ? fmtDate(g.date) : "—"}</td><td>${esc(g.store) || "—"}</td><td class="n">${money(g.cost)}</td><td class="n">${since ? money(g.cost / since) : "—"}</td></tr>`; }).join("") + `</tbody></table>`
-    : '<p class="nodata">No gear entries yet.</p>';
+        return `<tr><td><strong>${esc(g.item)}</strong></td><td><span class="partner-tag">${esc(g.category)}</span></td><td>${g.date ? fmtDate(g.date) : "—"}</td><td>${esc(g.store) || "—"}</td><td class="n"><strong>${money(g.cost)}</strong></td><td class="n" style="color:var(--good)">${since ? money(g.cost / since) : "—"}</td></tr>`; }).join("") + `</tbody></table>`
+    : '<p class="nodata">No gear entries found.</p>';
 
   $("#recentTbl").innerHTML = `<table><thead><tr><th>Day</th><th>Date</th><th>Time</th><th class="n">Length</th><th class="n">Fee</th><th>Played with</th><th>Notes</th></tr></thead><tbody>` +
-    S.slice(-10).reverse().map(s => `<tr><td>${s.dayNo}</td><td>${fmtDate(s.date)}</td><td>${esc(s.win || (s.slot === "Unknown" ? "—" : s.slot))}</td><td class="n">${s.min ? dur(s.min) : "—"}</td><td class="n">${money(s.fee)}</td><td>${esc(s.partners.join(", ")) || "—"}</td><td>${esc(s.notes) || "—"}</td></tr>`).join("") + `</tbody></table>`;
+    S.slice().reverse().map(s => {
+      const partnerTags = s.partners.length
+        ? s.partners.map(p => `<span class="partner-tag">${esc(p)}</span>`).join("")
+        : '<span style="color:var(--muted);font-style:italic">Solo</span>';
+      return `<tr><td><strong>#${s.dayNo}</strong></td><td>${fmtDate(s.date)}</td><td>${esc(s.win || (s.slot === "Unknown" ? "—" : s.slot))}</td><td class="n">${s.min ? dur(s.min) : "—"}</td><td class="n"><strong>${money(s.fee)}</strong></td><td>${partnerTags}</td><td style="color:var(--muted);max-width:280px;overflow:hidden;text-overflow:ellipsis" title="${esc(s.notes)}">${esc(s.notes) || "—"}</td></tr>`;
+    }).join("") + `</tbody></table>`;
 
   const nm = (hs, i) => i === undefined ? "<em>not found</em>" : `"${esc(hs[i])}"`;
   const m = parsed.s.map, gm = parsed.g.map;
   $("#mapping").innerHTML = [
-    `Sessions: Date ${nm(parsed.s.headers, m.date)}, Day # ${nm(parsed.s.headers, m.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, m.time)}, Duration ${nm(parsed.s.headers, m.duration)}, Partners ${nm(parsed.s.headers, m.partners)}`,
+    `Sessions: Date ${nm(parsed.s.headers, m.date)}, Day # ${nm(parsed.s.headers, m.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, m.time)}, Duration ${nm(parsed.s.headers, m.duration)}, Partners ${nm(parsed.s.headers, m.partners)}, Notes ${nm(parsed.s.headers, m.notes)}`,
     `Gear: Item ${nm(parsed.g.headers, gm.item)}, Cost ${nm(parsed.g.headers, gm.cost)}, Type ${gm.category !== undefined ? nm(parsed.g.headers, gm.category) : "auto inferred"}, Store ${nm(parsed.g.headers, gm.store)}`
   ].map(t => `<li>${t}</li>`).join("");
 }
 
-/* ---------- MEMBERSHIP CALC ---------- */
+/* ---------- Membership Calculator ---------- */
 let calcState = { a: null, weekTouched: false };
 function renderCalc(a) {
   calcState.a = a;
   let saved = {}; try { saved = JSON.parse(localStorage.getItem("bd_calc") || "{}"); } catch (e) {}
   const rate = $("#inRate"), mem = $("#inMember"), wk = $("#inWeek");
   if (!rate.dataset.init) {
-    rate.value = saved.rate ?? CONFIG.DAILY_RATE; mem.value = saved.member ?? ""; rate.dataset.init = "1";
+    const avgCourt = a && a.n ? Math.round(a.court / a.n) : CONFIG.DAILY_RATE;
+    rate.value = saved.rate ?? avgCourt;
+    mem.value = saved.member ?? "";
+    rate.dataset.init = "1";
     [rate, mem, wk].forEach(el => el.addEventListener("input", () => {
       if (el === wk) calcState.weekTouched = true;
       try { localStorage.setItem("bd_calc", JSON.stringify({ rate: rate.value, member: mem.value })); } catch (e) {}
@@ -699,155 +682,99 @@ function renderCalc(a) {
   if (!calcState.weekTouched) wk.value = (Math.round(a.perWeek * 2) / 2).toString();
   calcOut();
 }
+
 function calcOut() {
   const rate = parseFloat($("#inRate").value) || 0, mem = parseFloat($("#inMember").value) || 0, wk = parseFloat($("#inWeek").value) || 0;
   const perMonth = wk * 4.345, payg = perMonth * rate, v = $("#verdict");
-  if (!mem) { v.innerHTML = `<b>${money(payg)} / month</b><span>At ${money(rate)} per session and ${wk} sessions/wk (~${Math.round(perMonth)} sessions/mo). Enter a membership fee to compare.</span>`; return; }
+  if (!mem) {
+    v.innerHTML = `<b>${money(payg)} / month</b><span>At ${money(rate)} per session and ${wk} sessions/wk (~${Math.round(perMonth)} sessions/mo). Enter a monthly membership fee to compare.</span>`;
+    return;
+  }
   const be = rate ? Math.ceil(mem / rate) : 0, diff = payg - mem;
   v.innerHTML = diff > 0
-    ? `<b>Membership saves ~${money(diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Breaks even at ${be} sessions/month (~${(be/4.345).toFixed(1)}/wk).</span>`
-    : `<b>Pay-as-you-go is cheaper by ~${money(-diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Membership pays off at ${be}+ sessions/month.</span>`;
+    ? `<b>🎉 Membership saves ~${money(diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Pays off after ${be} sessions/month (~${(be/4.345).toFixed(1)}/wk).</span>`
+    : `<b>🏸 Pay-as-you-go is cheaper by ~${money(-diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Membership is only worth it if you play ${be}+ sessions/month.</span>`;
 }
 
-/* ---------- DEMO DATA ---------- */
-function demoData() {
-  return {
-    sessions: [
-      "Date,Day,Time,Court Fee,Played with,Duration,Notes",
-      '"September 10, 2026",1,7 AM - 8 AM,100,"Vishnu, Trishul, Aditya",60 mins,',
-      '"September 11, 2026",2,7 AM - 8 AM,100,"Vishnu, Trishul, Nitish",60 mins,',
-      '"September 13, 2026",3,7 AM - 8 AM,250,"Vishnu, Trishul, Nischit",60 mins,includes mine and Nischith',
-      '"September 16, 2026",4,8 AM - 9 AM,200,"Vishnu, Trishul, Nischit",60 mins,includes mine and Nischith',
-      '"September 17, 2026",5,8 AM - 9 AM,160,"Vishnu, Trishul, Aditya, Nischit",60 mins,includes mine and Nischith',
-      '"September 18, 2026",6,8 AM - 9 AM,200,"Vishnu, Trishul, Aditya",60 mins,includes mine and Aditya',
-      '"September 20, 2026",7,8 AM - 9 AM,80,"Vishnu, Trishul, Aditya, Nitish",60 mins,'
-    ].join("\n"),
-    gear: [
-      "Date,Item,Cost,Store,Notes",
-      '"September 15, 2026",Racket,1500,Angels Store,',
-      '"September 15, 2026",Shoes,1350,Virat Sports,',
-      '"September 16, 2026",Shuttle,400,Sloka,'
-    ].join("\n")
-  };
-}
-
-/* ---------- DATA MANAGEMENT ---------- */
-function loadCurrentData() {
-  const savedS = localStorage.getItem("bd_sessions_text");
-  const savedG = localStorage.getItem("bd_gear_text");
-  if (savedS) return { sText: savedS, gText: savedG || "" };
-  return { sText: demoData().sessions, gText: demoData().gear };
+/* ---------- Data Loading Directly from Code URLs ---------- */
+async function fetchCSV(url) {
+  const cleanUrl = url.trim() + (url.includes("?") ? "&" : "?") + "_=" + Date.now();
+  const res = await fetch(cleanUrl, { cache: "no-store" });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const text = await res.text();
+  if (text.includes("<!DOCTYPE html") || text.includes("Sign in to your Google Account")) {
+    throw new Error("Google returned a sign-in screen. Ensure the Google Sheet share permission is 'Anyone with the link can view'.");
+  }
+  return text;
 }
 
 function banner(html, isErr) {
   const b = $("#banner");
   if (!html) { b.hidden = true; return; }
   b.className = "banner" + (isErr ? " err" : "");
-  $("#bannerText").innerHTML = html;
+  b.innerHTML = html;
   b.hidden = false;
 }
 
-function render() {
-  const { sText, gText } = loadCurrentData();
+async function loadData() {
+  $("#updated").textContent = "Syncing...";
+  let sText = "", gText = "";
+
+  try {
+    sText = await fetchCSV(CONFIG.SESSIONS_CSV_URL);
+    localStorage.setItem("bd_sessions_cache", sText);
+    banner("", false);
+  } catch (err) {
+    sText = localStorage.getItem("bd_sessions_cache") || "";
+    if (!sText) {
+      banner(`Could not fetch sessions from Google Sheets (${esc(err.message)}).`, true);
+      $("#updated").textContent = "Sync error";
+      return;
+    }
+  }
+
+  try {
+    if (CONFIG.GEAR_CSV_URL) {
+      gText = await fetchCSV(CONFIG.GEAR_CSV_URL);
+      localStorage.setItem("bd_gear_cache", gText);
+    }
+  } catch (err) {
+    gText = localStorage.getItem("bd_gear_cache") || "";
+  }
+
   const s = parseSessions(sText), g = parseGear(gText);
   if (!s.sessions.length) {
-    banner("Could not find valid session dates in the stored data. Click 'Paste Data' to import your sheet rows.", true);
+    banner("Google Sheet loaded, but no valid session dates were found.", true);
+    $("#updated").textContent = "Format issue";
     return;
   }
+
   renderAll(s.sessions, g.gear, { s, g });
   $("#updated").textContent = "Updated " + new Date().toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
+  $("#footTime").textContent = `Auto-refreshes every ${CONFIG.REFRESH_MINUTES} mins`;
 }
 
-/* ---------- MODAL CONTROLS ---------- */
-const modal = $("#importModal");
-$("#btnImport").addEventListener("click", () => {
-  const { sText, gText } = loadCurrentData();
-  $("#taSessions").value = sText;
-  $("#taGear").value = gText;
-  $("#inSUrl").value = localStorage.getItem("bd_s_url") || CONFIG.SESSIONS_CSV_URL;
-  $("#inGUrl").value = localStorage.getItem("bd_g_url") || CONFIG.GEAR_CSV_URL;
-  modal.style.display = "flex";
-});
-
-$("#modalClose").addEventListener("click", () => modal.style.display = "none");
-$("#modalCancel").addEventListener("click", () => modal.style.display = "none");
-$("#bannerBtn").addEventListener("click", () => $("#btnImport").click());
-
-$("#tabPasteBtn").addEventListener("click", () => {
-  $(".tab-btn.active").classList.remove("active"); $("#tabPasteBtn").classList.add("active");
-  $("#tabPasteBody").style.display = "flex"; $("#tabLinkBody").style.display = "none"; $("#tabDemoBody").style.display = "none";
-});
-$("#tabLinkBtn").addEventListener("click", () => {
-  $(".tab-btn.active").classList.remove("active"); $("#tabLinkBtn").classList.add("active");
-  $("#tabPasteBody").style.display = "none"; $("#tabLinkBody").style.display = "flex"; $("#tabDemoBody").style.display = "none";
-});
-$("#tabDemoBtn").addEventListener("click", () => {
-  $(".tab-btn.active").classList.remove("active"); $("#tabDemoBtn").classList.add("active");
-  $("#tabPasteBody").style.display = "none"; $("#tabLinkBody").style.display = "none"; $("#tabDemoBody").style.display = "block";
-});
-
-$("#btnPasteClipboard").addEventListener("click", async () => {
-  try {
-    const text = await navigator.clipboard.readText();
-    if (text) $("#taSessions").value = text;
-  } catch(e) { alert("Please paste with Ctrl+V into the text box."); }
-});
-
-$("#modalApply").addEventListener("click", () => {
-  const sText = $("#taSessions").value.trim();
-  const gText = $("#taGear").value.trim();
-  if (!sText) { alert("Please provide sessions data."); return; }
-  const s = parseSessions(sText);
-  if (!s.sessions.length) { alert("No valid rows with dates were found. Please check your headers."); return; }
-  localStorage.setItem("bd_sessions_text", sText);
-  localStorage.setItem("bd_gear_text", gText);
-  modal.style.display = "none";
-  banner("", false);
-  render();
-});
-
-$("#btnResetDemo").addEventListener("click", () => {
-  const d = demoData();
-  localStorage.setItem("bd_sessions_text", d.sessions);
-  localStorage.setItem("bd_gear_text", d.gear);
-  modal.style.display = "none";
-  banner("Showing sample data. Click 'Import / Paste Data' to add your own numbers.", false);
-  render();
-});
-
-$("#btnFetchUrls").addEventListener("click", async () => {
-  const sUrl = $("#inSUrl").value.trim();
-  const gUrl = $("#inGUrl").value.trim();
-  if (!sUrl) return;
-  $("#btnFetchUrls").textContent = "Fetching...";
-  try {
-    const res = await fetch(sUrl + (sUrl.includes("?") ? "&" : "?") + "_=" + Date.now());
-    const text = await res.text();
-    if (text.includes("<!DOCTYPE html") || text.includes("Sign in to your Google Account")) {
-      throw new Error("Google requires sign-in. Open Google Sheets > Share > set to 'Anyone with the link can view', or copy & paste your cells directly in the 'Paste' tab!");
-    }
-    const s = parseSessions(text);
-    if (!s.sessions.length) throw new Error("Could not parse dates from the sheet.");
-    localStorage.setItem("bd_sessions_text", text);
-    localStorage.setItem("bd_s_url", sUrl);
-    if (gUrl) {
-      try {
-        const gRes = await fetch(gUrl + (gUrl.includes("?") ? "&" : "?") + "_=" + Date.now());
-        const gText = await gRes.text();
-        if (!gText.includes("<!DOCTYPE html")) { localStorage.setItem("bd_gear_text", gText); localStorage.setItem("bd_g_url", gUrl); }
-      } catch(e){}
-    }
-    modal.style.display = "none";
-    render();
-  } catch (err) {
-    alert(err.message);
-  } finally {
-    $("#btnFetchUrls").textContent = "Fetch from Google Sheets";
+/* ---------- Theme Toggle ---------- */
+let isDark = localStorage.getItem("bd_theme") === "dark" || (!localStorage.getItem("bd_theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+function applyTheme() {
+  document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+  localStorage.setItem("bd_theme", isDark ? "dark" : "light");
+}
+applyTheme();
+$("#themeToggle").addEventListener("click", () => {
+  isDark = !isDark;
+  applyTheme();
+  const sText = localStorage.getItem("bd_sessions_cache");
+  const gText = localStorage.getItem("bd_gear_cache");
+  if (sText) {
+    const s = parseSessions(sText), g = parseGear(gText);
+    renderAll(s.sessions, g.gear, { s, g });
   }
 });
 
-$("#refresh").addEventListener("click", render);
-render();
+$("#refresh").addEventListener("click", loadData);
+setInterval(loadData, CONFIG.REFRESH_MINUTES * 60000);
+loadData();
 </script>
 </body>
 </html>

@@ -2,29 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>Badminton Log</title>
+<title>Badminton Log & Analytics</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏸</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://docs.google.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" fetchpriority="high">
 <style>
-/* ========== Variables & Color Scheme ========== */
+/* ========== Theme & CSS Variables ========== */
 :root{
   --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
   --court:#1B5E4A; --court-deep:#134636; --chalk:#F6F4EA; --shuttle:#F2C230;
   --good:#1B7A55; --bad:#C23B4E;
-  --c1:#1B5E4A; --c2:#F2C230; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
+  --c1:#1B5E4A; --c2:#E0A814; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
   --l0:#E3E9E4; --l1:#A9D3BF; --l2:#4FA17F; --l3:#1B5E4A;
   --font:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --radius:14px; --shadow:0 2px 8px rgba(0,0,0,.06);
+  --radius:16px; --shadow:0 3px 12px rgba(0,0,0,.06);
 }
 [data-theme="light"]{
   --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
   --court:#1B5E4A; --court-deep:#134636; --good:#1B7A55; --bad:#C23B4E;
-  --c1:#1B5E4A; --c2:#F2C230; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
+  --c1:#1B5E4A; --c2:#E0A814; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
   --l0:#E3E9E4; --l1:#A9D3BF; --l2:#4FA17F; --l3:#1B5E4A;
 }
 [data-theme="dark"]{
@@ -34,20 +34,18 @@
   --l0:#1E2D26; --l1:#2B5A47; --l2:#3A8A69; --l3:#5FD0A0;
 }
 
-/* ========== Reset & Base ========== */
-*{box-sizing:border-box;margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;transition:background .3s,color .3s}
+/* ========== Base & Reset ========== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;transition:background .3s,color .3s;overflow-x:hidden}
 .wrap{max-width:1180px;margin:0 auto;padding:16px 16px 80px}
-h1,h2,h3,p{margin:0}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--shuttle);outline-offset:2px}
 
-/* ========== Skip Link (E5) ========== */
-.skip-link{position:absolute;top:-100%;left:16px;background:var(--court);color:var(--chalk);padding:10px 18px;border-radius:0 0 10px 10px;z-index:999;font-weight:700;text-decoration:none;
-  &:focus{top:0}
-}
+/* ========== Skip Link ========== */
+.skip-link{position:absolute;top:-100%;left:16px;background:var(--court);color:var(--chalk);padding:10px 18px;border-radius:0 0 10px 10px;z-index:999;font-weight:700;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:0}
 
-/* ========== Skeleton Loading (A7) ========== */
+/* ========== Skeleton Shimmer ========== */
 @keyframes shimmer{to{background-position:-200% 0}}
 .skeleton{pointer-events:none}
 .skel{border-radius:8px;background:linear-gradient(90deg,var(--line) 25%,var(--bg) 50%,var(--line) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
@@ -55,234 +53,252 @@ button,input,select{font:inherit;color:inherit}
 .skel-lg{height:32px;width:45%;margin-bottom:4px}
 .skel-full{height:200px;width:100%;border-radius:var(--radius)}
 
-/* ========== Top Bar ========== */
+/* ========== Header & Navigation ========== */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0 16px}
 .brand{display:flex;align-items:center;gap:10px}
-.shuttle-icon{font-size:1.6rem;line-height:1}
-.top h1{font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
+.shuttle-icon{font-size:1.75rem;line-height:1}
+.top h1{font-size:1.4rem;font-weight:800;letter-spacing:-.01em}
 .top .meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.85rem;flex-wrap:wrap}
-.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:.2s ease;min-height:44px;min-width:44px;justify-content:center;
-  &:hover{border-color:var(--court);transform:translateY(-1px);box-shadow:var(--shadow)}
-  &:active{transform:translateY(0)}
-}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 15px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:.2s ease;min-height:42px;justify-content:center}
+.btn:hover{border-color:var(--court);transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn:active{transform:translateY(0)}
 
-/* ========== Filter Bar (D13) ========== */
-.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 0 14px;font-size:.88rem;
-  & label{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600}
-  & input[type="date"]{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;font-size:.88rem;color:var(--ink);min-height:40px}
-  & .filter-tag{background:color-mix(in srgb,var(--shuttle) 18%,transparent);color:var(--ink);padding:4px 10px;border-radius:8px;font-size:.8rem;font-weight:600;display:none;
-    &.active{display:inline-flex;align-items:center;gap:4px}
-  }
-}
+/* ========== Filter Bar ========== */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 0 14px;font-size:.88rem}
+.filter-bar label{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600}
+.filter-bar input[type="date"]{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;font-size:.88rem;color:var(--ink);min-height:38px}
+.filter-tag{background:color-mix(in srgb,var(--shuttle) 20%,transparent);color:var(--ink);padding:4px 10px;border-radius:8px;font-size:.8rem;font-weight:700;display:none}
+.filter-tag.active{display:inline-flex;align-items:center;gap:4px}
 
-/* ========== Banner ========== */
-.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.9rem;
-  &.err{background:#FBE3E6;color:#7A1626}
-  &[hidden]{display:none}
-}
+/* ========== Alert Banner ========== */
+.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.9rem}
+.banner.err{background:#FBE3E6;color:#7A1626}
+.banner[hidden]{display:none}
 
-/* ========== Hero — Glassmorphism + Animated Gradient (A1, A2) ========== */
+/* ========== Hero Section ========== */
 @keyframes heroShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.hero{position:relative;overflow:hidden;border-radius:20px;color:var(--chalk);margin-bottom:16px;
-  background:linear-gradient(135deg,var(--court),var(--court-deep),#1a6b52,var(--court));
-  background-size:300% 300%;animation:heroShift 12s ease infinite;
-  box-shadow:0 8px 32px rgba(0,0,0,.12);
-  & .court{position:absolute;inset:0;width:100%;height:100%;opacity:.18}
-  & .hero-glass{position:relative;backdrop-filter:blur(8px) saturate(160%);-webkit-backdrop-filter:blur(8px) saturate(160%);background:rgba(27,94,74,.15)}
-}
+.hero{position:relative;overflow:hidden;border-radius:20px;color:var(--chalk);margin-bottom:16px;background:linear-gradient(135deg,var(--court),var(--court-deep),#17634d,var(--court));background-size:300% 300%;animation:heroShift 14s ease infinite;box-shadow:0 8px 30px rgba(0,0,0,.12)}
+.hero .court{position:absolute;inset:0;width:100%;height:100%;opacity:.18}
+.hero-glass{position:relative;backdrop-filter:blur(6px) saturate(160%);-webkit-backdrop-filter:blur(6px) saturate(160%);background:rgba(27,94,74,.18)}
 .hero-in{display:grid;grid-template-columns:auto 1fr;gap:12px 36px;align-items:end;padding:26px 28px}
 .dlabel{font-size:1rem;font-weight:600;opacity:.85}
-.dnum{font-size:clamp(4.5rem,16vw,7.5rem);font-weight:800;line-height:.9;letter-spacing:-.04em}
+.dnum{font-size:clamp(4.2rem,14vw,7rem);font-weight:800;line-height:.9;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .hero-side{display:grid;gap:14px}
-.hero-sub{font-size:1.05rem;max-width:40ch;line-height:1.4}
+.hero-sub{font-size:1.05rem;max-width:42ch;line-height:1.4}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{background:color-mix(in srgb,var(--chalk) 14%,transparent);border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent);border-radius:12px;padding:8px 14px;backdrop-filter:blur(4px);
-  & b{display:block;font-size:1.35rem;line-height:1.2}
-  & span{font-size:.8rem;opacity:.85}
-}
-@media(max-width:640px){.hero-in{grid-template-columns:1fr;padding:22px 20px}}
+.chip{background:color-mix(in srgb,var(--chalk) 14%,transparent);border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent);border-radius:12px;padding:8px 14px;backdrop-filter:blur(4px)}
+.chip b{display:block;font-size:1.35rem;line-height:1.2;font-variant-numeric:tabular-nums}
+.chip span{font-size:.8rem;opacity:.85}
 
-/* ========== KPIs — Color-coded, tabular nums, @starting-style (A5, A6, B13) ========== */
+/* ========== KPI Cards Grid ========== */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;border-left:4px solid var(--line);transition:opacity .5s ease,transform .5s ease;
-  &:nth-child(1){border-left-color:var(--c1)}
-  &:nth-child(2){border-left-color:var(--c2)}
-  &:nth-child(3){border-left-color:var(--c3)}
-  &:nth-child(4){border-left-color:var(--c4)}
-  &:nth-child(5){border-left-color:var(--c5)}
-  &:nth-child(6){border-left-color:var(--c6)}
-  & .k{font-size:.85rem;color:var(--muted)}
-  & .v{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.25;font-variant-numeric:tabular-nums}
-  & .s{font-size:.8rem;color:var(--muted)}
-}
-@starting-style{.kpi{opacity:0;transform:translateY(20px)}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;border-left:4px solid var(--line);transition:transform .2s ease,box-shadow .2s ease}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.kpi:nth-child(1){border-left-color:var(--c1)}
+.kpi:nth-child(2){border-left-color:var(--c2)}
+.kpi:nth-child(3){border-left-color:var(--c3)}
+.kpi:nth-child(4){border-left-color:var(--c4)}
+.kpi:nth-child(5){border-left-color:var(--c5)}
+.kpi:nth-child(6){border-left-color:var(--c6)}
+.kpi .k{font-size:.85rem;color:var(--muted);font-weight:600}
+.kpi .v{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.25;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:.8rem;color:var(--muted)}
 
-/* ========== Grid & Panels — Container queries, content-visibility (B1, B10, A3) ========== */
+/* ========== Main Dashboard Grid ========== */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.panel{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-width:0;container-type:inline-size;content-visibility:auto;contain-intrinsic-size:auto 350px;transition:transform .2s ease,box-shadow .2s ease;
-  &:hover{box-shadow:0 6px 20px rgba(0,0,0,.07);transform:translateY(-2px)}
-  & h2{font-size:1.05rem;font-weight:800;margin-bottom:2px;text-wrap:balance}
-  & .hint{font-size:.85rem;color:var(--muted);margin-bottom:12px}
-  &:has(.nodata){border-style:dashed;opacity:.8}
+.panel{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;min-width:0;display:flex;flex-direction:column;transition:box-shadow .2s ease,border-color .2s ease}
+.panel:hover{box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--court) 35%,var(--line))}
+.panel h2{font-size:1.1rem;font-weight:800;margin-bottom:3px;text-wrap:balance}
+.panel .hint{font-size:.85rem;color:var(--muted);margin-bottom:14px}
+
+/* Grid Column Spans for Desktop (>=960px) */
+@media(min-width:960px){
+  .s7{grid-column:span 7}
+  .s6{grid-column:span 6}
+  .s5{grid-column:span 5}
+  .s4{grid-column:span 4}
 }
-@media(min-width:860px){.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}}
-.chart{position:relative;height:250px}
-@container(max-width:350px){.chart{height:200px}}
-@container(min-width:500px){.chart{height:280px}}
+
+/* Tablet Layout (641px - 959px) */
+@media(min-width:641px) and (max-width:959px){
+  .s7, .s6, .s5{grid-column:span 6}
+  .s4{grid-column:span 4}
+}
+
+/* Chart Canvas Wrapper */
+.chart{position:relative;height:260px;width:100%;margin-top:auto}
 .chart.tall{height:300px}
-.nodata{color:var(--muted);font-size:.9rem;padding:20px 0;text-align:center}
+.nodata{color:var(--muted);font-size:.9rem;padding:24px 0;text-align:center}
 
-/* ========== Insights ========== */
-.insights{list-style:none;padding:0;display:grid;gap:10px;
-  & li{padding-left:14px;border-left:4px solid var(--shuttle);max-width:75ch;line-height:1.55}
-}
+/* ========== Insights List ========== */
+.insights{list-style:none;padding:0;display:grid;gap:10px}
+.insights li{padding-left:14px;border-left:4px solid var(--shuttle);max-width:75ch;line-height:1.55}
 
-/* ========== Records / Milestones (D3) ========== */
-.records{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.record-card{background:var(--bg);border-radius:12px;padding:12px 14px;text-align:center;transition:transform .2s;
-  &:hover{transform:scale(1.03)}
-  & .rec-icon{font-size:1.6rem;margin-bottom:4px}
-  & .rec-val{font-size:1.3rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
-  & .rec-label{font-size:.78rem;color:var(--muted);margin-top:2px}
-}
+/* ========== Personal Records Grid ========== */
+.records{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.record-card{background:var(--bg);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.record-card:hover{transform:scale(1.03)}
+.record-card .rec-icon{font-size:1.6rem;margin-bottom:4px}
+.record-card .rec-val{font-size:1.25rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+.record-card .rec-label{font-size:.76rem;color:var(--muted);margin-top:2px}
 
-/* ========== Heatmap ========== */
-.heat-wrap{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg)}
-.heat-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-size:.7rem;color:var(--muted);padding-right:2px;
-  & span{display:flex;align-items:center}
-}
+/* ========== Heatmap Calendar ========== */
+.heat-wrap{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg);-webkit-overflow-scrolling:touch}
+.heat-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-size:.7rem;color:var(--muted);padding-right:2px}
+.heat-days span{display:flex;align-items:center}
 .heat{flex:1;display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(16,1fr);gap:3px;min-width:280px}
-.cell{display:block;aspect-ratio:1;border-radius:3px;background:var(--l0);cursor:pointer;transition:transform .1s;
-  &:hover{transform:scale(1.25);z-index:2}
-  &.l1{background:var(--l1)}&.l2{background:var(--l2)}&.l3{background:var(--l3)}
-  &.fut{opacity:.35}
-}
-.legend{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:12px;
-  & i{width:12px;height:12px;border-radius:3px;display:inline-block}
-}
+.cell{display:block;aspect-ratio:1;border-radius:3px;background:var(--l0);cursor:pointer;transition:transform .1s}
+.cell:hover{transform:scale(1.25);z-index:2}
+.cell.l1{background:var(--l1)}.cell.l2{background:var(--l2)}.cell.l3{background:var(--l3)}
+.cell.fut{opacity:.35}
+.legend{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:12px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
 
-/* ========== Goals (D2) ========== */
+/* ========== Goals Widget ========== */
 .goals{display:grid;gap:14px}
-.goal{display:grid;gap:6px;
-  & label{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted);font-weight:600}
-  & input{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 10px;width:60px;text-align:center;font-weight:700;font-size:.95rem}
-}
+.goal{display:grid;gap:6px}
+.goal label{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted);font-weight:600}
+.goal input{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 10px;width:64px;text-align:center;font-weight:700;font-size:.95rem}
 .progress-bar{height:10px;background:var(--bg);border-radius:10px;overflow:hidden}
 .progress-fill{height:100%;border-radius:10px;background:var(--court);transition:width .6s ease;min-width:0}
 .progress-fill.over{background:var(--shuttle)}
 .goal-status{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* ========== Calculator ========== */
-.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px;
-  & label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);font-weight:600}
-  & input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:1rem;color:var(--ink);width:100%}
-}
-.verdict{padding:12px 14px;border-radius:12px;background:var(--bg);display:grid;gap:4px;
-  & b{font-size:1.1rem}
-}
+/* ========== Membership Calculator ========== */
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
+.calc label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);font-weight:600}
+.calc input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:1rem;color:var(--ink);width:100%}
+.verdict{padding:12px 14px;border-radius:12px;background:var(--bg);display:grid;gap:4px}
+.verdict b{font-size:1.05rem}
 
 /* ========== Tables ========== */
-.tbl{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg)}
+.tbl{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg);-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;font-size:.9rem}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
 th{font-weight:700;color:var(--muted);font-size:.82rem}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
-.partner-tag{background:var(--bg);padding:2px 7px;border-radius:6px;font-size:.75rem;margin-right:3px;display:inline-flex;align-items:center;gap:4px}
+.partner-tag{background:var(--bg);padding:3px 8px;border-radius:6px;font-size:.76rem;margin-right:4px;display:inline-flex;align-items:center;gap:5px}
 .avatar{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;flex-shrink:0}
-tr.clickable{cursor:pointer;&:hover{background:color-mix(in srgb,var(--court) 6%,transparent)}}
+tr.clickable{cursor:pointer;transition:background .15s}
+tr.clickable:hover{background:color-mix(in srgb,var(--court) 7%,transparent)}
 
-/* ========== Search Bar (D14) ========== */
-.search-bar{margin-bottom:12px;
-  & input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 14px;font-size:.9rem;width:100%;max-width:320px;min-height:44px;color:var(--ink);
-    &::placeholder{color:var(--muted)}
-  }
-}
+/* ========== Search Bar ========== */
+.search-bar{margin-bottom:12px}
+.search-bar input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 14px;font-size:.9rem;width:100%;max-width:340px;min-height:42px;color:var(--ink)}
+.search-bar input::placeholder{color:var(--muted)}
 
-/* ========== Session Dialog (D1, B2) ========== */
-dialog{border:none;border-radius:20px;background:var(--card);color:var(--ink);padding:0;max-width:480px;width:90vw;box-shadow:0 16px 48px rgba(0,0,0,.18);
-  &::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(4px)}
-}
-.dialog-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 0;
-  & h2{font-size:1.1rem;font-weight:800}
-}
-.dialog-close{background:none;border:none;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:8px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;
-  &:hover{background:var(--bg)}
-}
-.dialog-body{padding:14px 22px 22px;display:grid;gap:12px;
-  & .d-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
-  & .d-label{font-size:.85rem;color:var(--muted);font-weight:600}
-  & .d-value{font-weight:700;font-variant-numeric:tabular-nums}
-  & .d-partners{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
-}
+/* ========== Session Modal Dialog ========== */
+dialog{border:none;border-radius:20px;background:var(--card);color:var(--ink);padding:0;max-width:480px;width:92vw;box-shadow:0 16px 48px rgba(0,0,0,.22);margin:auto}
+dialog::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(4px)}
+.dialog-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 0}
+.dialog-header h2{font-size:1.15rem;font-weight:800}
+.dialog-close{background:none;border:none;font-size:1.4rem;cursor:pointer;padding:6px;border-radius:8px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+.dialog-close:hover{background:var(--bg)}
+.dialog-body{padding:14px 22px 22px;display:grid;gap:12px}
+.dialog-body .d-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.dialog-body .d-label{font-size:.85rem;color:var(--muted);font-weight:600}
+.dialog-body .d-value{font-weight:700;font-variant-numeric:tabular-nums}
+.dialog-body .d-partners{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 
-/* ========== Empty States (A10) ========== */
-.empty-state{text-align:center;padding:30px 20px;color:var(--muted);
-  & .empty-icon{font-size:2.5rem;margin-bottom:8px;opacity:.6}
-  & .empty-text{font-size:.95rem;max-width:30ch;margin:0 auto}
-}
+/* ========== Empty States ========== */
+.empty-state{text-align:center;padding:36px 20px;color:var(--muted)}
+.empty-state .empty-icon{font-size:2.6rem;margin-bottom:8px;opacity:.6}
+.empty-state .empty-text{font-size:.95rem;max-width:32ch;margin:0 auto}
 
-/* ========== Details Accordion (B11) ========== */
-details{margin-top:18px;color:var(--muted);font-size:.88rem;
-  & summary{cursor:pointer;font-weight:600;padding:8px 0;min-height:44px;display:flex;align-items:center}
-  & ul{margin:8px 0 0;padding-left:18px}
-}
+/* ========== Details Accordion ========== */
+details{margin-top:18px;color:var(--muted);font-size:.88rem}
+details summary{cursor:pointer;font-weight:600;padding:8px 0;min-height:44px;display:flex;align-items:center}
+details ul{margin:8px 0 0;padding-left:18px}
 
 /* ========== Footer ========== */
 footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:16px}
 
-/* ========== Mobile Bottom Nav (E1) ========== */
-.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:6px 0 env(safe-area-inset-bottom,6px);z-index:100;
-  & ul{display:flex;justify-content:space-around;list-style:none;padding:0;margin:0}
-  & a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 10px;border-radius:8px;min-width:44px;min-height:44px;justify-content:center;
-    &:hover,&:focus{color:var(--court);background:color-mix(in srgb,var(--court) 8%,transparent)}
-    & .nav-icon{font-size:1.2rem}
-  }
-}
-@media(max-width:640px){.mobile-nav{display:block}.wrap{padding-bottom:100px}}
+/* ========== Mobile Bottom Navigation Bar ========== */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:4px 0 env(safe-area-inset-bottom,6px);z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.04)}
+.mobile-nav ul{display:flex;justify-content:space-around;list-style:none;padding:0;margin:0}
+.mobile-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:.68rem;font-weight:600;padding:6px 12px;border-radius:8px;min-width:44px;min-height:44px;justify-content:center}
+.mobile-nav a:hover, .mobile-nav a:focus{color:var(--court);background:color-mix(in srgb,var(--court) 8%,transparent)}
+.mobile-nav .nav-icon{font-size:1.25rem}
 
-/* ========== Scroll-Driven Animations (B6) ========== */
-@supports(animation-timeline:view()){
-  .panel{animation:panelReveal linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
-  @keyframes panelReveal{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+/* ========== Mobile Responsiveness (<= 640px) ========== */
+@media(max-width:640px){
+  .wrap{padding:12px 12px 90px}
+  .mobile-nav{display:block}
+  .top h1{font-size:1.2rem}
+  .top .meta{gap:6px}
+  .btn{padding:8px 12px;font-size:.85rem}
+  
+  /* Filter bar wraps cleanly */
+  .filter-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .filter-bar label{flex-direction:column;align-items:flex-start;font-size:.78rem}
+  .filter-bar input[type="date"]{width:100%}
+  #filterReset{grid-column:span 2}
+  
+  /* Hero on mobile */
+  .hero-in{grid-template-columns:1fr;padding:18px 16px;gap:12px}
+  .dnum{font-size:clamp(3.5rem,15vw,5rem)}
+  .chip{padding:6px 10px}
+  .chip b{font-size:1.15rem}
+  
+  /* KPIs: Clean 2 columns on phones */
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+  .kpi{padding:10px 12px}
+  .kpi .v{font-size:1.35rem}
+  
+  /* Grid: Stack all cards with zero column-wrapping bugs */
+  .grid{display:flex;flex-direction:column;gap:12px}
+  .panel{padding:16px 14px}
+  
+  /* Records: 3 or 2 cols */
+  .records{grid-template-columns:repeat(3,1fr);gap:8px}
+  
+  /* Charts on mobile */
+  .chart{height:220px}
+  .chart.tall{height:260px}
+  
+  /* Calculator inputs */
+  .calc{grid-template-columns:1fr;gap:10px}
 }
 
-/* ========== Custom Scrollbars (A4) ========== */
+@media(max-width:400px){
+  .records{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:1fr}
+}
+
+/* Custom Scrollbars */
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--bg);border-radius:4px}
-::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;&:hover{background:var(--muted)}}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 
-/* ========== Reduced Motion (E4) ========== */
+/* Reduced Motion */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
 }
 
-/* ========== Print Styles (E7) ========== */
+/* Print Styles */
 @media print{
   .top .meta,.btn,.filter-bar,.mobile-nav,.calc,.search-bar,dialog,.skip-link{display:none !important}
   .wrap{max-width:100%;padding:0}
   .hero{break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  .panel{break-inside:avoid;box-shadow:none;border:1px solid #ccc;content-visibility:visible}
-  .grid{display:block;& .panel{margin-bottom:14px}}
+  .panel{break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+  .grid{display:block}
+  .panel{margin-bottom:14px}
   body{background:#fff;color:#000;font-size:12px}
-}
-
-/* ========== High Contrast (E6) ========== */
-@media(forced-colors:active){
-  .chip,.kpi,.panel,.btn{border:2px solid CanvasText}
-  .progress-fill{forced-color-adjust:none}
 }
 </style>
 </head>
 <body>
 
-<!-- Skip Navigation (E5) -->
+<!-- Skip Link -->
 <a href="#main" class="skip-link">Skip to content</a>
 
 <div class="wrap">
+  <!-- Top Navigation Header -->
   <header class="top">
     <div class="brand">
       <span class="shuttle-icon" aria-hidden="true">🏸</span>
-      <div><h1>Badminton log</h1></div>
+      <div><h1>Badminton Log</h1></div>
     </div>
     <div class="meta">
       <span id="updated" aria-live="polite">Loading...</span>
@@ -292,16 +308,18 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
     </div>
   </header>
 
-  <!-- Date Range Filter (D13) -->
+  <!-- Date Range Filter Bar -->
   <div class="filter-bar" id="filterBar">
     <label>From <input type="date" id="filterFrom"></label>
     <label>To <input type="date" id="filterTo"></label>
-    <button class="btn" id="filterReset" type="button" style="padding:8px 12px;font-size:.82rem">Reset</button>
+    <button class="btn" id="filterReset" type="button" style="padding:6px 12px;font-size:.82rem">Reset</button>
     <span class="filter-tag" id="filterTag">🔍 Filtered</span>
   </div>
 
+  <!-- Alert Banner -->
   <div class="banner" id="banner" hidden></div>
 
+  <!-- Hero Section -->
   <section class="hero" aria-label="Journey summary">
     <svg class="court" viewBox="0 0 134 61" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="#F6F4EA" stroke-width=".5">
       <rect x="1" y="1" width="132" height="59"/><line x1="1" y1="5.6" x2="133" y2="5.6"/><line x1="1" y1="55.4" x2="133" y2="55.4"/>
@@ -323,7 +341,7 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
     </div>
   </section>
 
-  <!-- KPI Cards with Skeleton Loading (A7) -->
+  <!-- KPI Cards -->
   <section class="kpis" id="kpis" aria-label="Key numbers" aria-live="polite">
     <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
     <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
@@ -333,7 +351,10 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
     <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
   </section>
 
+  <!-- Main Dashboard Grid (Perfect 12-Column Matching Rows) -->
   <main id="main" class="grid">
+    
+    <!-- ROW 1: What your data says (7) + Personal records (5) = 12 -->
     <section class="panel s7">
       <h2>What your data says</h2>
       <p class="hint">Generated directly from your Google Sheet.</p>
@@ -342,13 +363,14 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
 
     <section class="panel s5">
       <h2>🏆 Personal Records</h2>
-      <p class="hint">Your best achievements so far.</p>
+      <p class="hint">Your best achievements on court.</p>
       <div class="records" id="records"><div class="skel skel-full" style="height:120px"></div></div>
     </section>
 
-    <section class="panel s7">
+    <!-- ROW 2: Heatmap (7) + Goals (5) = 12 -->
+    <section class="panel s7" id="heatPanel">
       <h2>Last 16 weeks</h2>
-      <p class="hint">Each square is a day. Darker green = longer court time.</p>
+      <p class="hint">Each square is a day. Darker green indicates longer court playtime.</p>
       <div class="heat-wrap">
         <div class="heat-days" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
         <div class="heat" id="heat" role="img" aria-label="Play calendar for the last 16 weeks"></div>
@@ -357,7 +379,7 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
     </section>
 
     <section class="panel s5">
-      <h2>🎯 Goals</h2>
+      <h2>🎯 Consistency Goals</h2>
       <p class="hint">Set targets and track your consistency.</p>
       <div class="goals">
         <div class="goal">
@@ -373,20 +395,10 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
       </div>
     </section>
 
-    <section class="panel s5">
-      <h2>Is membership worth it?</h2>
-      <p class="hint">Compare pay-per-session against a monthly club membership.</p>
-      <div class="calc">
-        <label>Daily fee per session<input id="inRate" type="number" min="0" step="1"></label>
-        <label>Membership per month<input id="inMember" type="number" min="0" step="1" placeholder="e.g. 1500"></label>
-        <label>Sessions per week<input id="inWeek" type="number" min="0" step="0.5"></label>
-      </div>
-      <div class="verdict" id="verdict"></div>
-    </section>
-
-    <section class="panel s7">
+    <!-- ROW 3: Session length (7) + Sessions per week (5) = 12 -->
+    <section class="panel s7" id="chartDurationPanel">
       <h2>Session length</h2>
-      <p class="hint">Minutes per session, with a 3-session moving average.</p>
+      <p class="hint">Minutes per session, with a 3-session moving average line.</p>
       <div class="chart"><canvas id="chDuration" role="img"></canvas></div>
     </section>
 
@@ -396,6 +408,7 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
       <div class="chart"><canvas id="chWeekly" role="img"></canvas></div>
     </section>
 
+    <!-- ROW 4: Time of day (4) + Day of week (4) + Playing partners (4) = 12 -->
     <section class="panel s4">
       <h2>Time of day</h2>
       <p class="hint">When you usually play.</p>
@@ -414,18 +427,20 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
       <div class="chart"><canvas id="chPartners" role="img"></canvas></div>
     </section>
 
-    <section class="panel s6">
+    <!-- ROW 5: Money spent over time (6) + Cost per session (6) = 12 -->
+    <section class="panel s6" id="chartSpendPanel">
       <h2>Money spent over time</h2>
-      <p class="hint">Court fees and gear expenses accumulated day by day.</p>
+      <p class="hint">Clear comparison of Court fees, Gear purchases, and Total spend.</p>
       <div class="chart"><canvas id="chSpend" role="img"></canvas></div>
     </section>
 
     <section class="panel s6">
       <h2>Cost per session over time</h2>
-      <p class="hint">Total spend divided by sessions played (falls as equipment is utilized).</p>
+      <p class="hint">Total spend divided by sessions played (drops as gear amortizes).</p>
       <div class="chart"><canvas id="chCps" role="img"></canvas></div>
     </section>
 
+    <!-- ROW 6: Gear spend by type (5) + Is membership worth it? (7) = 12 -->
     <section class="panel s5">
       <h2>Gear spend by type</h2>
       <p class="hint">Where your equipment budget went.</p>
@@ -433,35 +448,49 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
     </section>
 
     <section class="panel s7">
+      <h2>Is membership worth it?</h2>
+      <p class="hint">Compare pay-per-session against a monthly club membership.</p>
+      <div class="calc">
+        <label>Daily fee per session<input id="inRate" type="number" min="0" step="1"></label>
+        <label>Membership per month<input id="inMember" type="number" min="0" step="1" placeholder="e.g. 1500"></label>
+        <label>Sessions per week<input id="inWeek" type="number" min="0" step="0.5"></label>
+      </div>
+      <div class="verdict" id="verdict"></div>
+    </section>
+
+    <!-- ROW 7: Gear list (Full Width 12 columns) -->
+    <section class="panel" id="gearPanel">
       <h2>Gear list</h2>
-      <p class="hint">"Per session" = cost ÷ sessions played since purchase.</p>
+      <p class="hint">"Per session" = purchase cost ÷ sessions played since purchase date.</p>
       <div class="tbl" id="gearTbl"></div>
     </section>
 
-    <section class="panel">
+    <!-- ROW 8: Recent sessions (Full Width 12 columns) -->
+    <section class="panel" id="recentPanel">
       <h2>Recent sessions</h2>
-      <p class="hint">Your latest sessions log. Click a row for details.</p>
-      <div class="search-bar"><input type="search" id="sessionSearch" placeholder="Search by partner, date, slot..." aria-label="Search sessions"></div>
+      <p class="hint">Your complete sessions log. Click any row for details.</p>
+      <div class="search-bar">
+        <input type="search" id="sessionSearch" placeholder="Search by partner, date, time..." aria-label="Search sessions">
+      </div>
       <div class="tbl" id="recentTbl"></div>
     </section>
+
   </main>
 
+  <!-- Technical Column Mappings Dropdown -->
   <details name="info-panel">
     <summary>How the columns were read</summary>
     <ul id="mapping"></ul>
   </details>
-  <details name="info-panel">
-    <summary>Data sources</summary>
-    <ul><li>Sessions: Published Google Sheets CSV</li><li>Gear: Published Google Sheets CSV</li></ul>
-  </details>
 
+  <!-- Footer -->
   <footer id="foot">
-    <span>Badminton Log &bull; Auto-syncs from your Google Sheet</span>
+    <span>Badminton Log &bull; Auto-syncs directly from your Google Sheet</span>
     <span id="footTime"></span>
   </footer>
 </div>
 
-<!-- Session Detail Dialog (D1, B2) -->
+<!-- Session Details Modal Dialog -->
 <dialog id="sessionDialog">
   <div class="dialog-header">
     <h2 id="dialogTitle">Session Details</h2>
@@ -470,14 +499,14 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
   <div class="dialog-body" id="dialogBody"></div>
 </dialog>
 
-<!-- Mobile Bottom Nav (E1) -->
+<!-- Mobile Sticky Bottom Navigation -->
 <nav class="mobile-nav" aria-label="Quick navigation">
   <ul>
     <li><a href="#kpis"><span class="nav-icon">📊</span>Stats</a></li>
-    <li><a href="#heat"><span class="nav-icon">📅</span>Calendar</a></li>
-    <li><a href="#chDuration"><span class="nav-icon">📈</span>Charts</a></li>
-    <li><a href="#gearTbl"><span class="nav-icon">🎒</span>Gear</a></li>
-    <li><a href="#recentTbl"><span class="nav-icon">📋</span>Log</a></li>
+    <li><a href="#heatPanel"><span class="nav-icon">📅</span>Calendar</a></li>
+    <li><a href="#chartSpendPanel"><span class="nav-icon">💰</span>Spend</a></li>
+    <li><a href="#gearPanel"><span class="nav-icon">🎒</span>Gear</a></li>
+    <li><a href="#recentPanel"><span class="nav-icon">📋</span>Log</a></li>
   </ul>
 </nav>
 
@@ -495,7 +524,7 @@ const CONFIG = {
   NAME_ALIASES: { "nischith": "Nischit" }
 };
 
-/* ========== Helpers ========== */
+/* ========== Utility Helpers ========== */
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -512,7 +541,7 @@ const weekStart = d => { const x = startOfDay(d); x.setDate(x.getDate() - ((x.ge
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-/* ========== Partner Avatars (D8) ========== */
+/* ========== Partner Avatars & Colors ========== */
 function getInitials(name) { return name.split(/\s+/).map(w => w[0]).join("").toUpperCase().slice(0, 2); }
 function nameColor(name) {
   let h = 0; for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
@@ -520,7 +549,7 @@ function nameColor(name) {
   return cols[Math.abs(h) % cols.length];
 }
 
-/* ========== CSV Parser ========== */
+/* ========== CSV Parsing Engine ========== */
 function parseCSV(text) {
   text = String(text ?? "").replace(/^\uFEFF/, "").trim();
   if (!text) return [];
@@ -531,17 +560,22 @@ function parseCSV(text) {
   const rows = []; let row = [], cur = "", inQ = false;
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
-    if (inQ) { if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; } else cur += c; }
-    else if (c === '"') inQ = true;
+    if (inQ) {
+      if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; }
+      else cur += c;
+    } else if (c === '"') inQ = true;
     else if (c === delimiter) { row.push(cur.trim()); cur = ""; }
-    else if (c === "\n" || c === "\r") { if (c === "\r" && text[i+1] === "\n") i++; row.push(cur.trim()); cur = ""; if (row.some(x => x !== "")) rows.push(row); row = []; }
-    else cur += c;
+    else if (c === "\n" || c === "\r") {
+      if (c === "\r" && text[i+1] === "\n") i++;
+      row.push(cur.trim()); cur = "";
+      if (row.some(x => x !== "")) rows.push(row);
+      row = [];
+    } else cur += c;
   }
   if (cur !== "" || row.length) { row.push(cur.trim()); if (row.some(x => x !== "")) rows.push(row); }
   return rows;
 }
 
-/* ========== Column Mapping ========== */
 const norm = s => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 function mapColumns(headers, spec) {
   const H = headers.map(norm), used = new Set(), map = {};
@@ -552,6 +586,7 @@ function mapColumns(headers, spec) {
   }
   return map;
 }
+
 const SESSION_SPEC = {
   date:     { exact: ["date","daydate","playeddate","sessiondate"], has: ["date","played"] },
   duration: { exact: ["duration","minutes","mins","playtime","timeplayed","hours","howlong"], has: ["duration","minute","mins","timeplayed"] },
@@ -561,6 +596,7 @@ const SESSION_SPEC = {
   day:      { exact: ["day","dayno","daynumber","sessionno","sessionnumber","session","sno"], has: ["dayno","daynumber","sessionno"] },
   notes:    { exact: ["notes","note","remarks","comments","comment"], has: ["note","remark","comment"] }
 };
+
 const GEAR_SPEC = {
   cost:     { exact: ["cost","price","amount","paid","mrp","total"], has: ["cost","price","amount","paid"] },
   date:     { exact: ["date","bought","purchased","boughton","purchasedon"], has: ["date","bought","purchas"] },
@@ -569,7 +605,6 @@ const GEAR_SPEC = {
   item:     { exact: ["item","gear","name","product","description"], has: ["item","gear","product","name"] }
 };
 
-/* ========== Data Parsers ========== */
 const mkDate = (y, m, d) => { const x = new Date(y, m - 1, d); return x.getMonth() === m - 1 ? x : null; };
 function parseDate(s) {
   s = String(s ?? "").trim().replace(/T\d{2}:\d{2}.*$/, ""); if (!s) return null;
@@ -613,6 +648,7 @@ function inferCategory(item) {
   if (/shuttle|cock|feather/.test(s)) return "Shuttles"; if (/grip|string|overgrip/.test(s)) return "Grips & Strings";
   if (/bag|kit/.test(s)) return "Bags"; if (/shirt|tee|jersey|short|sock|band|cap|towel/.test(s)) return "Apparel"; return "Other";
 }
+
 function parseSessions(text) {
   const rows = parseCSV(text); const headers = (rows[0] || []).map(h => h.trim());
   const map = mapColumns(headers, SESSION_SPEC);
@@ -638,6 +674,7 @@ function parseSessions(text) {
   sessions.forEach((s, i) => { if (!s.dayNo) s.dayNo = i + 1; });
   return { sessions, headers, map, feeCols };
 }
+
 function parseGear(text) {
   if (!text) return { gear: [], headers: [], map: {} };
   const rows = parseCSV(text); const headers = (rows[0] || []).map(h => h.trim());
@@ -655,7 +692,7 @@ function parseGear(text) {
   return { gear, headers, map };
 }
 
-/* ========== Analytics ========== */
+/* ========== Metrics & Analytics ========== */
 function compute(S, G) {
   const n = S.length, today = startOfDay(new Date());
   const totalMin = sum(S, "min"), court = sum(S, "fee"), gearSpend = sum(G, "cost"), total = court + gearSpend;
@@ -684,64 +721,64 @@ function compute(S, G) {
   });
   const partners = [...pm.values()].sort((a, b) => b.n - a.n || b.min - a.min);
 
+  /* Timeline calculation for cumulative court vs gear */
   const ev = S.map(s => ({ d: s.date, c: s.fee, g: 0, s: 1 })).concat(G.map(g => ({ d: g.date || first, c: 0, g: g.cost, s: 0 })));
   ev.sort((a, b) => a.d - b.d);
   const tl = []; let c = 0, gr = 0, ns = 0;
   ev.forEach(e => { c += e.c; gr += e.g; ns += e.s; const k2 = key(e.d), l = tl[tl.length - 1];
     if (l && l.k === k2) Object.assign(l, { c, gr, ns }); else tl.push({ k: k2, d: e.d, c, gr, ns }); });
 
-  /* Monthly stats for goals */
   const now = new Date(), monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
   const monthSessions = S.filter(s => s.date >= monthStart).length;
-
-  /* Best week ever */
   const bestWeek = weeks.length ? Math.max(...weeks.map(w => w.n)) : 0;
-
   const mins = S.map(s => s.min).filter(m => m > 0);
+
   return { n, totalMin, court, gearSpend, total, first, last, span, active: uniq.length, best, cur, weekSessions, perWeek, weeks, wd, slot, slotKeys, partners, solo, tl,
     avgMin: mins.length ? totalMin / mins.length : 0, maxMin: mins.length ? Math.max(...mins) : 0, monthSessions, bestWeek,
     uniquePartners: partners.length };
 }
 
-/* ========== Insights ========== */
+/* ========== Dynamic Insights ========== */
 function makeInsights(S, G, a) {
   const out = [];
-  out.push(`You've played on ${a.active} of the ${a.span} days since ${fmtDate(a.first)} (${Math.round(a.active / a.span * 100)}%). Current streak ${a.cur} ${a.cur === 1 ? "day" : "days"}, best streak ${a.best}.`);
+  out.push(`You've played on ${a.active} of the ${a.span} days since ${fmtDate(a.first)} (${Math.round(a.active / a.span * 100)}%). Current streak is ${a.cur} ${a.cur === 1 ? "day" : "days"} (best streak: ${a.best} days).`);
   const sl = a.slotKeys.slice().sort((x, y) => a.slot[y].n - a.slot[x].n);
   if (sl.length) {
     const t = sl[0], o = a.slot[t];
-    let line = `${t} is your primary slot: ${Math.round(o.n / a.n * 100)}% of sessions` + (o.min ? `, averaging ${dur(o.min / o.n)}.` : ".");
+    let line = `${t} is your preferred time slot: ${Math.round(o.n / a.n * 100)}% of all sessions` + (o.min ? `, averaging ${dur(o.min / o.n)}.` : ".");
     const longest = sl.filter(k => a.slot[k].min).sort((x, y) => a.slot[y].min / a.slot[y].n - a.slot[x].min / a.slot[x].n)[0];
     if (longest && longest !== t && sl.length > 1) line += ` Longest sessions are in ${longest} (${dur(a.slot[longest].min / a.slot[longest].n)} avg).`;
     out.push(line);
   }
   if (a.partners.length) {
     const p = a.partners[0];
-    out.push(`${p.name} is your most frequent partner with ${p.n} sessions. You've played with ${a.partners.length} friends so far` + (a.solo ? `, plus ${a.solo} solo.` : "."));
+    out.push(`${p.name} is your most frequent partner (${p.n} sessions). You have played with ${a.partners.length} friends` + (a.solo ? `, plus ${a.solo} solo match.` : "."));
   }
   const bd = a.wd.indexOf(Math.max(...a.wd));
-  out.push(`${WD[bd]} is your busiest day (${a.wd[bd]} sessions). Pace is ${a.perWeek.toFixed(1)} sessions per week.`);
-  if (a.total) out.push(`Each session has cost ${money(a.total / a.n)} so far (${money(a.court / a.n)} court` + (a.gearSpend ? `, ${money(a.gearSpend / a.n)} gear` : "") + `). Gear cost drops with every extra match.`);
+  out.push(`${WD[bd]} is your busiest day of the week (${a.wd[bd]} sessions). Current pace is ${a.perWeek.toFixed(1)} sessions per week.`);
+  if (a.total) {
+    out.push(`Cumulative spend stands at ${money(a.total)} (${money(a.court)} court + ${money(a.gearSpend)} gear). Average total cost per session is ${money(a.total / a.n)}.`);
+  }
   return out;
 }
 
-/* ========== Personal Records (D3) ========== */
+/* ========== Personal Records Component ========== */
 function renderRecords(S, a) {
   const hrs = Math.floor(a.totalMin / 60);
   const records = [
-    { icon: "⏱️", val: a.maxMin ? dur(a.maxMin) : "—", label: "Longest session" },
-    { icon: "🔥", val: a.best, label: "Best day streak" },
-    { icon: "📅", val: a.bestWeek, label: "Best week (sessions)" },
-    { icon: "⏳", val: hrs + "h+", label: "Total court hours" },
-    { icon: "🤝", val: a.uniquePartners, label: "Partners played" },
-    { icon: "🏸", val: a.n, label: "Total sessions" }
+    { icon: "⏱️", val: a.maxMin ? dur(a.maxMin) : "—", label: "Longest match" },
+    { icon: "🔥", val: a.best + " d", label: "Best streak" },
+    { icon: "📅", val: a.bestWeek, label: "Best week" },
+    { icon: "⏳", val: hrs + "h+", label: "Court hours" },
+    { icon: "🤝", val: a.uniquePartners, label: "Partners" },
+    { icon: "🏸", val: a.n, label: "Sessions" }
   ];
   $("#records").innerHTML = records.map(r =>
     `<div class="record-card"><div class="rec-icon">${r.icon}</div><div class="rec-val">${esc(String(r.val))}</div><div class="rec-label">${r.label}</div></div>`
   ).join("");
 }
 
-/* ========== Goals (D2) ========== */
+/* ========== Consistency Goals Widget ========== */
 function initGoals() {
   let saved = {}; try { saved = JSON.parse(localStorage.getItem("bd_goals") || "{}"); } catch(e) {}
   if (saved.week) $("#goalWeek").value = saved.week;
@@ -760,13 +797,13 @@ function updateGoals(a) {
   const mPct = Math.min(100, Math.round(a.monthSessions / mTarget * 100));
   $("#goalWeekFill").style.width = wPct + "%";
   $("#goalWeekFill").className = "progress-fill" + (wPct >= 100 ? " over" : "");
-  $("#goalWeekStatus").textContent = `${a.weekSessions} / ${wTarget} sessions this week` + (wPct >= 100 ? " ✅" : "");
+  $("#goalWeekStatus").textContent = `${a.weekSessions} / ${wTarget} this week` + (wPct >= 100 ? " 🎉 Goal reached!" : "");
   $("#goalMonthFill").style.width = mPct + "%";
   $("#goalMonthFill").className = "progress-fill" + (mPct >= 100 ? " over" : "");
-  $("#goalMonthStatus").textContent = `${a.monthSessions} / ${mTarget} sessions this month` + (mPct >= 100 ? " ✅" : "");
+  $("#goalMonthStatus").textContent = `${a.monthSessions} / ${mTarget} this month` + (mPct >= 100 ? " 🎉 Goal reached!" : "");
 }
 
-/* ========== Charts ========== */
+/* ========== Chart Manager ========== */
 const charts = {};
 function chart(id, cfg) {
   if (typeof Chart === "undefined") return;
@@ -776,32 +813,39 @@ function chart(id, cfg) {
   if (el) charts[id] = new Chart(el, cfg);
 }
 
-/* ========== Session Detail Dialog (D1) ========== */
+/* ========== Session Details Modal Dialog ========== */
 let allSessionsForDialog = [];
 function openSessionDialog(s) {
   const dlg = $("#sessionDialog");
   $("#dialogTitle").textContent = `Session #${s.dayNo} — ${fmtDateY(s.date)}`;
   const partners = s.partners.length
     ? s.partners.map(p => `<span class="partner-tag"><span class="avatar" style="background:${nameColor(p)}">${getInitials(p)}</span>${esc(p)}</span>`).join("")
-    : '<em style="color:var(--muted)">Solo session</em>';
+    : '<em style="color:var(--muted)">Solo match</em>';
   $("#dialogBody").innerHTML = `
     <div class="d-row"><span class="d-label">Date</span><span class="d-value">${fmtDateY(s.date)}</span></div>
     <div class="d-row"><span class="d-label">Time slot</span><span class="d-value">${esc(s.win || s.slot)}</span></div>
-    <div class="d-row"><span class="d-label">Duration</span><span class="d-value">${s.min ? dur(s.min) : "—"}</span></div>
+    <div class="d-row"><span class="d-label">Playtime</span><span class="d-value">${s.min ? dur(s.min) : "—"}</span></div>
     <div class="d-row"><span class="d-label">Court fee</span><span class="d-value">${money(s.fee)}</span></div>
-    <div class="d-row"><span class="d-label">Partners</span><span class="d-value"><div class="d-partners">${partners}</div></span></div>
+    <div class="d-row"><span class="d-label">Played with</span><span class="d-value"><div class="d-partners">${partners}</div></span></div>
     ${s.notes ? `<div class="d-row"><span class="d-label">Notes</span><span class="d-value" style="white-space:normal;text-align:right;max-width:260px">${esc(s.notes)}</span></div>` : ""}`;
   dlg.showModal();
 }
 
-/* ========== Main Render ========== */
+/* ========== Main Render Pipeline ========== */
 let lastAnalytics = null;
 
 function renderAll(S, G, parsed) {
   const a = compute(S, G);
   lastAnalytics = a;
   allSessionsForDialog = S;
-  const P = [css("--c1")||"#1B5E4A", css("--c2")||"#F2C230", css("--c3")||"#2D6CDF", css("--c4")||"#D1495B", css("--c5")||"#7A5CD6", css("--c6")||"#2BA6A0"];
+  const P = [
+    css("--c1") || "#1B5E4A",
+    css("--c2") || "#E0A814",
+    css("--c3") || "#2D6CDF",
+    css("--c4") || "#D1495B",
+    css("--c5") || "#7A5CD6",
+    css("--c6") || "#2BA6A0"
+  ];
 
   /* Hero */
   const dayCount = Math.max(...S.map(s => s.dayNo));
@@ -811,7 +855,7 @@ function renderAll(S, G, parsed) {
     [a.cur, "day streak"], [a.best, "best streak"], [a.weekSessions, "this week"]
   ].map(x => `<div class="chip"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
 
-  /* KPIs */
+  /* KPI Cards */
   const cps = a.total / a.n, hrs = a.totalMin / 60;
   const k = [
     ["Sessions", a.n, `${a.perWeek.toFixed(1)} per week`],
@@ -826,14 +870,11 @@ function renderAll(S, G, parsed) {
   /* Insights */
   $("#insights").innerHTML = makeInsights(S, G, a).map(t => `<li>${esc(t)}</li>`).join("");
 
-  /* Records (D3) — deferred via requestIdleCallback (C6) */
-  if ("requestIdleCallback" in window) { requestIdleCallback(() => renderRecords(S, a)); }
-  else renderRecords(S, a);
-
-  /* Goals (D2) */
+  /* Records & Goals */
+  renderRecords(S, a);
   updateGoals(a);
 
-  /* Heatmap */
+  /* Heatmap Calendar */
   const by = {}; S.forEach(s => { const o = by[key(s.date)] || (by[key(s.date)] = { n: 0, m: 0 }); o.n++; o.m += s.min; });
   const today = startOfDay(new Date()), WEEKS = 16, st = weekStart(today); st.setDate(st.getDate() - 7 * (WEEKS - 1));
   const mx = Math.max(1, ...Object.values(by).map(o => o.m)); let h = "";
@@ -847,61 +888,188 @@ function renderAll(S, G, parsed) {
 
   renderCalc(a);
 
-  /* Charts — deferred for non-critical ones (C6) */
+  /* Primary Charts */
   const labels = S.map(s => "D" + s.dayNo), mins = S.map(s => Math.round(s.min));
   const ma = mins.map((_, i) => { const w2 = mins.slice(Math.max(0, i - 2), i + 1); return Math.round(w2.reduce((x, y) => x + y, 0) / w2.length); });
-  chart("chDuration", { type: "bar", data: { labels, datasets: [
-    { label: "Minutes", data: mins, backgroundColor: P[0], borderRadius: 4, order: 2 },
-    { type: "line", label: "3-session avg", data: ma, borderColor: P[1], backgroundColor: P[1], tension: .3, pointRadius: 2, borderWidth: 3, order: 1 } ] },
-    options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
-
-  chart("chWeekly", { type: "bar", data: { labels: a.weeks.map(w2 => fmtDate(w2.d)), datasets: [{ label: "Sessions", data: a.weeks.map(w2 => w2.n), backgroundColor: P[2], borderRadius: 4 }] },
-    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
-
-  const renderSecondary = () => {
-    if (a.slotKeys.length) chart("chSlots", { type: "doughnut", data: { labels: a.slotKeys, datasets: [{ data: a.slotKeys.map(k2 => a.slot[k2].n), backgroundColor: P, borderWidth: 0 }] }, options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
-    chart("chWeekday", { type: "bar", data: { labels: WD, datasets: [{ label: "Sessions", data: a.wd, backgroundColor: P[4], borderRadius: 4 }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
-    if (a.partners.length) {
-      const tp = a.partners.slice(0, 8);
-      chart("chPartners", { type: "bar", data: { labels: tp.map(p => p.name), datasets: [{ label: "Sessions", data: tp.map(p => p.n), backgroundColor: P[5], borderRadius: 4 }] },
-        options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } } });
+  chart("chDuration", {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [
+        { label: "Minutes", data: mins, backgroundColor: P[0], borderRadius: 4, order: 2 },
+        { type: "line", label: "3-session avg", data: ma, borderColor: P[1], backgroundColor: P[1], tension: .3, pointRadius: 2, borderWidth: 3, order: 1 }
+      ]
+    },
+    options: {
+      scales: { y: { beginAtZero: true, title: { display: false } } },
+      plugins: { legend: { position: "bottom" } }
     }
-    chart("chSpend", { type: "line", data: { labels: a.tl.map(t => fmtDate(t.d)), datasets: [
-      { label: "Court fees", data: a.tl.map(t => t.c), borderColor: P[0], backgroundColor: P[0] + "33", fill: true, tension: .25, pointRadius: 0 },
-      { label: "Gear", data: a.tl.map(t => t.gr), borderColor: P[1], backgroundColor: P[1] + "33", fill: true, tension: .25, pointRadius: 0 } ] },
-      options: { scales: { y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
-    const pts = a.tl.filter(t => t.ns > 0);
-    chart("chCps", { type: "line", data: { labels: pts.map(t => fmtDate(t.d)), datasets: [{ label: "Cost per session", data: pts.map(t => Math.round((t.c + t.gr) / t.ns)), borderColor: P[3], backgroundColor: P[3], tension: .3, pointRadius: 2, borderWidth: 3 }] },
-      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } });
-    if (G.length && a.gearSpend > 0) {
-      const cat2 = {}; G.forEach(g => cat2[g.category] = (cat2[g.category] || 0) + g.cost);
-      const names = Object.keys(cat2).sort((x, y) => cat2[y] - cat2[x]);
-      chart("chGear", { type: "doughnut", data: { labels: names, datasets: [{ data: names.map(n2 => cat2[n2]), backgroundColor: P, borderWidth: 0 }] },
-        options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
-    }
-  };
-  if ("requestIdleCallback" in window) requestIdleCallback(renderSecondary); else setTimeout(renderSecondary, 50);
+  });
 
-  /* Gear Table */
+  chart("chWeekly", {
+    type: "bar",
+    data: {
+      labels: a.weeks.map(w2 => fmtDate(w2.d)),
+      datasets: [{ label: "Sessions", data: a.weeks.map(w2 => w2.n), backgroundColor: P[2], borderRadius: 4 }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+    }
+  });
+
+  /* Secondary Charts */
+  if (a.slotKeys.length) {
+    chart("chSlots", {
+      type: "doughnut",
+      data: { labels: a.slotKeys, datasets: [{ data: a.slotKeys.map(k2 => a.slot[k2].n), backgroundColor: P, borderWidth: 0 }] },
+      options: { cutout: "62%", plugins: { legend: { position: "bottom" } } }
+    });
+  }
+
+  chart("chWeekday", {
+    type: "bar",
+    data: { labels: WD, datasets: [{ label: "Sessions", data: a.wd, backgroundColor: P[4], borderRadius: 4 }] },
+    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+  });
+
+  if (a.partners.length) {
+    const tp = a.partners.slice(0, 8);
+    chart("chPartners", {
+      type: "bar",
+      data: { labels: tp.map(p => p.name), datasets: [{ label: "Sessions", data: tp.map(p => p.n), backgroundColor: P[5], borderRadius: 4 }] },
+      options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+  }
+
+  /* ========== MONEY SPENT OVER TIME (Clear, Unstacked 3-Series Representation) ========== */
+  chart("chSpend", {
+    type: "line",
+    data: {
+      labels: a.tl.map(t => fmtDate(t.d)),
+      datasets: [
+        {
+          label: "Court fees",
+          data: a.tl.map(t => t.c),
+          borderColor: P[0],
+          backgroundColor: P[0] + "22",
+          fill: true,
+          tension: 0.25,
+          pointRadius: 1,
+          borderWidth: 2
+        },
+        {
+          label: "Gear expenses",
+          data: a.tl.map(t => t.gr),
+          borderColor: P[1],
+          backgroundColor: P[1] + "22",
+          fill: true,
+          tension: 0.25,
+          pointRadius: 1,
+          borderWidth: 2
+        },
+        {
+          label: "Total spend",
+          data: a.tl.map(t => t.c + t.gr),
+          borderColor: P[3],
+          backgroundColor: "transparent",
+          fill: false,
+          tension: 0.25,
+          pointRadius: 1.5,
+          borderWidth: 2.5,
+          borderDash: [5, 4]
+        }
+      ]
+    },
+    options: {
+      interaction: { mode: "index", intersect: false },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => money(v) }
+        }
+      },
+      plugins: {
+        legend: { position: "bottom" },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${money(ctx.parsed.y)}`
+          }
+        }
+      }
+    }
+  });
+
+  /* Cost per Session Trend */
+  const pts = a.tl.filter(t => t.ns > 0);
+  chart("chCps", {
+    type: "line",
+    data: {
+      labels: pts.map(t => fmtDate(t.d)),
+      datasets: [{
+        label: "Cost per session",
+        data: pts.map(t => Math.round((t.c + t.gr) / t.ns)),
+        borderColor: P[3],
+        backgroundColor: P[3] + "20",
+        fill: true,
+        tension: .3,
+        pointRadius: 2,
+        borderWidth: 2.5
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: { label: ctx => ` Cost / session: ${money(ctx.parsed.y)}` }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => money(v) }
+        }
+      }
+    }
+  });
+
+  /* Gear by Category Doughnut */
+  if (G.length && a.gearSpend > 0) {
+    const cat2 = {}; G.forEach(g => cat2[g.category] = (cat2[g.category] || 0) + g.cost);
+    const names = Object.keys(cat2).sort((x, y) => cat2[y] - cat2[x]);
+    chart("chGear", {
+      type: "doughnut",
+      data: { labels: names, datasets: [{ data: names.map(n2 => cat2[n2]), backgroundColor: P, borderWidth: 0 }] },
+      options: {
+        cutout: "62%",
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${money(ctx.parsed)}` } }
+        }
+      }
+    });
+  }
+
+  /* Gear Inventory Table */
   $("#gearTbl").innerHTML = G.length
     ? `<table><thead><tr><th>Item</th><th>Type</th><th>Bought</th><th>Store</th><th class="n">Cost</th><th class="n">Per session</th></tr></thead><tbody>` +
       G.map(g => { const since = g.date ? S.filter(s2 => s2.date >= g.date).length : S.length;
         return `<tr><td><strong>${esc(g.item)}</strong></td><td><span class="partner-tag">${esc(g.category)}</span></td><td>${g.date ? fmtDate(g.date) : "—"}</td><td>${esc(g.store) || "—"}</td><td class="n"><strong>${money(g.cost)}</strong></td><td class="n" style="color:var(--good)">${since ? money(g.cost / since) : "—"}</td></tr>`; }).join("") + `</tbody></table>`
-    : '<div class="empty-state"><div class="empty-icon">🎒</div><div class="empty-text">No gear entries found. Add gear to your Google Sheet to track equipment costs.</div></div>';
+    : '<div class="empty-state"><div class="empty-icon">🎒</div><div class="empty-text">No gear entries found in your Google Sheet.</div></div>';
 
-  /* Recent Sessions Table with partner avatars (D8) */
+  /* Recent Sessions Table */
   renderSessionsTable(S);
 
-  /* Column Mapping */
+  /* Column Mappings */
   const nm = (hs, i) => i === undefined ? "<em>not found</em>" : `"${esc(hs[i])}"`;
   const mp = parsed.s.map, gm = parsed.g.map;
   $("#mapping").innerHTML = [
-    `Sessions: Date ${nm(parsed.s.headers, mp.date)}, Day # ${nm(parsed.s.headers, mp.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, mp.time)}, Duration ${nm(parsed.s.headers, mp.duration)}, Partners ${nm(parsed.s.headers, mp.partners)}, Notes ${nm(parsed.s.headers, mp.notes)}`,
+    `Sessions: Date ${nm(parsed.s.headers, mp.date)}, Day # ${nm(parsed.s.headers, mp.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, mp.time)}, Duration ${nm(parsed.s.headers, mp.duration)}, Partners ${nm(parsed.s.headers, mp.partners)}`,
     `Gear: Item ${nm(parsed.g.headers, gm.item)}, Cost ${nm(parsed.g.headers, gm.cost)}, Type ${gm.category !== undefined ? nm(parsed.g.headers, gm.category) : "auto inferred"}, Store ${nm(parsed.g.headers, gm.store)}`
   ].map(t => `<li>${t}</li>`).join("");
 }
 
-/* ========== Sessions Table Rendering ========== */
+/* ========== Table Renderer with Search Filter ========== */
 function renderSessionsTable(S) {
   $("#recentTbl").innerHTML = `<table><thead><tr><th>Day</th><th>Date</th><th>Time</th><th class="n">Length</th><th class="n">Fee</th><th>Played with</th></tr></thead><tbody>` +
     S.slice().reverse().map((s, idx) => {
@@ -911,7 +1079,6 @@ function renderSessionsTable(S) {
       return `<tr class="clickable" data-idx="${S.length - 1 - idx}"><td><strong>#${s.dayNo}</strong></td><td>${fmtDate(s.date)}</td><td>${esc(s.win || (s.slot === "Unknown" ? "—" : s.slot))}</td><td class="n">${s.min ? dur(s.min) : "—"}</td><td class="n"><strong>${money(s.fee)}</strong></td><td>${partnerTags}</td></tr>`;
     }).join("") + `</tbody></table>`;
 
-  /* Attach click handlers for dialog (D1) */
   $$("#recentTbl tr.clickable").forEach(tr => {
     tr.addEventListener("click", () => {
       const idx = parseInt(tr.dataset.idx);
@@ -920,7 +1087,7 @@ function renderSessionsTable(S) {
   });
 }
 
-/* ========== Session Search (D14) ========== */
+/* Search input filter */
 $("#sessionSearch").addEventListener("input", e => {
   const q = e.target.value.toLowerCase().trim();
   $$("#recentTbl tbody tr").forEach(tr => {
@@ -928,7 +1095,7 @@ $("#sessionSearch").addEventListener("input", e => {
   });
 });
 
-/* ========== Membership Calculator ========== */
+/* ========== Membership Calculator Logic ========== */
 let calcState = { a: null, weekTouched: false };
 function renderCalc(a) {
   calcState.a = a;
@@ -956,7 +1123,7 @@ function calcOut() {
     : `<b>🏸 Pay-as-you-go is cheaper by ~${money(-diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Membership is only worth it at ${be}+ sessions/month.</span>`;
 }
 
-/* ========== Date Range Filter (D13) ========== */
+/* ========== Date Filter Pipeline ========== */
 let rawSessions = [], rawGear = [], rawParsed = {};
 function applyFilterAndRender() {
   let S = rawSessions.slice();
@@ -974,7 +1141,6 @@ function applyFilterAndRender() {
   }
   banner("", false);
 
-  /* View Transition (B5) */
   const doRender = () => renderAll(S, rawGear, rawParsed);
   if (document.startViewTransition) document.startViewTransition(doRender);
   else doRender();
@@ -986,14 +1152,14 @@ $("#filterReset").addEventListener("click", () => {
   applyFilterAndRender();
 });
 
-/* ========== Data Loading ========== */
+/* ========== Live Data Fetching ========== */
 async function fetchCSV(url) {
   const cleanUrl = url.trim() + (url.includes("?") ? "&" : "?") + "_=" + Date.now();
   const res = await fetch(cleanUrl, { cache: "no-store" });
   if (!res.ok) throw new Error("HTTP " + res.status);
   const text = await res.text();
   if (text.includes("<!DOCTYPE html") || text.includes("Sign in to your Google Account"))
-    throw new Error("Google returned a sign-in page. Ensure sharing is set to 'Anyone with the link'.");
+    throw new Error("Google returned a sign-in screen. Check sheet sharing settings.");
   return text;
 }
 
@@ -1027,7 +1193,7 @@ async function loadData() {
   $("#footTime").textContent = `Auto-refreshes every ${CONFIG.REFRESH_MINUTES} min`;
 }
 
-/* ========== Theme Toggle with View Transitions (B5) ========== */
+/* ========== Theme Switching ========== */
 let isDark = localStorage.getItem("bd_theme") === "dark" || (!localStorage.getItem("bd_theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
 function applyTheme() {
   document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
@@ -1049,14 +1215,14 @@ $("#themeToggle").addEventListener("click", () => {
   else doToggle();
 });
 
-/* ========== Dialog Close Handlers ========== */
+/* ========== Modal Dialog Controls ========== */
 $(".dialog-close").addEventListener("click", () => $("#sessionDialog").close());
 $("#sessionDialog").addEventListener("click", e => { if (e.target === e.currentTarget) e.target.close(); });
 
-/* ========== Print / Export (D5) ========== */
+/* ========== Print / Export ========== */
 $("#exportBtn").addEventListener("click", () => window.print());
 
-/* ========== Init ========== */
+/* ========== Initialization ========== */
 initGoals();
 $("#refresh").addEventListener("click", loadData);
 setInterval(loadData, CONFIG.REFRESH_MINUTES * 60000);

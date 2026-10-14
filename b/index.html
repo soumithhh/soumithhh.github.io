@@ -3,11 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>Badminton Log</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏸</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://docs.google.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" fetchpriority="high">
 <style>
+/* ========== Variables & Color Scheme ========== */
 :root{
   --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
   --court:#1B5E4A; --court-deep:#134636; --chalk:#F6F4EA; --shuttle:#F2C230;
@@ -15,14 +19,7 @@
   --c1:#1B5E4A; --c2:#F2C230; --c3:#2D6CDF; --c4:#D1495B; --c5:#7A5CD6; --c6:#2BA6A0;
   --l0:#E3E9E4; --l1:#A9D3BF; --l2:#4FA17F; --l3:#1B5E4A;
   --font:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-}
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#0D1612; --card:#15221C; --ink:#E8F0EA; --muted:#93A69B; --line:#25362E;
-    --court:#1F7A5F; --court-deep:#0F3A2D; --good:#4FC08D; --bad:#E5738A;
-    --c1:#4FC08D; --c2:#F2C230; --c3:#6FA0F5; --c4:#E5738A; --c5:#A68CF0; --c6:#52C7C1;
-    --l0:#1E2D26; --l1:#2B5A47; --l2:#3A8A69; --l3:#5FD0A0;
-  }
+  --radius:14px; --shadow:0 2px 8px rgba(0,0,0,.06);
 }
 [data-theme="light"]{
   --bg:#EDF1EC; --card:#FFFFFF; --ink:#12231C; --muted:#5B6D64; --line:#D8E0DA;
@@ -36,153 +33,344 @@
   --c1:#4FC08D; --c2:#F2C230; --c3:#6FA0F5; --c4:#E5738A; --c5:#A68CF0; --c6:#52C7C1;
   --l0:#1E2D26; --l1:#2B5A47; --l2:#3A8A69; --l3:#5FD0A0;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;transition:background 0.2s,color 0.2s}
-.wrap{max-width:1180px;margin:0 auto;padding:16px 16px 56px}
+
+/* ========== Reset & Base ========== */
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;transition:background .3s,color .3s}
+.wrap{max-width:1180px;margin:0 auto;padding:16px 16px 80px}
 h1,h2,h3,p{margin:0}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--shuttle);outline-offset:2px}
 
-/* Top bar */
+/* ========== Skip Link (E5) ========== */
+.skip-link{position:absolute;top:-100%;left:16px;background:var(--court);color:var(--chalk);padding:10px 18px;border-radius:0 0 10px 10px;z-index:999;font-weight:700;text-decoration:none;
+  &:focus{top:0}
+}
+
+/* ========== Skeleton Loading (A7) ========== */
+@keyframes shimmer{to{background-position:-200% 0}}
+.skeleton{pointer-events:none}
+.skel{border-radius:8px;background:linear-gradient(90deg,var(--line) 25%,var(--bg) 50%,var(--line) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+.skel-sm{height:14px;width:60%;margin-bottom:6px}
+.skel-lg{height:32px;width:45%;margin-bottom:4px}
+.skel-full{height:200px;width:100%;border-radius:var(--radius)}
+
+/* ========== Top Bar ========== */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 0 16px}
 .brand{display:flex;align-items:center;gap:10px}
 .shuttle-icon{font-size:1.6rem;line-height:1}
 .top h1{font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
-.top .meta{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.85rem}
-.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:0.15s ease}
-.btn:hover{border-color:var(--court);transform:translateY(-1px)}
-.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.9rem}
-.banner.err{background:#FBE3E6;color:#7A1626}
-.banner[hidden]{display:none}
+.top .meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.85rem;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:.2s ease;min-height:44px;min-width:44px;justify-content:center;
+  &:hover{border-color:var(--court);transform:translateY(-1px);box-shadow:var(--shadow)}
+  &:active{transform:translateY(0)}
+}
 
-/* Hero court */
-.hero{position:relative;overflow:hidden;border-radius:20px;background:var(--court);color:var(--chalk);margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
-.hero .court{position:absolute;inset:0;width:100%;height:100%;opacity:.22}
-.hero-in{position:relative;display:grid;grid-template-columns:auto 1fr;gap:12px 36px;align-items:end;padding:26px 28px}
+/* ========== Filter Bar (D13) ========== */
+.filter-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 0 14px;font-size:.88rem;
+  & label{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:600}
+  & input[type="date"]{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;font-size:.88rem;color:var(--ink);min-height:40px}
+  & .filter-tag{background:color-mix(in srgb,var(--shuttle) 18%,transparent);color:var(--ink);padding:4px 10px;border-radius:8px;font-size:.8rem;font-weight:600;display:none;
+    &.active{display:inline-flex;align-items:center;gap:4px}
+  }
+}
+
+/* ========== Banner ========== */
+.banner{margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FFF4CC;color:#5A4500;font-size:.9rem;
+  &.err{background:#FBE3E6;color:#7A1626}
+  &[hidden]{display:none}
+}
+
+/* ========== Hero — Glassmorphism + Animated Gradient (A1, A2) ========== */
+@keyframes heroShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero{position:relative;overflow:hidden;border-radius:20px;color:var(--chalk);margin-bottom:16px;
+  background:linear-gradient(135deg,var(--court),var(--court-deep),#1a6b52,var(--court));
+  background-size:300% 300%;animation:heroShift 12s ease infinite;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  & .court{position:absolute;inset:0;width:100%;height:100%;opacity:.18}
+  & .hero-glass{position:relative;backdrop-filter:blur(8px) saturate(160%);-webkit-backdrop-filter:blur(8px) saturate(160%);background:rgba(27,94,74,.15)}
+}
+.hero-in{display:grid;grid-template-columns:auto 1fr;gap:12px 36px;align-items:end;padding:26px 28px}
 .dlabel{font-size:1rem;font-weight:600;opacity:.85}
 .dnum{font-size:clamp(4.5rem,16vw,7.5rem);font-weight:800;line-height:.9;letter-spacing:-.04em}
 .hero-side{display:grid;gap:14px}
 .hero-sub{font-size:1.05rem;max-width:40ch;line-height:1.4}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{background:rgba(246,244,234,.14);border:1px solid rgba(246,244,234,.28);border-radius:12px;padding:8px 14px}
-.chip b{display:block;font-size:1.35rem;line-height:1.2}
-.chip span{font-size:.8rem;opacity:.85}
-@media (max-width:640px){.hero-in{grid-template-columns:1fr;padding:22px 20px}}
+.chip{background:color-mix(in srgb,var(--chalk) 14%,transparent);border:1px solid color-mix(in srgb,var(--chalk) 28%,transparent);border-radius:12px;padding:8px 14px;backdrop-filter:blur(4px);
+  & b{display:block;font-size:1.35rem;line-height:1.2}
+  & span{font-size:.8rem;opacity:.85}
+}
+@media(max-width:640px){.hero-in{grid-template-columns:1fr;padding:22px 20px}}
 
-/* KPIs */
+/* ========== KPIs — Color-coded, tabular nums, @starting-style (A5, A6, B13) ========== */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-.kpi .k{font-size:.85rem;color:var(--muted)}
-.kpi .v{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.25}
-.kpi .s{font-size:.8rem;color:var(--muted)}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;border-left:4px solid var(--line);transition:opacity .5s ease,transform .5s ease;
+  &:nth-child(1){border-left-color:var(--c1)}
+  &:nth-child(2){border-left-color:var(--c2)}
+  &:nth-child(3){border-left-color:var(--c3)}
+  &:nth-child(4){border-left-color:var(--c4)}
+  &:nth-child(5){border-left-color:var(--c5)}
+  &:nth-child(6){border-left-color:var(--c6)}
+  & .k{font-size:.85rem;color:var(--muted)}
+  & .v{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;line-height:1.25;font-variant-numeric:tabular-nums}
+  & .s{font-size:.8rem;color:var(--muted)}
+}
+@starting-style{.kpi{opacity:0;transform:translateY(20px)}}
 
-/* Panels */
+/* ========== Grid & Panels — Container queries, content-visibility (B1, B10, A3) ========== */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.panel{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-width:0}
-.panel h2{font-size:1.05rem;font-weight:800;margin-bottom:2px}
-.panel .hint{font-size:.85rem;color:var(--muted);margin-bottom:12px}
-@media (min-width:860px){.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}}
+.panel{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-width:0;container-type:inline-size;content-visibility:auto;contain-intrinsic-size:auto 350px;transition:transform .2s ease,box-shadow .2s ease;
+  &:hover{box-shadow:0 6px 20px rgba(0,0,0,.07);transform:translateY(-2px)}
+  & h2{font-size:1.05rem;font-weight:800;margin-bottom:2px;text-wrap:balance}
+  & .hint{font-size:.85rem;color:var(--muted);margin-bottom:12px}
+  &:has(.nodata){border-style:dashed;opacity:.8}
+}
+@media(min-width:860px){.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}}
 .chart{position:relative;height:250px}
+@container(max-width:350px){.chart{height:200px}}
+@container(min-width:500px){.chart{height:280px}}
 .chart.tall{height:300px}
 .nodata{color:var(--muted);font-size:.9rem;padding:20px 0;text-align:center}
 
-/* Insights */
-.insights{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.insights li{padding-left:14px;border-left:4px solid var(--shuttle);max-width:75ch;line-height:1.55}
+/* ========== Insights ========== */
+.insights{list-style:none;padding:0;display:grid;gap:10px;
+  & li{padding-left:14px;border-left:4px solid var(--shuttle);max-width:75ch;line-height:1.55}
+}
 
-/* Heatmap */
-.heat-wrap{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:4px}
-.heat-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-size:.7rem;color:var(--muted);padding-right:2px}
-.heat-days span{display:flex;align-items:center}
+/* ========== Records / Milestones (D3) ========== */
+.records{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.record-card{background:var(--bg);border-radius:12px;padding:12px 14px;text-align:center;transition:transform .2s;
+  &:hover{transform:scale(1.03)}
+  & .rec-icon{font-size:1.6rem;margin-bottom:4px}
+  & .rec-val{font-size:1.3rem;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
+  & .rec-label{font-size:.78rem;color:var(--muted);margin-top:2px}
+}
+
+/* ========== Heatmap ========== */
+.heat-wrap{display:flex;gap:8px;align-items:stretch;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg)}
+.heat-days{display:grid;grid-template-rows:repeat(7,1fr);gap:3px;font-size:.7rem;color:var(--muted);padding-right:2px;
+  & span{display:flex;align-items:center}
+}
 .heat{flex:1;display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(16,1fr);gap:3px;min-width:280px}
-.cell{display:block;aspect-ratio:1;border-radius:3px;background:var(--l0);cursor:pointer;transition:transform 0.1s}
-.cell:hover{transform:scale(1.2)}
-.cell.l1{background:var(--l1)}.cell.l2{background:var(--l2)}.cell.l3{background:var(--l3)}
-.cell.fut{opacity:.35}
-.legend{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:12px}
-.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.cell{display:block;aspect-ratio:1;border-radius:3px;background:var(--l0);cursor:pointer;transition:transform .1s;
+  &:hover{transform:scale(1.25);z-index:2}
+  &.l1{background:var(--l1)}&.l2{background:var(--l2)}&.l3{background:var(--l3)}
+  &.fut{opacity:.35}
+}
+.legend{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);margin-top:12px;
+  & i{width:12px;height:12px;border-radius:3px;display:inline-block}
+}
 
-/* Calculator */
-.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
-.calc label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);font-weight:600}
-.calc input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:1rem;color:var(--ink);width:100%}
-.verdict{padding:12px 14px;border-radius:12px;background:var(--bg);display:grid;gap:4px}
-.verdict b{font-size:1.1rem}
+/* ========== Goals (D2) ========== */
+.goals{display:grid;gap:14px}
+.goal{display:grid;gap:6px;
+  & label{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:var(--muted);font-weight:600}
+  & input{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 10px;width:60px;text-align:center;font-weight:700;font-size:.95rem}
+}
+.progress-bar{height:10px;background:var(--bg);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;border-radius:10px;background:var(--court);transition:width .6s ease;min-width:0}
+.progress-fill.over{background:var(--shuttle)}
+.goal-status{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
 
-/* Tables */
-.tbl{overflow-x:auto}
+/* ========== Calculator ========== */
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px;
+  & label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);font-weight:600}
+  & input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 11px;font-size:1rem;color:var(--ink);width:100%}
+}
+.verdict{padding:12px 14px;border-radius:12px;background:var(--bg);display:grid;gap:4px;
+  & b{font-size:1.1rem}
+}
+
+/* ========== Tables ========== */
+.tbl{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--court) var(--bg)}
 table{border-collapse:collapse;width:100%;font-size:.9rem}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
 th{font-weight:700;color:var(--muted);font-size:.82rem}
-td.n,th.n{text-align:right}
-.partner-tag{background:var(--bg);padding:2px 7px;border-radius:6px;font-size:0.75rem;margin-right:3px;display:inline-block}
-details{margin-top:18px;color:var(--muted);font-size:.88rem}
-details summary{cursor:pointer;font-weight:600}
-details ul{margin:8px 0 0;padding-left:18px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.partner-tag{background:var(--bg);padding:2px 7px;border-radius:6px;font-size:.75rem;margin-right:3px;display:inline-flex;align-items:center;gap:4px}
+.avatar{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff;flex-shrink:0}
+tr.clickable{cursor:pointer;&:hover{background:color-mix(in srgb,var(--court) 6%,transparent)}}
+
+/* ========== Search Bar (D14) ========== */
+.search-bar{margin-bottom:12px;
+  & input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 14px;font-size:.9rem;width:100%;max-width:320px;min-height:44px;color:var(--ink);
+    &::placeholder{color:var(--muted)}
+  }
+}
+
+/* ========== Session Dialog (D1, B2) ========== */
+dialog{border:none;border-radius:20px;background:var(--card);color:var(--ink);padding:0;max-width:480px;width:90vw;box-shadow:0 16px 48px rgba(0,0,0,.18);
+  &::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(4px)}
+}
+.dialog-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 0;
+  & h2{font-size:1.1rem;font-weight:800}
+}
+.dialog-close{background:none;border:none;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:8px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;
+  &:hover{background:var(--bg)}
+}
+.dialog-body{padding:14px 22px 22px;display:grid;gap:12px;
+  & .d-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  & .d-label{font-size:.85rem;color:var(--muted);font-weight:600}
+  & .d-value{font-weight:700;font-variant-numeric:tabular-nums}
+  & .d-partners{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+}
+
+/* ========== Empty States (A10) ========== */
+.empty-state{text-align:center;padding:30px 20px;color:var(--muted);
+  & .empty-icon{font-size:2.5rem;margin-bottom:8px;opacity:.6}
+  & .empty-text{font-size:.95rem;max-width:30ch;margin:0 auto}
+}
+
+/* ========== Details Accordion (B11) ========== */
+details{margin-top:18px;color:var(--muted);font-size:.88rem;
+  & summary{cursor:pointer;font-weight:600;padding:8px 0;min-height:44px;display:flex;align-items:center}
+  & ul{margin:8px 0 0;padding-left:18px}
+}
+
+/* ========== Footer ========== */
 footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);padding-top:16px}
+
+/* ========== Mobile Bottom Nav (E1) ========== */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:6px 0 env(safe-area-inset-bottom,6px);z-index:100;
+  & ul{display:flex;justify-content:space-around;list-style:none;padding:0;margin:0}
+  & a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--muted);font-size:.65rem;font-weight:600;padding:6px 10px;border-radius:8px;min-width:44px;min-height:44px;justify-content:center;
+    &:hover,&:focus{color:var(--court);background:color-mix(in srgb,var(--court) 8%,transparent)}
+    & .nav-icon{font-size:1.2rem}
+  }
+}
+@media(max-width:640px){.mobile-nav{display:block}.wrap{padding-bottom:100px}}
+
+/* ========== Scroll-Driven Animations (B6) ========== */
+@supports(animation-timeline:view()){
+  .panel{animation:panelReveal linear both;animation-timeline:view();animation-range:entry 0% entry 40%}
+  @keyframes panelReveal{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+}
+
+/* ========== Custom Scrollbars (A4) ========== */
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg);border-radius:4px}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;&:hover{background:var(--muted)}}
+
+/* ========== Reduced Motion (E4) ========== */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+
+/* ========== Print Styles (E7) ========== */
+@media print{
+  .top .meta,.btn,.filter-bar,.mobile-nav,.calc,.search-bar,dialog,.skip-link{display:none !important}
+  .wrap{max-width:100%;padding:0}
+  .hero{break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .panel{break-inside:avoid;box-shadow:none;border:1px solid #ccc;content-visibility:visible}
+  .grid{display:block;& .panel{margin-bottom:14px}}
+  body{background:#fff;color:#000;font-size:12px}
+}
+
+/* ========== High Contrast (E6) ========== */
+@media(forced-colors:active){
+  .chip,.kpi,.panel,.btn{border:2px solid CanvasText}
+  .progress-fill{forced-color-adjust:none}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<!-- Skip Navigation (E5) -->
+<a href="#main" class="skip-link">Skip to content</a>
+
+<div class="wrap">
   <header class="top">
     <div class="brand">
-      <span class="shuttle-icon">🏸</span>
-      <div>
-        <h1>Badminton log</h1>
-      </div>
+      <span class="shuttle-icon" aria-hidden="true">🏸</span>
+      <div><h1>Badminton log</h1></div>
     </div>
     <div class="meta">
       <span id="updated" aria-live="polite">Loading...</span>
-      <button class="btn" id="refresh" type="button">🔄 Refresh</button>
-      <button class="btn" id="themeToggle" type="button" title="Toggle theme">🌓</button>
+      <button class="btn" id="refresh" type="button" aria-label="Refresh data">🔄 Refresh</button>
+      <button class="btn" id="exportBtn" type="button" aria-label="Print report">🖨️ Print</button>
+      <button class="btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle dark mode">🌓</button>
     </div>
   </header>
+
+  <!-- Date Range Filter (D13) -->
+  <div class="filter-bar" id="filterBar">
+    <label>From <input type="date" id="filterFrom"></label>
+    <label>To <input type="date" id="filterTo"></label>
+    <button class="btn" id="filterReset" type="button" style="padding:8px 12px;font-size:.82rem">Reset</button>
+    <span class="filter-tag" id="filterTag">🔍 Filtered</span>
+  </div>
 
   <div class="banner" id="banner" hidden></div>
 
   <section class="hero" aria-label="Journey summary">
     <svg class="court" viewBox="0 0 134 61" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="#F6F4EA" stroke-width=".5">
-      <rect x="1" y="1" width="132" height="59"/>
-      <line x1="1" y1="5.6" x2="133" y2="5.6"/>
-      <line x1="1" y1="55.4" x2="133" y2="55.4"/>
-      <line x1="67" y1="1" x2="67" y2="60" stroke-width=".9"/>
-      <line x1="47.2" y1="1" x2="47.2" y2="60"/>
-      <line x1="86.8" y1="1" x2="86.8" y2="60"/>
-      <line x1="8.6" y1="1" x2="8.6" y2="60"/>
-      <line x1="125.4" y1="1" x2="125.4" y2="60"/>
-      <line x1="1" y1="30.5" x2="47.2" y2="30.5"/>
-      <line x1="86.8" y1="30.5" x2="133" y2="30.5"/>
+      <rect x="1" y="1" width="132" height="59"/><line x1="1" y1="5.6" x2="133" y2="5.6"/><line x1="1" y1="55.4" x2="133" y2="55.4"/>
+      <line x1="67" y1="1" x2="67" y2="60" stroke-width=".9"/><line x1="47.2" y1="1" x2="47.2" y2="60"/><line x1="86.8" y1="1" x2="86.8" y2="60"/>
+      <line x1="8.6" y1="1" x2="8.6" y2="60"/><line x1="125.4" y1="1" x2="125.4" y2="60"/>
+      <line x1="1" y1="30.5" x2="47.2" y2="30.5"/><line x1="86.8" y1="30.5" x2="133" y2="30.5"/>
     </svg>
-    <div class="hero-in">
-      <div>
-        <p class="dlabel">Day</p>
-        <p class="dnum" id="dayNo">0</p>
-      </div>
-      <div class="hero-side">
-        <p class="hero-sub" id="heroSub">Connecting to Google Sheet...</p>
-        <div class="chips" id="chips"></div>
+    <div class="hero-glass">
+      <div class="hero-in">
+        <div>
+          <p class="dlabel">Day</p>
+          <p class="dnum" id="dayNo">0</p>
+        </div>
+        <div class="hero-side">
+          <p class="hero-sub" id="heroSub">Connecting to Google Sheet...</p>
+          <div class="chips" id="chips"></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="kpis" id="kpis" aria-label="Key numbers"></section>
+  <!-- KPI Cards with Skeleton Loading (A7) -->
+  <section class="kpis" id="kpis" aria-label="Key numbers" aria-live="polite">
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+    <div class="kpi skeleton"><div class="skel skel-sm"></div><div class="skel skel-lg"></div><div class="skel skel-sm"></div></div>
+  </section>
 
-  <div class="grid">
-    <section class="panel">
+  <main id="main" class="grid">
+    <section class="panel s7">
       <h2>What your data says</h2>
       <p class="hint">Generated directly from your Google Sheet.</p>
-      <ul class="insights" id="insights"></ul>
+      <ul class="insights" id="insights"><li class="skeleton"><div class="skel skel-full" style="height:80px"></div></li></ul>
+    </section>
+
+    <section class="panel s5">
+      <h2>🏆 Personal Records</h2>
+      <p class="hint">Your best achievements so far.</p>
+      <div class="records" id="records"><div class="skel skel-full" style="height:120px"></div></div>
     </section>
 
     <section class="panel s7">
       <h2>Last 16 weeks</h2>
-      <p class="hint">Each square is a day. Darker green indicates longer court playtime.</p>
+      <p class="hint">Each square is a day. Darker green = longer court time.</p>
       <div class="heat-wrap">
         <div class="heat-days" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
         <div class="heat" id="heat" role="img" aria-label="Play calendar for the last 16 weeks"></div>
       </div>
       <div class="legend"><span>Rest</span><i style="background:var(--l0)"></i><i style="background:var(--l1)"></i><i style="background:var(--l2)"></i><i style="background:var(--l3)"></i><span>Long session</span></div>
+    </section>
+
+    <section class="panel s5">
+      <h2>🎯 Goals</h2>
+      <p class="hint">Set targets and track your consistency.</p>
+      <div class="goals">
+        <div class="goal">
+          <label>Weekly target <input id="goalWeek" type="number" min="1" max="14" value="3"></label>
+          <div class="progress-bar"><div class="progress-fill" id="goalWeekFill" style="width:0"></div></div>
+          <span class="goal-status" id="goalWeekStatus">—</span>
+        </div>
+        <div class="goal">
+          <label>Monthly target <input id="goalMonth" type="number" min="1" max="60" value="12"></label>
+          <div class="progress-bar"><div class="progress-fill" id="goalMonthFill" style="width:0"></div></div>
+          <span class="goal-status" id="goalMonthStatus">—</span>
+        </div>
+      </div>
     </section>
 
     <section class="panel s5">
@@ -246,32 +434,57 @@ footer{margin-top:24px;color:var(--muted);font-size:.82rem;display:flex;justify-
 
     <section class="panel s7">
       <h2>Gear list</h2>
-      <p class="hint">"Per session" is cost divided by sessions played since purchase.</p>
+      <p class="hint">"Per session" = cost ÷ sessions played since purchase.</p>
       <div class="tbl" id="gearTbl"></div>
     </section>
 
     <section class="panel">
       <h2>Recent sessions</h2>
-      <p class="hint">Your latest sessions log.</p>
+      <p class="hint">Your latest sessions log. Click a row for details.</p>
+      <div class="search-bar"><input type="search" id="sessionSearch" placeholder="Search by partner, date, slot..." aria-label="Search sessions"></div>
       <div class="tbl" id="recentTbl"></div>
     </section>
-  </div>
+  </main>
 
-  <details>
+  <details name="info-panel">
     <summary>How the columns were read</summary>
     <ul id="mapping"></ul>
   </details>
+  <details name="info-panel">
+    <summary>Data sources</summary>
+    <ul><li>Sessions: Published Google Sheets CSV</li><li>Gear: Published Google Sheets CSV</li></ul>
+  </details>
 
   <footer id="foot">
-    <span>Badminton Log &bull; Auto-syncs directly from your Google Sheet</span>
+    <span>Badminton Log &bull; Auto-syncs from your Google Sheet</span>
     <span id="footTime"></span>
   </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<!-- Session Detail Dialog (D1, B2) -->
+<dialog id="sessionDialog">
+  <div class="dialog-header">
+    <h2 id="dialogTitle">Session Details</h2>
+    <button class="dialog-close" aria-label="Close dialog">&times;</button>
+  </div>
+  <div class="dialog-body" id="dialogBody"></div>
+</dialog>
+
+<!-- Mobile Bottom Nav (E1) -->
+<nav class="mobile-nav" aria-label="Quick navigation">
+  <ul>
+    <li><a href="#kpis"><span class="nav-icon">📊</span>Stats</a></li>
+    <li><a href="#heat"><span class="nav-icon">📅</span>Calendar</a></li>
+    <li><a href="#chDuration"><span class="nav-icon">📈</span>Charts</a></li>
+    <li><a href="#gearTbl"><span class="nav-icon">🎒</span>Gear</a></li>
+    <li><a href="#recentTbl"><span class="nav-icon">📋</span>Log</a></li>
+  </ul>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
 <script>
 /* ============================================================
-   CONFIG: Put your Google Sheets published CSV links below
+   CONFIG
    ============================================================ */
 const CONFIG = {
   SESSIONS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSGuqca1pmIcDKSzkH6Z-LRwI6mQWxFR3egbBFn0B-Ywn2U29P5dCTeyKUDa-Xk2oEXURwAmndl-y_v/pub?gid=375537300&single=true&output=csv",
@@ -282,8 +495,9 @@ const CONFIG = {
   NAME_ALIASES: { "nischith": "Nischit" }
 };
 
-/* ---------- Helpers ---------- */
+/* ========== Helpers ========== */
 const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const DAY = 86400000;
 const money = n => CONFIG.CURRENCY + Math.round(n || 0).toLocaleString("en-IN");
@@ -298,39 +512,36 @@ const weekStart = d => { const x = startOfDay(d); x.setDate(x.getDate() - ((x.ge
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const WD = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-/* ---------- Smart CSV Parser ---------- */
+/* ========== Partner Avatars (D8) ========== */
+function getInitials(name) { return name.split(/\s+/).map(w => w[0]).join("").toUpperCase().slice(0, 2); }
+function nameColor(name) {
+  let h = 0; for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  const cols = ["#1B5E4A","#2D6CDF","#D1495B","#7A5CD6","#2BA6A0","#C97C1B"];
+  return cols[Math.abs(h) % cols.length];
+}
+
+/* ========== CSV Parser ========== */
 function parseCSV(text) {
   text = String(text ?? "").replace(/^\uFEFF/, "").trim();
   if (!text) return [];
-
   const lines = text.split(/\r?\n/).slice(0, 5);
   let tabs = 0, commas = 0;
   lines.forEach(l => { tabs += (l.match(/\t/g)||[]).length; commas += (l.match(/,/g)||[]).length; });
   const delimiter = tabs > 0 && tabs >= commas ? "\t" : ",";
-
   const rows = []; let row = [], cur = "", inQ = false;
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
-    if (inQ) {
-      if (c === '"') {
-        if (text[i + 1] === '"') { cur += '"'; i++; }
-        else inQ = false;
-      } else cur += c;
-    } else if (c === '"') {
-      inQ = true;
-    } else if (c === delimiter) {
-      row.push(cur.trim()); cur = "";
-    } else if (c === "\n" || c === "\r") {
-      if (c === "\r" && text[i + 1] === "\n") i++;
-      row.push(cur.trim()); cur = "";
-      if (row.some(x => x !== "")) rows.push(row);
-      row = [];
-    } else cur += c;
+    if (inQ) { if (c === '"') { if (text[i+1] === '"') { cur += '"'; i++; } else inQ = false; } else cur += c; }
+    else if (c === '"') inQ = true;
+    else if (c === delimiter) { row.push(cur.trim()); cur = ""; }
+    else if (c === "\n" || c === "\r") { if (c === "\r" && text[i+1] === "\n") i++; row.push(cur.trim()); cur = ""; if (row.some(x => x !== "")) rows.push(row); row = []; }
+    else cur += c;
   }
   if (cur !== "" || row.length) { row.push(cur.trim()); if (row.some(x => x !== "")) rows.push(row); }
   return rows;
 }
 
+/* ========== Column Mapping ========== */
 const norm = s => String(s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 function mapColumns(headers, spec) {
   const H = headers.map(norm), used = new Set(), map = {};
@@ -341,113 +552,79 @@ function mapColumns(headers, spec) {
   }
   return map;
 }
-
 const SESSION_SPEC = {
-  date:     { exact: ["date", "daydate", "playeddate", "sessiondate"], has: ["date", "played"] },
-  duration: { exact: ["duration", "minutes", "mins", "playtime", "timeplayed", "hours", "howlong"], has: ["duration", "minute", "mins", "timeplayed"] },
-  fee:      { exact: ["fee", "fees", "cost", "amount", "price", "paid", "courtfee", "courtfees"], has: ["fee", "cost", "amount", "price", "paid"] },
-  partners: { exact: ["partners", "partner", "people", "players", "playedwith", "playingwith", "with"], has: ["partner", "people", "player", "playedwith"] },
-  time:     { exact: ["time", "timeofday", "slot", "sessiontime", "starttime", "when"], has: ["timeofday", "slot", "starttime"] },
-  day:      { exact: ["day", "dayno", "daynumber", "sessionno", "sessionnumber", "session", "sno"], has: ["dayno", "daynumber", "sessionno"] },
-  notes:    { exact: ["notes", "note", "remarks", "comments", "comment"], has: ["note", "remark", "comment"] }
+  date:     { exact: ["date","daydate","playeddate","sessiondate"], has: ["date","played"] },
+  duration: { exact: ["duration","minutes","mins","playtime","timeplayed","hours","howlong"], has: ["duration","minute","mins","timeplayed"] },
+  fee:      { exact: ["fee","fees","cost","amount","price","paid","courtfee","courtfees"], has: ["fee","cost","amount","price","paid"] },
+  partners: { exact: ["partners","partner","people","players","playedwith","playingwith","with"], has: ["partner","people","player","playedwith"] },
+  time:     { exact: ["time","timeofday","slot","sessiontime","starttime","when"], has: ["timeofday","slot","starttime"] },
+  day:      { exact: ["day","dayno","daynumber","sessionno","sessionnumber","session","sno"], has: ["dayno","daynumber","sessionno"] },
+  notes:    { exact: ["notes","note","remarks","comments","comment"], has: ["note","remark","comment"] }
 };
-
 const GEAR_SPEC = {
-  cost:     { exact: ["cost", "price", "amount", "paid", "mrp", "total"], has: ["cost", "price", "amount", "paid"] },
-  date:     { exact: ["date", "bought", "purchased", "boughton", "purchasedon"], has: ["date", "bought", "purchas"] },
-  category: { exact: ["category", "type", "kind"], has: ["categor", "type"] },
-  store:    { exact: ["store", "shop", "vendor", "boughtfrom", "seller"], has: ["store", "shop", "vendor"] },
-  item:     { exact: ["item", "gear", "name", "product", "description"], has: ["item", "gear", "product", "name"] }
+  cost:     { exact: ["cost","price","amount","paid","mrp","total"], has: ["cost","price","amount","paid"] },
+  date:     { exact: ["date","bought","purchased","boughton","purchasedon"], has: ["date","bought","purchas"] },
+  category: { exact: ["category","type","kind"], has: ["categor","type"] },
+  store:    { exact: ["store","shop","vendor","boughtfrom","seller"], has: ["store","shop","vendor"] },
+  item:     { exact: ["item","gear","name","product","description"], has: ["item","gear","product","name"] }
 };
 
+/* ========== Data Parsers ========== */
 const mkDate = (y, m, d) => { const x = new Date(y, m - 1, d); return x.getMonth() === m - 1 ? x : null; };
 function parseDate(s) {
-  s = String(s ?? "").trim().replace(/T\d{2}:\d{2}.*$/, "");
-  if (!s) return null;
-  let m = s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);
-  if (m) return mkDate(+m[1], +m[2], +m[3]);
+  s = String(s ?? "").trim().replace(/T\d{2}:\d{2}.*$/, ""); if (!s) return null;
+  let m = s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/); if (m) return mkDate(+m[1], +m[2], +m[3]);
   m = s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})/);
-  if (m) {
-    const a = +m[1], b = +m[2]; let y = +m[3]; if (y < 100) y += 2000;
-    return (b > 12 && a <= 12) ? mkDate(y, a, b) : mkDate(y, b, a);
-  }
-  const t = Date.parse(s.replace(/([0-9]+)(st|nd|rd|th)/gi, "$1"));
-  return isNaN(t) ? null : startOfDay(new Date(t));
+  if (m) { const a = +m[1], b = +m[2]; let y = +m[3]; if (y < 100) y += 2000; return (b > 12 && a <= 12) ? mkDate(y, a, b) : mkDate(y, b, a); }
+  const t = Date.parse(s.replace(/([0-9]+)(st|nd|rd|th)/gi, "$1")); return isNaN(t) ? null : startOfDay(new Date(t));
 }
-
-function parseMoney(v) {
-  if (typeof v === "number") return v;
-  const n = parseFloat(String(v ?? "").replace(/,/g, "").replace(/[^\d.\-]/g, ""));
-  return isNaN(n) ? 0 : n;
-}
-
+function parseMoney(v) { if (typeof v === "number") return v; const n = parseFloat(String(v ?? "").replace(/,/g, "").replace(/[^\d.\-]/g, "")); return isNaN(n) ? 0 : n; }
 function parseDuration(v) {
   const s = String(v ?? "").toLowerCase().trim(); if (!s) return 0;
   let m = s.match(/^(\d+):(\d{2})$/); if (m) return +m[1] * 60 + +m[2];
   let total = 0, found = false;
   const h = s.match(/(\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hour|hours)/); if (h) { total += parseFloat(h[1]) * 60; found = true; }
   const mi = s.match(/(\d+(?:\.\d+)?)\s*(?:m|min|mins|minute|minutes)\b/); if (mi) { total += parseFloat(mi[1]); found = true; }
-  if (found) return total;
-  const n = parseFloat(s.replace(/[^\d.]/g, "")); if (isNaN(n)) return 0;
-  return n <= 5 ? n * 60 : n;
+  if (found) return total; const n = parseFloat(s.replace(/[^\d.]/g, "")); if (isNaN(n)) return 0; return n <= 5 ? n * 60 : n;
 }
-
 function parseStartHour(v) {
-  const s = String(v ?? "").toLowerCase();
-  let h, ap = null; const t = s.match(/(\d{1,2})(?::\d{2})?\s*([ap])\.?m/);
-  if (t) { h = +t[1]; ap = t[2]; }
-  else { const m = s.match(/(\d{1,2})(?::\d{2})?/); if (!m) return null; h = +m[1]; const x = s.match(/([ap])\.?m\b/); if (x) ap = x[1]; }
-  if (ap) { if (ap === "p" && h < 12) h += 12; if (ap === "a" && h === 12) h = 0; }
-  return h < 24 ? h : null;
+  const s = String(v ?? "").toLowerCase(); let h, ap = null;
+  const t = s.match(/(\d{1,2})(?::\d{2})?\s*([ap])\.?m/);
+  if (t) { h = +t[1]; ap = t[2]; } else { const m = s.match(/(\d{1,2})(?::\d{2})?/); if (!m) return null; h = +m[1]; const x = s.match(/([ap])\.?m\b/); if (x) ap = x[1]; }
+  if (ap) { if (ap === "p" && h < 12) h += 12; if (ap === "a" && h === 12) h = 0; } return h < 24 ? h : null;
 }
-
 function parseSlot(v) {
   const s = String(v ?? "").toLowerCase().trim(); if (!s) return "Unknown";
-  if (/morn|dawn|sunrise/.test(s)) return "Morning";
-  if (/after|noon/.test(s)) return "Afternoon";
-  if (/even|dusk/.test(s)) return "Evening";
-  if (/night|late/.test(s)) return "Night";
+  if (/morn|dawn|sunrise/.test(s)) return "Morning"; if (/after|noon/.test(s)) return "Afternoon";
+  if (/even|dusk/.test(s)) return "Evening"; if (/night|late/.test(s)) return "Night";
   const h = parseStartHour(s); if (h === null) return "Unknown";
-  if (h >= 4 && h < 12) return "Morning";
-  if (h >= 12 && h < 17) return "Afternoon";
-  if (h >= 17 && h < 20) return "Evening";
-  return "Night";
+  if (h >= 4 && h < 12) return "Morning"; if (h >= 12 && h < 17) return "Afternoon"; if (h >= 17 && h < 20) return "Evening"; return "Night";
 }
-
 const cleanWindow = v => String(v ?? "").replace(/\s+/g, " ").trim().replace(/\b(am|pm)\b/gi, x => x.toUpperCase());
 const cap = s => s.replace(/\s+/g, " ").replace(/(^|\s)\S/g, c => c.toUpperCase());
 function parsePartners(v) {
   return String(v ?? "").split(/[,&+\/;|]|\band\b/i).map(x => x.trim())
-    .filter(x => x && !/^(solo|alone|none|na|n\/a|-|—|only me|me)$/i.test(x))
-    .map(cap)
+    .filter(x => x && !/^(solo|alone|none|na|n\/a|-|—|only me|me)$/i.test(x)).map(cap)
     .map(n => (CONFIG.NAME_ALIASES || {})[n.toLowerCase()] || n);
 }
-
 function inferCategory(item) {
   const s = item.toLowerCase();
-  if (/sho+e|sneaker|footwear/.test(s)) return "Shoes";
-  if (/racket|racquet/.test(s)) return "Racket";
-  if (/shuttle|cock|feather/.test(s)) return "Shuttles";
-  if (/grip|string|overgrip/.test(s)) return "Grips & Strings";
-  if (/bag|kit/.test(s)) return "Bags";
-  if (/shirt|tee|jersey|short|sock|band|cap|towel/.test(s)) return "Apparel";
-  return "Other";
+  if (/sho+e|sneaker|footwear/.test(s)) return "Shoes"; if (/racket|racquet/.test(s)) return "Racket";
+  if (/shuttle|cock|feather/.test(s)) return "Shuttles"; if (/grip|string|overgrip/.test(s)) return "Grips & Strings";
+  if (/bag|kit/.test(s)) return "Bags"; if (/shirt|tee|jersey|short|sock|band|cap|towel/.test(s)) return "Apparel"; return "Other";
 }
-
 function parseSessions(text) {
   const rows = parseCSV(text); const headers = (rows[0] || []).map(h => h.trim());
   const map = mapColumns(headers, SESSION_SPEC);
   if (map.date === undefined) map.date = 0;
   const feeCols = []; if (map.fee !== undefined) feeCols.push(map.fee);
   const H = headers.map(norm), taken = new Set(Object.values(map));
-  H.forEach((h, i) => { if (!taken.has(i) && ["fee", "cost", "amount", "price", "paid"].some(a => h.includes(a))) feeCols.push(i); });
+  H.forEach((h, i) => { if (!taken.has(i) && ["fee","cost","amount","price","paid"].some(a => h.includes(a))) feeCols.push(i); });
   const sessions = [];
-  rows.slice(1).forEach((r, idx) => {
-    if (!r[map.date]) return;
-    const d = parseDate(r[map.date]); if (!d) return;
+  rows.slice(1).forEach(r => {
+    if (!r[map.date]) return; const d = parseDate(r[map.date]); if (!d) return;
     const dn = map.day !== undefined ? parseInt(String(r[map.day]).replace(/\D/g, ""), 10) : NaN;
-    sessions.push({
-      date: d, dayNo: isNaN(dn) ? null : dn,
+    sessions.push({ date: d, dayNo: isNaN(dn) ? null : dn,
       fee: feeCols.reduce((t, c) => t + parseMoney(r[c]), 0),
       min: map.duration !== undefined ? parseDuration(r[map.duration]) : 0,
       slot: map.time !== undefined ? parseSlot(r[map.time]) : "Unknown",
@@ -461,7 +638,6 @@ function parseSessions(text) {
   sessions.forEach((s, i) => { if (!s.dayNo) s.dayNo = i + 1; });
   return { sessions, headers, map, feeCols };
 }
-
 function parseGear(text) {
   if (!text) return { gear: [], headers: [], map: {} };
   const rows = parseCSV(text); const headers = (rows[0] || []).map(h => h.trim());
@@ -473,17 +649,13 @@ function parseGear(text) {
     const cost = map.cost !== undefined ? parseMoney(r[map.cost]) : 0;
     if (!item && !cost) return;
     const catRaw = map.category !== undefined ? String(r[map.category] ?? "").trim() : "";
-    gear.push({
-      item: item || "Item", cost,
-      date: map.date !== undefined ? parseDate(r[map.date]) : null,
-      category: catRaw ? cap(catRaw) : inferCategory(item),
-      store: map.store !== undefined ? String(r[map.store] ?? "").trim() : ""
-    });
+    gear.push({ item: item || "Item", cost, date: map.date !== undefined ? parseDate(r[map.date]) : null,
+      category: catRaw ? cap(catRaw) : inferCategory(item), store: map.store !== undefined ? String(r[map.store] ?? "").trim() : "" });
   });
   return { gear, headers, map };
 }
 
-/* ---------- Analytics & Metrics ---------- */
+/* ========== Analytics ========== */
 function compute(S, G) {
   const n = S.length, today = startOfDay(new Date());
   const totalMin = sum(S, "min"), court = sum(S, "fee"), gearSpend = sum(G, "cost"), total = court + gearSpend;
@@ -494,8 +666,7 @@ function compute(S, G) {
   for (let i = 1; i < uniq.length; i++) { run = dayDiff(uniq[i], uniq[i - 1]) === 1 ? run + 1 : 1; best = Math.max(best, run); }
   let cur = 0;
   if (uniq.length && dayDiff(today, uniq[uniq.length - 1]) <= 1) { cur = 1; for (let i = uniq.length - 1; i > 0 && dayDiff(uniq[i], uniq[i - 1]) === 1; i--) cur++; }
-  const ws = weekStart(today);
-  const weekSessions = S.filter(s => s.date >= ws).length;
+  const ws = weekStart(today), weekSessions = S.filter(s => s.date >= ws).length;
   const perWeek = n / (Math.max(span, 7) / 7);
 
   const w0 = weekStart(first), w1 = weekStart(today > last ? today : last), weeks = [];
@@ -516,21 +687,23 @@ function compute(S, G) {
   const ev = S.map(s => ({ d: s.date, c: s.fee, g: 0, s: 1 })).concat(G.map(g => ({ d: g.date || first, c: 0, g: g.cost, s: 0 })));
   ev.sort((a, b) => a.d - b.d);
   const tl = []; let c = 0, gr = 0, ns = 0;
-  ev.forEach(e => {
-    c += e.c; gr += e.g; ns += e.s; const k = key(e.d), l = tl[tl.length - 1];
-    if (l && l.k === k) Object.assign(l, { c, gr, ns }); else tl.push({ k, d: e.d, c, gr, ns });
-  });
+  ev.forEach(e => { c += e.c; gr += e.g; ns += e.s; const k2 = key(e.d), l = tl[tl.length - 1];
+    if (l && l.k === k2) Object.assign(l, { c, gr, ns }); else tl.push({ k: k2, d: e.d, c, gr, ns }); });
 
-  const mins = S.map(s => s.min).filter(m => m > 0); let trend = null;
-  if (mins.length >= 6) {
-    const k = Math.min(5, Math.floor(mins.length / 2));
-    const a = mins.slice(0, k).reduce((x, y) => x + y, 0) / k, b = mins.slice(-k).reduce((x, y) => x + y, 0) / k;
-    trend = { a, b, k };
-  }
-  return { n, totalMin, court, gearSpend, total, first, last, span, active: uniq.length, best, cur, weekSessions, perWeek, weeks, wd, slot, slotKeys, partners, solo, tl, trend,
-    avgMin: mins.length ? totalMin / mins.length : 0, maxMin: mins.length ? Math.max(...mins) : 0 };
+  /* Monthly stats for goals */
+  const now = new Date(), monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthSessions = S.filter(s => s.date >= monthStart).length;
+
+  /* Best week ever */
+  const bestWeek = weeks.length ? Math.max(...weeks.map(w => w.n)) : 0;
+
+  const mins = S.map(s => s.min).filter(m => m > 0);
+  return { n, totalMin, court, gearSpend, total, first, last, span, active: uniq.length, best, cur, weekSessions, perWeek, weeks, wd, slot, slotKeys, partners, solo, tl,
+    avgMin: mins.length ? totalMin / mins.length : 0, maxMin: mins.length ? Math.max(...mins) : 0, monthSessions, bestWeek,
+    uniquePartners: partners.length };
 }
 
+/* ========== Insights ========== */
 function makeInsights(S, G, a) {
   const out = [];
   out.push(`You've played on ${a.active} of the ${a.span} days since ${fmtDate(a.first)} (${Math.round(a.active / a.span * 100)}%). Current streak ${a.cur} ${a.cur === 1 ? "day" : "days"}, best streak ${a.best}.`);
@@ -544,17 +717,56 @@ function makeInsights(S, G, a) {
   }
   if (a.partners.length) {
     const p = a.partners[0];
-    out.push(`${p.name} is your most frequent partner with ${p.n} sessions. You've played with ${a.partners.length} friends so far` + (a.solo ? `, plus ${a.solo} solo match.` : "."));
+    out.push(`${p.name} is your most frequent partner with ${p.n} sessions. You've played with ${a.partners.length} friends so far` + (a.solo ? `, plus ${a.solo} solo.` : "."));
   }
   const bd = a.wd.indexOf(Math.max(...a.wd));
   out.push(`${WD[bd]} is your busiest day (${a.wd[bd]} sessions). Pace is ${a.perWeek.toFixed(1)} sessions per week.`);
-  if (a.total) {
-    out.push(`Each session has cost ${money(a.total / a.n)} so far (${money(a.court / a.n)} court` + (a.gearSpend ? `, ${money(a.gearSpend / a.n)} gear` : "") + `). The gear cost drops with every extra match you play.`);
-  }
+  if (a.total) out.push(`Each session has cost ${money(a.total / a.n)} so far (${money(a.court / a.n)} court` + (a.gearSpend ? `, ${money(a.gearSpend / a.n)} gear` : "") + `). Gear cost drops with every extra match.`);
   return out;
 }
 
-/* ---------- Rendering Charts & Tables ---------- */
+/* ========== Personal Records (D3) ========== */
+function renderRecords(S, a) {
+  const hrs = Math.floor(a.totalMin / 60);
+  const records = [
+    { icon: "⏱️", val: a.maxMin ? dur(a.maxMin) : "—", label: "Longest session" },
+    { icon: "🔥", val: a.best, label: "Best day streak" },
+    { icon: "📅", val: a.bestWeek, label: "Best week (sessions)" },
+    { icon: "⏳", val: hrs + "h+", label: "Total court hours" },
+    { icon: "🤝", val: a.uniquePartners, label: "Partners played" },
+    { icon: "🏸", val: a.n, label: "Total sessions" }
+  ];
+  $("#records").innerHTML = records.map(r =>
+    `<div class="record-card"><div class="rec-icon">${r.icon}</div><div class="rec-val">${esc(String(r.val))}</div><div class="rec-label">${r.label}</div></div>`
+  ).join("");
+}
+
+/* ========== Goals (D2) ========== */
+function initGoals() {
+  let saved = {}; try { saved = JSON.parse(localStorage.getItem("bd_goals") || "{}"); } catch(e) {}
+  if (saved.week) $("#goalWeek").value = saved.week;
+  if (saved.month) $("#goalMonth").value = saved.month;
+  ["goalWeek", "goalMonth"].forEach(id => {
+    $("#" + id).addEventListener("input", () => {
+      try { localStorage.setItem("bd_goals", JSON.stringify({ week: $("#goalWeek").value, month: $("#goalMonth").value })); } catch(e) {}
+      if (lastAnalytics) updateGoals(lastAnalytics);
+    });
+  });
+}
+function updateGoals(a) {
+  const wTarget = parseInt($("#goalWeek").value) || 3;
+  const mTarget = parseInt($("#goalMonth").value) || 12;
+  const wPct = Math.min(100, Math.round(a.weekSessions / wTarget * 100));
+  const mPct = Math.min(100, Math.round(a.monthSessions / mTarget * 100));
+  $("#goalWeekFill").style.width = wPct + "%";
+  $("#goalWeekFill").className = "progress-fill" + (wPct >= 100 ? " over" : "");
+  $("#goalWeekStatus").textContent = `${a.weekSessions} / ${wTarget} sessions this week` + (wPct >= 100 ? " ✅" : "");
+  $("#goalMonthFill").style.width = mPct + "%";
+  $("#goalMonthFill").className = "progress-fill" + (mPct >= 100 ? " over" : "");
+  $("#goalMonthStatus").textContent = `${a.monthSessions} / ${mTarget} sessions this month` + (mPct >= 100 ? " ✅" : "");
+}
+
+/* ========== Charts ========== */
 const charts = {};
 function chart(id, cfg) {
   if (typeof Chart === "undefined") return;
@@ -564,19 +776,42 @@ function chart(id, cfg) {
   if (el) charts[id] = new Chart(el, cfg);
 }
 
+/* ========== Session Detail Dialog (D1) ========== */
+let allSessionsForDialog = [];
+function openSessionDialog(s) {
+  const dlg = $("#sessionDialog");
+  $("#dialogTitle").textContent = `Session #${s.dayNo} — ${fmtDateY(s.date)}`;
+  const partners = s.partners.length
+    ? s.partners.map(p => `<span class="partner-tag"><span class="avatar" style="background:${nameColor(p)}">${getInitials(p)}</span>${esc(p)}</span>`).join("")
+    : '<em style="color:var(--muted)">Solo session</em>';
+  $("#dialogBody").innerHTML = `
+    <div class="d-row"><span class="d-label">Date</span><span class="d-value">${fmtDateY(s.date)}</span></div>
+    <div class="d-row"><span class="d-label">Time slot</span><span class="d-value">${esc(s.win || s.slot)}</span></div>
+    <div class="d-row"><span class="d-label">Duration</span><span class="d-value">${s.min ? dur(s.min) : "—"}</span></div>
+    <div class="d-row"><span class="d-label">Court fee</span><span class="d-value">${money(s.fee)}</span></div>
+    <div class="d-row"><span class="d-label">Partners</span><span class="d-value"><div class="d-partners">${partners}</div></span></div>
+    ${s.notes ? `<div class="d-row"><span class="d-label">Notes</span><span class="d-value" style="white-space:normal;text-align:right;max-width:260px">${esc(s.notes)}</span></div>` : ""}`;
+  dlg.showModal();
+}
+
+/* ========== Main Render ========== */
+let lastAnalytics = null;
+
 function renderAll(S, G, parsed) {
   const a = compute(S, G);
+  lastAnalytics = a;
+  allSessionsForDialog = S;
   const P = [css("--c1")||"#1B5E4A", css("--c2")||"#F2C230", css("--c3")||"#2D6CDF", css("--c4")||"#D1495B", css("--c5")||"#7A5CD6", css("--c6")||"#2BA6A0"];
 
+  /* Hero */
   const dayCount = Math.max(...S.map(s => s.dayNo));
   $("#dayNo").textContent = dayCount;
   $("#heroSub").textContent = `${a.n} sessions and ${dur(a.totalMin)} on court since ${fmtDateY(a.first)}.`;
   $("#chips").innerHTML = [
-    [a.cur, "day streak"],
-    [a.best, "best streak"],
-    [a.weekSessions, "this week"]
+    [a.cur, "day streak"], [a.best, "best streak"], [a.weekSessions, "this week"]
   ].map(x => `<div class="chip"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("");
 
+  /* KPIs */
   const cps = a.total / a.n, hrs = a.totalMin / 60;
   const k = [
     ["Sessions", a.n, `${a.perWeek.toFixed(1)} per week`],
@@ -588,9 +823,17 @@ function renderAll(S, G, parsed) {
   ];
   $("#kpis").innerHTML = k.map(x => `<div class="kpi"><div class="k">${x[0]}</div><div class="v">${esc(x[1])}</div><div class="s">${esc(x[2])}</div></div>`).join("");
 
+  /* Insights */
   $("#insights").innerHTML = makeInsights(S, G, a).map(t => `<li>${esc(t)}</li>`).join("");
 
-  // Heatmap
+  /* Records (D3) — deferred via requestIdleCallback (C6) */
+  if ("requestIdleCallback" in window) { requestIdleCallback(() => renderRecords(S, a)); }
+  else renderRecords(S, a);
+
+  /* Goals (D2) */
+  updateGoals(a);
+
+  /* Heatmap */
   const by = {}; S.forEach(s => { const o = by[key(s.date)] || (by[key(s.date)] = { n: 0, m: 0 }); o.n++; o.m += s.min; });
   const today = startOfDay(new Date()), WEEKS = 16, st = weekStart(today); st.setDate(st.getDate() - 7 * (WEEKS - 1));
   const mx = Math.max(1, ...Object.values(by).map(o => o.m)); let h = "";
@@ -604,174 +847,217 @@ function renderAll(S, G, parsed) {
 
   renderCalc(a);
 
-  // Charts
+  /* Charts — deferred for non-critical ones (C6) */
   const labels = S.map(s => "D" + s.dayNo), mins = S.map(s => Math.round(s.min));
-  const ma = mins.map((_, i) => { const w = mins.slice(Math.max(0, i - 2), i + 1); return Math.round(w.reduce((x, y) => x + y, 0) / w.length); });
+  const ma = mins.map((_, i) => { const w2 = mins.slice(Math.max(0, i - 2), i + 1); return Math.round(w2.reduce((x, y) => x + y, 0) / w2.length); });
   chart("chDuration", { type: "bar", data: { labels, datasets: [
     { label: "Minutes", data: mins, backgroundColor: P[0], borderRadius: 4, order: 2 },
-    { type: "line", label: "3-session average", data: ma, borderColor: P[1], backgroundColor: P[1], tension: .3, pointRadius: 2, borderWidth: 3, order: 1 } ] },
+    { type: "line", label: "3-session avg", data: ma, borderColor: P[1], backgroundColor: P[1], tension: .3, pointRadius: 2, borderWidth: 3, order: 1 } ] },
     options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
 
-  chart("chWeekly", { type: "bar", data: { labels: a.weeks.map(w => fmtDate(w.d)), datasets: [{ label: "Sessions", data: a.weeks.map(w => w.n), backgroundColor: P[2], borderRadius: 4 }] },
+  chart("chWeekly", { type: "bar", data: { labels: a.weeks.map(w2 => fmtDate(w2.d)), datasets: [{ label: "Sessions", data: a.weeks.map(w2 => w2.n), backgroundColor: P[2], borderRadius: 4 }] },
     options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
 
-  if (a.slotKeys.length) chart("chSlots", { type: "doughnut", data: { labels: a.slotKeys, datasets: [{ data: a.slotKeys.map(k => a.slot[k].n), backgroundColor: P, borderWidth: 0 }] }, options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
-  chart("chWeekday", { type: "bar", data: { labels: WD, datasets: [{ label: "Sessions", data: a.wd, backgroundColor: P[4], borderRadius: 4 }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
+  const renderSecondary = () => {
+    if (a.slotKeys.length) chart("chSlots", { type: "doughnut", data: { labels: a.slotKeys, datasets: [{ data: a.slotKeys.map(k2 => a.slot[k2].n), backgroundColor: P, borderWidth: 0 }] }, options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
+    chart("chWeekday", { type: "bar", data: { labels: WD, datasets: [{ label: "Sessions", data: a.wd, backgroundColor: P[4], borderRadius: 4 }] }, options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } } });
+    if (a.partners.length) {
+      const tp = a.partners.slice(0, 8);
+      chart("chPartners", { type: "bar", data: { labels: tp.map(p => p.name), datasets: [{ label: "Sessions", data: tp.map(p => p.n), backgroundColor: P[5], borderRadius: 4 }] },
+        options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } } });
+    }
+    chart("chSpend", { type: "line", data: { labels: a.tl.map(t => fmtDate(t.d)), datasets: [
+      { label: "Court fees", data: a.tl.map(t => t.c), borderColor: P[0], backgroundColor: P[0] + "33", fill: true, tension: .25, pointRadius: 0 },
+      { label: "Gear", data: a.tl.map(t => t.gr), borderColor: P[1], backgroundColor: P[1] + "33", fill: true, tension: .25, pointRadius: 0 } ] },
+      options: { scales: { y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
+    const pts = a.tl.filter(t => t.ns > 0);
+    chart("chCps", { type: "line", data: { labels: pts.map(t => fmtDate(t.d)), datasets: [{ label: "Cost per session", data: pts.map(t => Math.round((t.c + t.gr) / t.ns)), borderColor: P[3], backgroundColor: P[3], tension: .3, pointRadius: 2, borderWidth: 3 }] },
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } });
+    if (G.length && a.gearSpend > 0) {
+      const cat2 = {}; G.forEach(g => cat2[g.category] = (cat2[g.category] || 0) + g.cost);
+      const names = Object.keys(cat2).sort((x, y) => cat2[y] - cat2[x]);
+      chart("chGear", { type: "doughnut", data: { labels: names, datasets: [{ data: names.map(n2 => cat2[n2]), backgroundColor: P, borderWidth: 0 }] },
+        options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
+    }
+  };
+  if ("requestIdleCallback" in window) requestIdleCallback(renderSecondary); else setTimeout(renderSecondary, 50);
 
-  if (a.partners.length) {
-    const tp = a.partners.slice(0, 8);
-    chart("chPartners", { type: "bar", data: { labels: tp.map(p => p.name), datasets: [{ label: "Sessions", data: tp.map(p => p.n), backgroundColor: P[5], borderRadius: 4 }] },
-      options: { indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } } });
-  }
-
-  chart("chSpend", { type: "line", data: { labels: a.tl.map(t => fmtDate(t.d)), datasets: [
-    { label: "Court fees", data: a.tl.map(t => t.c), borderColor: P[0], backgroundColor: P[0] + "33", fill: true, tension: .25, pointRadius: 0 },
-    { label: "Gear", data: a.tl.map(t => t.gr), borderColor: P[1], backgroundColor: P[1] + "33", fill: true, tension: .25, pointRadius: 0 } ] },
-    options: { scales: { y: { stacked: true, beginAtZero: true } }, plugins: { legend: { position: "bottom" } } } });
-
-  const pts = a.tl.filter(t => t.ns > 0);
-  chart("chCps", { type: "line", data: { labels: pts.map(t => fmtDate(t.d)), datasets: [{ label: "Cost per session", data: pts.map(t => Math.round((t.c + t.gr) / t.ns)), borderColor: P[3], backgroundColor: P[3], tension: .3, pointRadius: 2, borderWidth: 3 }] },
-    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } } });
-
-  if (G.length && a.gearSpend > 0) {
-    const cat = {}; G.forEach(g => cat[g.category] = (cat[g.category] || 0) + g.cost);
-    const names = Object.keys(cat).sort((x, y) => cat[y] - cat[x]);
-    chart("chGear", { type: "doughnut", data: { labels: names, datasets: [{ data: names.map(n => cat[n]), backgroundColor: P, borderWidth: 0 }] },
-      options: { cutout: "60%", plugins: { legend: { position: "bottom" } } } });
-  }
-
+  /* Gear Table */
   $("#gearTbl").innerHTML = G.length
     ? `<table><thead><tr><th>Item</th><th>Type</th><th>Bought</th><th>Store</th><th class="n">Cost</th><th class="n">Per session</th></tr></thead><tbody>` +
-      G.map(g => { const since = g.date ? S.filter(s => s.date >= g.date).length : S.length;
+      G.map(g => { const since = g.date ? S.filter(s2 => s2.date >= g.date).length : S.length;
         return `<tr><td><strong>${esc(g.item)}</strong></td><td><span class="partner-tag">${esc(g.category)}</span></td><td>${g.date ? fmtDate(g.date) : "—"}</td><td>${esc(g.store) || "—"}</td><td class="n"><strong>${money(g.cost)}</strong></td><td class="n" style="color:var(--good)">${since ? money(g.cost / since) : "—"}</td></tr>`; }).join("") + `</tbody></table>`
-    : '<p class="nodata">No gear entries found.</p>';
+    : '<div class="empty-state"><div class="empty-icon">🎒</div><div class="empty-text">No gear entries found. Add gear to your Google Sheet to track equipment costs.</div></div>';
 
-  $("#recentTbl").innerHTML = `<table><thead><tr><th>Day</th><th>Date</th><th>Time</th><th class="n">Length</th><th class="n">Fee</th><th>Played with</th></tr></thead><tbody>` +
-    S.slice().reverse().map(s => {
-      const partnerTags = s.partners.length
-        ? s.partners.map(p => `<span class="partner-tag">${esc(p)}</span>`).join("")
-        : '<span style="color:var(--muted);font-style:italic">Solo</span>';
-      return `<tr><td><strong>#${s.dayNo}</strong></td><td>${fmtDate(s.date)}</td><td>${esc(s.win || (s.slot === "Unknown" ? "—" : s.slot))}</td><td class="n">${s.min ? dur(s.min) : "—"}</td><td class="n"><strong>${money(s.fee)}</strong></td><td>${partnerTags}</td></tr>`;
-    }).join("") + `</tbody></table>`;
+  /* Recent Sessions Table with partner avatars (D8) */
+  renderSessionsTable(S);
 
+  /* Column Mapping */
   const nm = (hs, i) => i === undefined ? "<em>not found</em>" : `"${esc(hs[i])}"`;
-  const m = parsed.s.map, gm = parsed.g.map;
+  const mp = parsed.s.map, gm = parsed.g.map;
   $("#mapping").innerHTML = [
-    `Sessions: Date ${nm(parsed.s.headers, m.date)}, Day # ${nm(parsed.s.headers, m.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, m.time)}, Duration ${nm(parsed.s.headers, m.duration)}, Partners ${nm(parsed.s.headers, m.partners)}, Notes ${nm(parsed.s.headers, m.notes)}`,
+    `Sessions: Date ${nm(parsed.s.headers, mp.date)}, Day # ${nm(parsed.s.headers, mp.day)}, Fee ${parsed.s.feeCols.map(i => nm(parsed.s.headers, i)).join(" + ") || "<em>not found</em>"}, Time ${nm(parsed.s.headers, mp.time)}, Duration ${nm(parsed.s.headers, mp.duration)}, Partners ${nm(parsed.s.headers, mp.partners)}, Notes ${nm(parsed.s.headers, mp.notes)}`,
     `Gear: Item ${nm(parsed.g.headers, gm.item)}, Cost ${nm(parsed.g.headers, gm.cost)}, Type ${gm.category !== undefined ? nm(parsed.g.headers, gm.category) : "auto inferred"}, Store ${nm(parsed.g.headers, gm.store)}`
   ].map(t => `<li>${t}</li>`).join("");
 }
 
-/* ---------- Membership Calculator ---------- */
+/* ========== Sessions Table Rendering ========== */
+function renderSessionsTable(S) {
+  $("#recentTbl").innerHTML = `<table><thead><tr><th>Day</th><th>Date</th><th>Time</th><th class="n">Length</th><th class="n">Fee</th><th>Played with</th></tr></thead><tbody>` +
+    S.slice().reverse().map((s, idx) => {
+      const partnerTags = s.partners.length
+        ? s.partners.map(p => `<span class="partner-tag"><span class="avatar" style="background:${nameColor(p)}">${getInitials(p)}</span>${esc(p)}</span>`).join("")
+        : '<span style="color:var(--muted);font-style:italic">Solo</span>';
+      return `<tr class="clickable" data-idx="${S.length - 1 - idx}"><td><strong>#${s.dayNo}</strong></td><td>${fmtDate(s.date)}</td><td>${esc(s.win || (s.slot === "Unknown" ? "—" : s.slot))}</td><td class="n">${s.min ? dur(s.min) : "—"}</td><td class="n"><strong>${money(s.fee)}</strong></td><td>${partnerTags}</td></tr>`;
+    }).join("") + `</tbody></table>`;
+
+  /* Attach click handlers for dialog (D1) */
+  $$("#recentTbl tr.clickable").forEach(tr => {
+    tr.addEventListener("click", () => {
+      const idx = parseInt(tr.dataset.idx);
+      if (allSessionsForDialog[idx]) openSessionDialog(allSessionsForDialog[idx]);
+    });
+  });
+}
+
+/* ========== Session Search (D14) ========== */
+$("#sessionSearch").addEventListener("input", e => {
+  const q = e.target.value.toLowerCase().trim();
+  $$("#recentTbl tbody tr").forEach(tr => {
+    tr.style.display = !q || tr.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+
+/* ========== Membership Calculator ========== */
 let calcState = { a: null, weekTouched: false };
 function renderCalc(a) {
   calcState.a = a;
-  let saved = {}; try { saved = JSON.parse(localStorage.getItem("bd_calc") || "{}"); } catch (e) {}
+  let saved = {}; try { saved = JSON.parse(localStorage.getItem("bd_calc") || "{}"); } catch(e) {}
   const rate = $("#inRate"), mem = $("#inMember"), wk = $("#inWeek");
   if (!rate.dataset.init) {
     const avgCourt = a && a.n ? Math.round(a.court / a.n) : CONFIG.DAILY_RATE;
-    rate.value = saved.rate ?? avgCourt;
-    mem.value = saved.member ?? "";
-    rate.dataset.init = "1";
+    rate.value = saved.rate ?? avgCourt; mem.value = saved.member ?? ""; rate.dataset.init = "1";
     [rate, mem, wk].forEach(el => el.addEventListener("input", () => {
       if (el === wk) calcState.weekTouched = true;
-      try { localStorage.setItem("bd_calc", JSON.stringify({ rate: rate.value, member: mem.value })); } catch (e) {}
+      try { localStorage.setItem("bd_calc", JSON.stringify({ rate: rate.value, member: mem.value })); } catch(e) {}
       calcOut();
     }));
   }
   if (!calcState.weekTouched) wk.value = (Math.round(a.perWeek * 2) / 2).toString();
   calcOut();
 }
-
 function calcOut() {
   const rate = parseFloat($("#inRate").value) || 0, mem = parseFloat($("#inMember").value) || 0, wk = parseFloat($("#inWeek").value) || 0;
   const perMonth = wk * 4.345, payg = perMonth * rate, v = $("#verdict");
-  if (!mem) {
-    v.innerHTML = `<b>${money(payg)} / month</b><span>At ${money(rate)} per session and ${wk} sessions/wk (~${Math.round(perMonth)} sessions/mo). Enter a monthly membership fee to compare.</span>`;
-    return;
-  }
+  if (!mem) { v.innerHTML = `<b>${money(payg)} / month</b><span>At ${money(rate)} per session and ${wk} sessions/wk (~${Math.round(perMonth)} sessions/mo). Enter a membership fee to compare.</span>`; return; }
   const be = rate ? Math.ceil(mem / rate) : 0, diff = payg - mem;
   v.innerHTML = diff > 0
     ? `<b>🎉 Membership saves ~${money(diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Pays off after ${be} sessions/month (~${(be/4.345).toFixed(1)}/wk).</span>`
-    : `<b>🏸 Pay-as-you-go is cheaper by ~${money(-diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Membership is only worth it if you play ${be}+ sessions/month.</span>`;
+    : `<b>🏸 Pay-as-you-go is cheaper by ~${money(-diff)} a month</b><span>Pay-as-you-go: ${money(payg)} vs Membership: ${money(mem)}. Membership is only worth it at ${be}+ sessions/month.</span>`;
 }
 
-/* ---------- Data Loading Directly from Code URLs ---------- */
+/* ========== Date Range Filter (D13) ========== */
+let rawSessions = [], rawGear = [], rawParsed = {};
+function applyFilterAndRender() {
+  let S = rawSessions.slice();
+  const from = $("#filterFrom").value, to = $("#filterTo").value;
+  const hasFilter = !!(from || to);
+  if (from) S = S.filter(s => s.date >= new Date(from));
+  if (to) S = S.filter(s => s.date <= new Date(to + "T23:59:59"));
+  const tag = $("#filterTag");
+  if (hasFilter) { tag.classList.add("active"); tag.textContent = `🔍 Showing ${S.length} of ${rawSessions.length} sessions`; }
+  else tag.classList.remove("active");
+
+  if (!S.length) {
+    banner("No sessions found for the selected date range.", true);
+    return;
+  }
+  banner("", false);
+
+  /* View Transition (B5) */
+  const doRender = () => renderAll(S, rawGear, rawParsed);
+  if (document.startViewTransition) document.startViewTransition(doRender);
+  else doRender();
+}
+$("#filterFrom").addEventListener("change", applyFilterAndRender);
+$("#filterTo").addEventListener("change", applyFilterAndRender);
+$("#filterReset").addEventListener("click", () => {
+  $("#filterFrom").value = ""; $("#filterTo").value = "";
+  applyFilterAndRender();
+});
+
+/* ========== Data Loading ========== */
 async function fetchCSV(url) {
   const cleanUrl = url.trim() + (url.includes("?") ? "&" : "?") + "_=" + Date.now();
   const res = await fetch(cleanUrl, { cache: "no-store" });
   if (!res.ok) throw new Error("HTTP " + res.status);
   const text = await res.text();
-  if (text.includes("<!DOCTYPE html") || text.includes("Sign in to your Google Account")) {
-    throw new Error("Google returned a sign-in screen. Ensure the Google Sheet share permission is 'Anyone with the link can view'.");
-  }
+  if (text.includes("<!DOCTYPE html") || text.includes("Sign in to your Google Account"))
+    throw new Error("Google returned a sign-in page. Ensure sharing is set to 'Anyone with the link'.");
   return text;
 }
 
 function banner(html, isErr) {
   const b = $("#banner");
   if (!html) { b.hidden = true; return; }
-  b.className = "banner" + (isErr ? " err" : "");
-  b.innerHTML = html;
-  b.hidden = false;
+  b.className = "banner" + (isErr ? " err" : ""); b.innerHTML = html; b.hidden = false;
 }
 
 async function loadData() {
   $("#updated").textContent = "Syncing...";
   let sText = "", gText = "";
-
   try {
     sText = await fetchCSV(CONFIG.SESSIONS_CSV_URL);
     localStorage.setItem("bd_sessions_cache", sText);
     banner("", false);
   } catch (err) {
     sText = localStorage.getItem("bd_sessions_cache") || "";
-    if (!sText) {
-      banner(`Could not fetch sessions from Google Sheets (${esc(err.message)}).`, true);
-      $("#updated").textContent = "Sync error";
-      return;
-    }
+    if (!sText) { banner(`Could not fetch sessions (${esc(err.message)}).`, true); $("#updated").textContent = "Sync error"; return; }
   }
-
   try {
-    if (CONFIG.GEAR_CSV_URL) {
-      gText = await fetchCSV(CONFIG.GEAR_CSV_URL);
-      localStorage.setItem("bd_gear_cache", gText);
-    }
-  } catch (err) {
-    gText = localStorage.getItem("bd_gear_cache") || "";
-  }
+    if (CONFIG.GEAR_CSV_URL) { gText = await fetchCSV(CONFIG.GEAR_CSV_URL); localStorage.setItem("bd_gear_cache", gText); }
+  } catch (err) { gText = localStorage.getItem("bd_gear_cache") || ""; }
 
   const s = parseSessions(sText), g = parseGear(gText);
-  if (!s.sessions.length) {
-    banner("Google Sheet loaded, but no valid session dates were found.", true);
-    $("#updated").textContent = "Format issue";
-    return;
-  }
+  if (!s.sessions.length) { banner("Sheet loaded, but no valid session dates found.", true); $("#updated").textContent = "Format issue"; return; }
 
-  renderAll(s.sessions, g.gear, { s, g });
+  rawSessions = s.sessions; rawGear = g.gear; rawParsed = { s, g };
+  applyFilterAndRender();
   $("#updated").textContent = "Updated " + new Date().toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit" });
-  $("#footTime").textContent = `Auto-refreshes every ${CONFIG.REFRESH_MINUTES} mins`;
+  $("#footTime").textContent = `Auto-refreshes every ${CONFIG.REFRESH_MINUTES} min`;
 }
 
-/* ---------- Theme Toggle ---------- */
+/* ========== Theme Toggle with View Transitions (B5) ========== */
 let isDark = localStorage.getItem("bd_theme") === "dark" || (!localStorage.getItem("bd_theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
 function applyTheme() {
   document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   localStorage.setItem("bd_theme", isDark ? "dark" : "light");
 }
 applyTheme();
+
 $("#themeToggle").addEventListener("click", () => {
   isDark = !isDark;
-  applyTheme();
-  const sText = localStorage.getItem("bd_sessions_cache");
-  const gText = localStorage.getItem("bd_gear_cache");
-  if (sText) {
-    const s = parseSessions(sText), g = parseGear(gText);
-    renderAll(s.sessions, g.gear, { s, g });
-  }
+  const doToggle = () => {
+    applyTheme();
+    const sText = localStorage.getItem("bd_sessions_cache"), gText = localStorage.getItem("bd_gear_cache");
+    if (sText) { const s = parseSessions(sText), g = parseGear(gText);
+      rawSessions = s.sessions; rawGear = g.gear; rawParsed = { s, g };
+      applyFilterAndRender();
+    }
+  };
+  if (document.startViewTransition) document.startViewTransition(doToggle);
+  else doToggle();
 });
 
+/* ========== Dialog Close Handlers ========== */
+$(".dialog-close").addEventListener("click", () => $("#sessionDialog").close());
+$("#sessionDialog").addEventListener("click", e => { if (e.target === e.currentTarget) e.target.close(); });
+
+/* ========== Print / Export (D5) ========== */
+$("#exportBtn").addEventListener("click", () => window.print());
+
+/* ========== Init ========== */
+initGoals();
 $("#refresh").addEventListener("click", loadData);
 setInterval(loadData, CONFIG.REFRESH_MINUTES * 60000);
 loadData();

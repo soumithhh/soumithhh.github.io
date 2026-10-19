@@ -1,1 +1,61 @@
-
+<div class="bdc" id="bdc-root">
+<style>
+#bdc-root{max-width:420px;margin:1.5rem auto;font-family:inherit;color:inherit}
+#bdc-root .bdc-row{display:flex;gap:8px;margin-bottom:8px}
+#bdc-root button{flex:1;padding:9px;border-radius:8px;border:1px solid rgba(128,128,128,.5);background:transparent;color:inherit;font:inherit;font-size:15px;cursor:pointer}
+#bdc-root button.on{background:#1D9E75;border-color:#0F6E56;color:#fff}
+#bdc-root svg{width:100%;height:auto;display:block}
+#bdc-root .ln{stroke:currentColor;stroke-opacity:.6;stroke-width:1;fill:none}
+#bdc-root .lb{fill:currentColor;fill-opacity:.75;font-size:12px;font-family:inherit}
+#bdc-root .cap{font-size:14px;line-height:1.5;opacity:.85;margin-top:6px}
+</style>
+<div class="bdc-row"><button id="bdc-S">Singles</button><button id="bdc-D">Doubles</button></div>
+<div class="bdc-row"><button id="bdc-V">Serve</button><button id="bdc-R">Rally</button></div>
+<svg viewBox="0 0 380 395" role="img" aria-label="Badminton court top view showing where the shuttle must land">
+<defs><marker id="bdc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="60" y="30" width="152" height="335" fill="none" stroke="currentColor" stroke-opacity=".7" stroke-width="1.5"/>
+<rect id="bdc-zone" x="60" y="30" width="152" height="335" fill="#1D9E75" fill-opacity="0.28" stroke="#0F6E56" stroke-width="1.5"/>
+<line class="ln" x1="72" y1="30" x2="72" y2="365"/>
+<line class="ln" x1="200" y1="30" x2="200" y2="365"/>
+<line class="ln" x1="60" y1="147" x2="212" y2="147"/>
+<line class="ln" x1="60" y1="247" x2="212" y2="247"/>
+<line class="ln" x1="60" y1="49" x2="212" y2="49" stroke-dasharray="4 3"/>
+<line class="ln" x1="60" y1="346" x2="212" y2="346" stroke-dasharray="4 3"/>
+<line class="ln" x1="136" y1="30" x2="136" y2="147"/>
+<line class="ln" x1="136" y1="247" x2="136" y2="365"/>
+<line x1="50" y1="197" x2="222" y2="197" stroke="currentColor" stroke-width="3"/>
+<g id="bdc-srv"><circle cx="170" cy="310" r="8" fill="#888780"/>
+<line id="bdc-arr" x1="168" y1="298" x2="104" y2="100" stroke="#0F6E56" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#bdc-arrow)"/></g>
+<text class="lb" x="232" y="34">Back line</text>
+<text class="lb" x="232" y="53">Doubles serve limit</text>
+<text class="lb" x="232" y="151">Short service line</text>
+<text class="lb" x="232" y="201">Net</text>
+<text class="lb" x="232" y="350">Doubles serve limit</text>
+<text class="lb" x="232" y="369">Back line</text>
+<text class="lb" x="136" y="388" text-anchor="middle">Green = shuttle must land here</text>
+</svg>
+<div class="cap" id="bdc-cap"></div>
+<script>
+(function(){
+var m='S',t='V',$=function(i){return document.getElementById(i)};
+var z=$('bdc-zone'),a=$('bdc-arr'),s=$('bdc-srv'),c=$('bdc-cap');
+function set(x,y,w,h){z.setAttribute('x',x);z.setAttribute('y',y);z.setAttribute('width',w);z.setAttribute('height',h)}
+function draw(){
+$('bdc-S').className=m=='S'?'on':'';$('bdc-D').className=m=='D'?'on':'';
+$('bdc-V').className=t=='V'?'on':'';$('bdc-R').className=t=='R'?'on':'';
+s.style.display=t=='V'?'block':'none';
+if(t=='R'){
+if(m=='S'){set(72,30,128,335);c.textContent='Singles rally: narrow and long. Inside the inner side lines, all the way to the back line.'}
+else{set(60,30,152,335);c.textContent='Doubles rally: wide and short. Outer side lines count, but the back line is the same as singles.'}
+}else{
+if(m=='S'){set(72,30,64,117);a.setAttribute('x2',104);a.setAttribute('y2',95);c.textContent='Singles serve: diagonal. Must reach the short line, can land right up to the back line, but not in the side alley.'}
+else{set(60,49,76,98);a.setAttribute('x2',98);a.setAttribute('y2',105);c.textContent='Doubles serve: diagonal, short and wide. Must clear the short line, but land before the dashed long line.'}
+}}
+$('bdc-S').onclick=function(){m='S';draw()};
+$('bdc-D').onclick=function(){m='D';draw()};
+$('bdc-V').onclick=function(){t='V';draw()};
+$('bdc-R').onclick=function(){t='R';draw()};
+draw();
+})();
+</script>
+</div>

@@ -702,36 +702,90 @@
       border-radius: 6px;
     }
 
-    /* Portrait Guard Modal */
-    #portrait-guard {
-      position: fixed;
-      inset: 0;
-      background: #090d16;
-      z-index: 9999;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 32px;
-      text-align: center;
-    }
+    /* Responsive Vertical (Portrait) & Mobile Layout */
+    @media (orientation: portrait), (max-aspect-ratio: 1/1) {
+      header#top-bar {
+        height: auto;
+        min-height: 44px;
+        padding: 6px 10px;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
 
-    .phone-rotate-icon {
-      width: 72px;
-      height: 72px;
-      margin-bottom: 24px;
-      animation: rotateDevice 2.2s infinite ease-in-out;
-    }
+      .nav-group {
+        gap: 4px;
+        flex-wrap: wrap;
+      }
 
-    @keyframes rotateDevice {
-      0%, 20% { transform: rotate(0deg); }
-      50%, 70% { transform: rotate(90deg); }
-      100% { transform: rotate(0deg); }
-    }
+      .btn-nav {
+        padding: 5px 8px;
+        font-size: 0.72rem;
+        gap: 4px;
+      }
 
-    @media (orientation: portrait) {
-      #portrait-guard {
-        display: flex;
+      .badge-status {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+      }
+
+      #court-container {
+        flex-direction: column;
+        height: calc(100dvh - 48px);
+      }
+
+      #court-container.swapped {
+        flex-direction: column-reverse;
+      }
+
+      .court-half {
+        flex: 1;
+        width: 100%;
+        padding: 8px 12px;
+      }
+
+      #team-a-half {
+        border-right: none;
+        border-bottom: 2px dashed rgba(255, 255, 255, 0.15);
+      }
+
+      #court-container.swapped #team-a-half {
+        border-left: none;
+        border-right: none;
+        border-top: 2px dashed rgba(255, 255, 255, 0.15);
+        border-bottom: none;
+      }
+
+      .team-names-title {
+        max-width: 58vw;
+        font-size: clamp(0.95rem, 4vw, 1.25rem);
+      }
+
+      .score-number {
+        font-size: clamp(4.8rem, 16vh, 8.5rem);
+        line-height: 0.9;
+      }
+
+      .tap-hint-text {
+        font-size: 0.72rem;
+      }
+
+      .btn-court-control {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+      }
+
+      .court-position-label {
+        font-size: 0.7rem;
+      }
+
+      .teams-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .modal-card {
+        width: 95vw;
+        max-height: 94dvh;
       }
     }
 
@@ -751,20 +805,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Fullscreen Portrait Orientation Blocker -->
-  <div id="portrait-guard">
-    <svg class="phone-rotate-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-      <path d="M12 18h.01"/>
-      <path d="M19 12c1.5 0 3-1.5 3-3"/>
-      <path d="M22 9l-2-2m2 2l-2 2"/>
-    </svg>
-    <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">PLEASE ROTATE YOUR DEVICE</h2>
-    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 300px; line-height: 1.4;">
-      This professional badminton scoreboard is designed exclusively for full-screen landscape mode.
-    </p>
-  </div>
 
   <!-- Main Application -->
   <div id="app-container">
@@ -1371,15 +1411,28 @@
       // Status Badge (Deuce / Game Point / Normal)
       updateStatusBadge();
 
-      // Court orientation labels
-      if (state.isSwapped) {
-        DOM.courtContainer.classList.add('swapped');
-        DOM.teamAPosLabel.textContent = "RIGHT COURT";
-        DOM.teamBPosLabel.textContent = "LEFT COURT";
+      // Court orientation labels (responsive to Portrait vs Landscape)
+      const isPortrait = window.innerHeight > window.innerWidth;
+      if (isPortrait) {
+        if (state.isSwapped) {
+          DOM.courtContainer.classList.add('swapped');
+          DOM.teamAPosLabel.textContent = "BOTTOM COURT";
+          DOM.teamBPosLabel.textContent = "TOP COURT";
+        } else {
+          DOM.courtContainer.classList.remove('swapped');
+          DOM.teamAPosLabel.textContent = "TOP COURT";
+          DOM.teamBPosLabel.textContent = "BOTTOM COURT";
+        }
       } else {
-        DOM.courtContainer.classList.remove('swapped');
-        DOM.teamAPosLabel.textContent = "LEFT COURT";
-        DOM.teamBPosLabel.textContent = "RIGHT COURT";
+        if (state.isSwapped) {
+          DOM.courtContainer.classList.add('swapped');
+          DOM.teamAPosLabel.textContent = "RIGHT COURT";
+          DOM.teamBPosLabel.textContent = "LEFT COURT";
+        } else {
+          DOM.courtContainer.classList.remove('swapped');
+          DOM.teamAPosLabel.textContent = "LEFT COURT";
+          DOM.teamBPosLabel.textContent = "RIGHT COURT";
+        }
       }
     }
 
@@ -2029,6 +2082,10 @@
         e.returnValue = '';
       }
     });
+
+    // Dynamic Orientation / Resize Updates
+    window.addEventListener('resize', renderScoreboard);
+    window.addEventListener('orientationchange', renderScoreboard);
 
     /**
      * INITIAL LAUNCH
